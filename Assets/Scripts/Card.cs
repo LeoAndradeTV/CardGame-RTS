@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class Card : MonoBehaviour
 {
@@ -21,9 +22,12 @@ public class Card : MonoBehaviour
     }
 
     private void OnMouseDown()
-    {   
-        if (!UIHandler.instance.cardMenuIsOpen)
-            UIHandler.instance.ShowAndSetCardPlayMenu(this);
+    {
+        Debug.Log(UIHandler.instance.allMenusAreClosed);
+        if (!UIHandler.instance.allMenusAreClosed)
+            return;
+        
+        UIHandler.instance.ShowAndSetCardPlayMenu(this);
     }
 
     public void Play()
@@ -31,7 +35,18 @@ public class Card : MonoBehaviour
         switch (cardType)
         {
             case CardType.Gold:
+                UIHandler.instance.HideAllMenus();
                 Table.Instance.GoldAmount += 5;
+                break;
+            case CardType.OneFarmer:
+                UIHandler.instance.HideAllMenus();
+                UIHandler.instance.OpenMaterialMenu();
+                UIHandler.instance.harvests = 1;
+                break;
+            case CardType.TwoFarmer:
+                UIHandler.instance.HideAllMenus();
+                UIHandler.instance.OpenMaterialMenu();
+                UIHandler.instance.harvests = 2;
                 break;
         }
     }

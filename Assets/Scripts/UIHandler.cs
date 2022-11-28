@@ -2,18 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIHandler : MonoBehaviour
 {
     public static UIHandler instance;
 
-    public bool cardMenuIsOpen;
+    public bool allMenusAreClosed = true;
+    public int harvests;
 
-    [SerializeField] private Image menuBackground;
-    [SerializeField] private GameObject cardButtons;
+    [SerializeField] private GameObject cardSelectionMenu;
+    [SerializeField] private GameObject materialSelectionMenu;
+    [SerializeField] private GameObject playerHUD;
     [SerializeField] private Button playButton;
     [SerializeField] private Button discardButton;
     [SerializeField] private Button backButton;
+    public TMP_Text woodCounterText; 
+    public TMP_Text rockCounterText; 
+    public TMP_Text stringCounterText; 
+    public TMP_Text ironCounterText;
 
     // Start is called before the first frame update
     void Awake()
@@ -22,25 +29,32 @@ public class UIHandler : MonoBehaviour
         {
             instance = this;
         }
-        StartCoroutine(HideAllMenus());
+        HideAllMenus();
     }
 
-    public IEnumerator HideAllMenus()
-    {
-        cardMenuIsOpen = false;
-        yield return null;
-        menuBackground.gameObject.SetActive(cardMenuIsOpen);
-        backButton.gameObject.SetActive(cardMenuIsOpen);
-        cardButtons.SetActive(cardMenuIsOpen);
+    public IEnumerator HideAllMenusCoroutine()
+    {  
+        yield return new WaitForEndOfFrame();
+        allMenusAreClosed = true;
+        backButton.gameObject.SetActive(!allMenusAreClosed);
+        cardSelectionMenu.SetActive(!allMenusAreClosed);
+        playerHUD.SetActive(allMenusAreClosed);
     }
 
     private IEnumerator ShowCardMenu()
+    { 
+        yield return new WaitForEndOfFrame();
+        allMenusAreClosed = false;
+        backButton.gameObject.SetActive(!allMenusAreClosed);
+        cardSelectionMenu.SetActive(!allMenusAreClosed);
+        playerHUD.SetActive(allMenusAreClosed);
+    }
+
+    private IEnumerator ShowMaterialMenu()
     {
-        cardMenuIsOpen = true;
-        yield return null;
-        menuBackground.gameObject.SetActive(cardMenuIsOpen);
-        backButton.gameObject.SetActive(cardMenuIsOpen);
-        cardButtons.SetActive(cardMenuIsOpen);
+        yield return new WaitForEndOfFrame();
+        materialSelectionMenu.SetActive(true);
+        allMenusAreClosed = false;
     }
 
     public void ShowAndSetCardPlayMenu(Card card)
@@ -56,19 +70,53 @@ public class UIHandler : MonoBehaviour
     {
         card.Play();
         PlayerCards.instance.DiscardCard(card);
-        StartCoroutine(HideAllMenus());
-
     }
 
     public void DiscardButtonClicked(Card card)
     {
         PlayerCards.instance.DiscardCard(card);
-        StartCoroutine(HideAllMenus());
+        HideAllMenus();
     }
 
-    public void BackButtonClicked()
+    public void OpenMaterialMenu()
     {
-        StartCoroutine(HideAllMenus());
+        StartCoroutine(ShowMaterialMenu());
     }
 
+    public void HideAllMenus()
+    {
+        StartCoroutine(HideAllMenusCoroutine());
+    }
+
+    public void HarvestWood()
+    {
+        MaterialCounter.WoodCounter += 1;
+        CheckIfDoneHarvesting();
+    }
+
+    public void HarvestRock()
+    {
+        MaterialCounter.RockCounter += 1;
+        CheckIfDoneHarvesting();
+    }
+    public void HarvestString()
+    {
+        MaterialCounter.StringCounter += 1;
+        CheckIfDoneHarvesting();
+    }
+    public void HarvestIron()
+    {
+        MaterialCounter.IronCounter += 1;
+        CheckIfDoneHarvesting();
+    }
+
+    private void CheckIfDoneHarvesting()
+    {
+        harvests--;
+        if (harvests == 0) 
+        { 
+            materialSelectionMenu.SetActive(false);
+            allMenusAreClosed = true;
+        }
+    }
 }
