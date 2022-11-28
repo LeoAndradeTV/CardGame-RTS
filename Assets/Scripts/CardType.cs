@@ -5,6 +5,14 @@ using UnityEngine;
 public enum CardType 
 { 
    OneFarmer,
-   TwoFarmer,
-   Gold
+   TwoFarmers,
+   Gold,
+   ThreeFarmers,
+   MachineOne,
+   MachineTwo,
+   MachineThree,
+   MachineFour,
+   MachineFive,
+   MachineSix,
+   Overtime
 }

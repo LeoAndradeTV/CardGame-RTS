@@ -28,7 +28,7 @@ public class PlayerCards : MonoBehaviour
     // Create every initial card
     public void CreateInitialDeck()
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 7; i++)
         {
             playerDeck.Add(cardData[0]);
         }
@@ -36,10 +36,8 @@ public class PlayerCards : MonoBehaviour
         {
             playerDeck.Add(cardData[1]);
         }
-        for (int i = 0; i < 6; i++)
-        {
-            playerDeck.Add(cardData[2]);
-        }
+
+        //TODO: Add one type of attack card
     }
     private void DrawCards()
     {
@@ -62,12 +60,11 @@ public class PlayerCards : MonoBehaviour
             // Makes and places card
             Card card = Instantiate(cardPrefab, Table.Instance.cardLocations[i].position, Quaternion.Euler(90f, 0f, 0f));
             card.indexInHand = i;
-            Debug.Log(card.indexInHand);
             Table.Instance.locationIsFilled[i] = true;
 
             // Adds card to list
             cardsInHand.Add(card);
-            card.SetUpCard(currentData);
+            card.SetUpCard(currentData, CardStatus.Bought);
 
             playerDeck.RemoveAt(index);
 
