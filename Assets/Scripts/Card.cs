@@ -23,7 +23,6 @@ public class Card : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log(UIHandler.instance.allMenusAreClosed);
         if (!UIHandler.instance.allMenusAreClosed)
             return;
         
@@ -49,10 +48,5 @@ public class Card : MonoBehaviour
                 UIHandler.instance.harvests = 2;
                 break;
         }
-    }
-
-    public void TestMethod(CardType cardType)
-    {
-        Debug.Log("We ran this");
     }
 }

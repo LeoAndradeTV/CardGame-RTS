@@ -41,7 +41,6 @@ public class PlayerCards : MonoBehaviour
             playerDeck.Add(cardData[2]);
         }
     }
-
     private void DrawCards()
     {
         for (int i = 0; i < 5; i++)
@@ -75,7 +74,6 @@ public class PlayerCards : MonoBehaviour
             SetDrawAndShuffleButtons(!deckIsEmpty);
         }
     }
-
     public void DiscardCard(Card card)
     {
         playerDiscard.Add(card.currentData);
@@ -83,7 +81,6 @@ public class PlayerCards : MonoBehaviour
         Table.Instance.locationIsFilled[card.indexInHand] = false;
         Destroy(card.gameObject);
     }
-
     public void ShuffleCards()
     {
         while (playerDiscard.Count > 0)
@@ -93,19 +90,16 @@ public class PlayerCards : MonoBehaviour
         }
         SetDrawAndShuffleButtons(true);
     }
-
     private void SetDrawAndShuffleButtons(bool active)
     {
         Table.Instance.shuffleButton.gameObject.SetActive(!active);
         Table.Instance.drawButton.gameObject.SetActive(active);
     }
-
     private void OnEnable()
     {
         Actions.OnDrawCardsClicked += DrawCards;
         Actions.OnShuffleCardsClicked += ShuffleCards;
     }
-
     private void OnDisable()
     {
         Actions.OnDrawCardsClicked -= DrawCards;

@@ -40,7 +40,10 @@ public class UIHandler : MonoBehaviour
         cardSelectionMenu.SetActive(!allMenusAreClosed);
         playerHUD.SetActive(allMenusAreClosed);
     }
-
+    public void HideAllMenus()
+    {
+        StartCoroutine(HideAllMenusCoroutine());
+    }
     private IEnumerator ShowCardMenu()
     { 
         yield return new WaitForEndOfFrame();
@@ -49,14 +52,16 @@ public class UIHandler : MonoBehaviour
         cardSelectionMenu.SetActive(!allMenusAreClosed);
         playerHUD.SetActive(allMenusAreClosed);
     }
-
     private IEnumerator ShowMaterialMenu()
     {
         yield return new WaitForEndOfFrame();
         materialSelectionMenu.SetActive(true);
         allMenusAreClosed = false;
     }
-
+    public void OpenMaterialMenu()
+    {
+        StartCoroutine(ShowMaterialMenu());
+    }
     public void ShowAndSetCardPlayMenu(Card card)
     {
         playButton.onClick.RemoveAllListeners();
@@ -65,35 +70,21 @@ public class UIHandler : MonoBehaviour
         discardButton.onClick.AddListener(delegate { DiscardButtonClicked(card); });
         StartCoroutine(ShowCardMenu());
     }
-
     public void PlayButtonClicked(Card card)
     {
         card.Play();
         PlayerCards.instance.DiscardCard(card);
     }
-
     public void DiscardButtonClicked(Card card)
     {
         PlayerCards.instance.DiscardCard(card);
         HideAllMenus();
     }
-
-    public void OpenMaterialMenu()
-    {
-        StartCoroutine(ShowMaterialMenu());
-    }
-
-    public void HideAllMenus()
-    {
-        StartCoroutine(HideAllMenusCoroutine());
-    }
-
     public void HarvestWood()
     {
         MaterialCounter.WoodCounter += 1;
         CheckIfDoneHarvesting();
     }
-
     public void HarvestRock()
     {
         MaterialCounter.RockCounter += 1;
@@ -109,7 +100,6 @@ public class UIHandler : MonoBehaviour
         MaterialCounter.IronCounter += 1;
         CheckIfDoneHarvesting();
     }
-
     private void CheckIfDoneHarvesting()
     {
         harvests--;
