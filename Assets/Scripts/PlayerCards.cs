@@ -28,7 +28,7 @@ public class PlayerCards : MonoBehaviour
     // Create every initial card
     public void CreateInitialDeck()
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 7; i++)
         {
             playerDeck.Add(cardData[0]);
         }
@@ -36,12 +36,13 @@ public class PlayerCards : MonoBehaviour
         {
             playerDeck.Add(cardData[1]);
         }
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 4; i++)
         {
             playerDeck.Add(cardData[2]);
         }
-    }
 
+        //TODO: Add one type of attack card
+    }
     private void DrawCards()
     {
         for (int i = 0; i < 5; i++)
@@ -63,7 +64,6 @@ public class PlayerCards : MonoBehaviour
             // Makes and places card
             Card card = Instantiate(cardPrefab, Table.Instance.cardLocations[i].position, Quaternion.Euler(90f, 0f, 0f));
             card.indexInHand = i;
-            Debug.Log(card.indexInHand);
             Table.Instance.locationIsFilled[i] = true;
 
             // Adds card to list
@@ -75,7 +75,6 @@ public class PlayerCards : MonoBehaviour
             SetDrawAndShuffleButtons(!deckIsEmpty);
         }
     }
-
     public void DiscardCard(Card card)
     {
         playerDiscard.Add(card.currentData);
@@ -83,7 +82,6 @@ public class PlayerCards : MonoBehaviour
         Table.Instance.locationIsFilled[card.indexInHand] = false;
         Destroy(card.gameObject);
     }
-
     public void ShuffleCards()
     {
         while (playerDiscard.Count > 0)
@@ -93,23 +91,24 @@ public class PlayerCards : MonoBehaviour
         }
         SetDrawAndShuffleButtons(true);
     }
-
     private void SetDrawAndShuffleButtons(bool active)
     {
         Table.Instance.shuffleButton.gameObject.SetActive(!active);
         Table.Instance.drawButton.gameObject.SetActive(active);
     }
-
     private void OnEnable()
     {
         Actions.OnDrawCardsClicked += DrawCards;
         Actions.OnShuffleCardsClicked += ShuffleCards;
     }
-
     private void OnDisable()
     {
         Actions.OnDrawCardsClicked -= DrawCards;
         Actions.OnShuffleCardsClicked -= ShuffleCards;
 
+    }
+    public void AddCardToDiscardFromBank(Card card)
+    {
+        playerDiscard.Add(card.currentData);
     }
 }

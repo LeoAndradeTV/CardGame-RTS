@@ -8,4 +8,5 @@ public static class Actions
     public static Action OnDrawCardsClicked;
     public static Action OnShuffleCardsClicked;
     public static Action<Card> OnCardPlayedClicked;
+    public static Action<Card, int> OnCardBought;
 }
