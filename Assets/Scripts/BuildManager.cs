@@ -31,6 +31,7 @@ public class BuildManager : MonoBehaviour
                 break;
         }
         RemoveMaterials(buildingData);
+        UIHandler.instance.ChangeToTableView();
         UIHandler.instance.HideAllMenus();
     }
 

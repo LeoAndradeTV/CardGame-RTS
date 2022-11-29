@@ -74,6 +74,8 @@ public class PlayerCards : MonoBehaviour
 
             SetDrawAndShuffleButtons(!deckIsEmpty);
         }
+        UIHandler.instance.SetBuildButton(false);
+
     }
     public void DiscardCard(Card card)
     {
@@ -90,6 +92,10 @@ public class PlayerCards : MonoBehaviour
             playerDiscard.RemoveAt(0);
         }
         SetDrawAndShuffleButtons(true);
+    }
+    public int GetCardsInHand()
+    {
+        return cardsInHand.Count;
     }
     private void SetDrawAndShuffleButtons(bool active)
     {
