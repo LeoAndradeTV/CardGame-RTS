@@ -58,19 +58,28 @@ public class Card : MonoBehaviour
         switch (cardType)
         {
             case CardType.Gold:
-                UIHandler.instance.HideAllMenus();
-                Table.Instance.GoldAmount += 5;
+                PlayGold();
                 break;
             case CardType.OneFarmer:
-                UIHandler.instance.HideAllMenus();
-                UIHandler.instance.OpenMaterialMenu();
-                UIHandler.instance.harvests = 1;
+                PlayFarmers(1);
                 break;
             case CardType.TwoFarmers:
-                UIHandler.instance.HideAllMenus();
-                UIHandler.instance.OpenMaterialMenu();
-                UIHandler.instance.harvests = 2;
+                PlayFarmers(2);
                 break;
         }
     }
+
+    private static void PlayFarmers(int harvests)
+    {
+        UIHandler.instance.HideAllMenus();
+        UIHandler.instance.OpenMaterialMenu();
+        UIHandler.instance.harvests = harvests;
+    }
+
+    private static void PlayGold()
+    {
+        UIHandler.instance.HideAllMenus();
+        Table.Instance.GoldAmount += 5;
+    }
+
 }

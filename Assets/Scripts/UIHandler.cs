@@ -15,6 +15,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private GameObject materialSelectionMenu;
     [SerializeField] private GameObject playerHUD;
     [SerializeField] private GameObject cardPurchaseMenu;
+    [SerializeField] private GameObject buildingMenu;
     [SerializeField] private Button playButton;
     [SerializeField] private Button discardButton;
     [SerializeField] private Button backButton;
@@ -23,7 +24,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private Button goToBoardButton;
     [SerializeField] private Vector3 cameraOnBoard;
     [SerializeField] private Vector3 cameraOnTable;
-    [SerializeField] private Camera camera;
+    [SerializeField] private new Camera camera;
 
     public TMP_Text woodCounterText;
     public TMP_Text rockCounterText;
@@ -47,6 +48,7 @@ public class UIHandler : MonoBehaviour
         backButton.gameObject.SetActive(!allMenusAreClosed);
         cardSelectionMenu.SetActive(!allMenusAreClosed);
         cardPurchaseMenu.SetActive(!allMenusAreClosed);
+        buildingMenu.SetActive(!allMenusAreClosed);
         playerHUD.SetActive(allMenusAreClosed);
     }
     public void HideAllMenus()
@@ -141,6 +143,7 @@ public class UIHandler : MonoBehaviour
             return;
         }
         card.currentData.CardStatus = CardStatus.Bought;
+        Table.Instance.GoldAmount -= card.price;
         PlayerCards.instance.AddCardToDiscardFromBank(card);
         CardBank.instance.cardsOnCardBank.Remove(card);
         CardBank.instance.locationIsFilled[card.indexInHand] = false;
@@ -152,6 +155,10 @@ public class UIHandler : MonoBehaviour
     private void BuyButtonClicked(Card card, int goldAmount)
     {
         Actions.OnCardBought?.Invoke(card, goldAmount);
+    }
+    public void BuildButtonClicked()
+    {
+        buildingMenu.SetActive(true);
     }
     private IEnumerator LerpCamera(Vector3 startPos, Vector3 endPos)
     {

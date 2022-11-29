@@ -30,7 +30,7 @@ public static class MaterialCounter
         set
         {
             stringCounter = value;
-            UIHandler.instance.stringCounterText.text = $"Wood: {stringCounter}";
+            UIHandler.instance.stringCounterText.text = $"String: {stringCounter}";
         }
 
     }
