@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Machine 6
   m_EditorClassIdentifier: 
   CardType: 9
+  CardStatus: 0
   name: Machine 6
   description: Harvest 4 iron
   price: 7

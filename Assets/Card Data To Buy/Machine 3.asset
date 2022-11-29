@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Machine 3
   m_EditorClassIdentifier: 
   CardType: 6
+  CardStatus: 1
   name: Machine 3
   description: Harvest 4 woods
   price: 7

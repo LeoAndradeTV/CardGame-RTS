@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Machine 2
   m_EditorClassIdentifier: 
   CardType: 5
+  CardStatus: 1
   name: Machine 2
   description: Harvest 2 of any two materials
   price: 10

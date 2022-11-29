@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Machine 5
   m_EditorClassIdentifier: 
   CardType: 8
+  CardStatus: 1
   name: Machine 5
   description: Harvest 4 string
   price: 7

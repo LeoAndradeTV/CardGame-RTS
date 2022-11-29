@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Machine 4
   m_EditorClassIdentifier: 
   CardType: 7
+  CardStatus: 1
   name: Machine 4
   description: Harvest 4 rock
   price: 7

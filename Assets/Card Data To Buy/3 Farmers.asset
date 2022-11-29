@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 3 Farmers
   m_EditorClassIdentifier: 
   CardType: 3
+  CardStatus: 1
   name: 3 Farmers
   description: Can harvest any 3 materials
   price: 5

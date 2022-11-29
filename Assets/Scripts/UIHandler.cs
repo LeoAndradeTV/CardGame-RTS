@@ -19,9 +19,15 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private Button discardButton;
     [SerializeField] private Button backButton;
     [SerializeField] private Button buyButton;
-    public TMP_Text woodCounterText; 
-    public TMP_Text rockCounterText; 
-    public TMP_Text stringCounterText; 
+    [SerializeField] private Button goToTableButton;
+    [SerializeField] private Button goToBoardButton;
+    [SerializeField] private Vector3 cameraOnBoard;
+    [SerializeField] private Vector3 cameraOnTable;
+    [SerializeField] private Camera camera;
+
+    public TMP_Text woodCounterText;
+    public TMP_Text rockCounterText;
+    public TMP_Text stringCounterText;
     public TMP_Text ironCounterText;
 
     // Start is called before the first frame update
@@ -35,7 +41,7 @@ public class UIHandler : MonoBehaviour
     }
 
     public IEnumerator HideAllMenusCoroutine()
-    {  
+    {
         yield return new WaitForEndOfFrame();
         allMenusAreClosed = true;
         backButton.gameObject.SetActive(!allMenusAreClosed);
@@ -48,7 +54,7 @@ public class UIHandler : MonoBehaviour
         StartCoroutine(HideAllMenusCoroutine());
     }
     private IEnumerator ShowCardMenuCoroutine()
-    { 
+    {
         yield return new WaitForEndOfFrame();
         allMenusAreClosed = false;
         backButton.gameObject.SetActive(!allMenusAreClosed);
@@ -58,7 +64,7 @@ public class UIHandler : MonoBehaviour
     private IEnumerator ShowBuyMenuCoroutine()
     {
         yield return new WaitForEndOfFrame();
-        allMenusAreClosed=false;
+        allMenusAreClosed = false;
         cardPurchaseMenu.SetActive(!allMenusAreClosed);
         playerHUD.SetActive(allMenusAreClosed);
     }
@@ -121,8 +127,8 @@ public class UIHandler : MonoBehaviour
     private void CheckIfDoneHarvesting()
     {
         harvests--;
-        if (harvests == 0) 
-        { 
+        if (harvests == 0)
+        {
             materialSelectionMenu.SetActive(false);
             allMenusAreClosed = true;
         }
@@ -143,10 +149,30 @@ public class UIHandler : MonoBehaviour
         HideAllMenus();
 
     }
-
     private void BuyButtonClicked(Card card, int goldAmount)
     {
         Actions.OnCardBought?.Invoke(card, goldAmount);
+    }
+    private IEnumerator LerpCamera(Vector3 startPos, Vector3 endPos)
+    {
+        float difference = 0;
+        while (difference < 1)
+        {
+            camera.transform.position = Vector3.Lerp(startPos, endPos, difference);
+            difference += Time.deltaTime * 2;
+            yield return null;
+        }
+        camera.transform.position = endPos;
+    }
+    public void ChangeToTableView()
+    {
+        StopCoroutine(LerpCamera(camera.transform.position, cameraOnBoard));
+        StartCoroutine(LerpCamera(camera.transform.position, cameraOnTable));
+    }
+    public void ChangeToBoardView()
+    {
+        StopCoroutine(LerpCamera(camera.transform.position, cameraOnTable));
+        StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard));
     }
     private void OnEnable()
     {

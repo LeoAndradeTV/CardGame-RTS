@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Overtime
   m_EditorClassIdentifier: 
   CardType: 10
+  CardStatus: 1
   name: Overtime
   description: Harvest any Material, draw extra card
   price: 12

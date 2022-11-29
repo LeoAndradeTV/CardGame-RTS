@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Machine 1
   m_EditorClassIdentifier: 
   CardType: 4
+  CardStatus: 1
   name: Machine 1
   description: Harvest any 4 materials
   price: 10
