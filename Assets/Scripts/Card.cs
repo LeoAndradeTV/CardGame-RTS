@@ -17,14 +17,14 @@ public class Card : MonoBehaviour
     [SerializeField] private TMP_Text cardPriceText;
 
 
-    public void SetUpCard(CardData card, CardStatus status)
+    public void SetUpCard(CardData cardData)
     {
-        currentData = card;
-        cardType = card.CardType;
-        cardNameText.text = card.name;
-        cardDescriptionText.text = card.description;
-        cardStatus = status;
-        price = card.price;
+        currentData = cardData;
+        cardType = cardData.CardType;
+        cardNameText.text = cardData.name;
+        cardDescriptionText.text = cardData.description;
+        cardStatus = cardData.CardStatus;
+        price = cardData.price;
         if (price == 0)
         {
             cardPriceText.gameObject.SetActive(false);
@@ -45,6 +45,11 @@ public class Card : MonoBehaviour
         }
 
         // TODO: Open buy menu
+        if (cardStatus == CardStatus.Available)
+        {
+            UIHandler.instance.ShowBuyMenu(this);
+            return;
+        }
         
     }
 

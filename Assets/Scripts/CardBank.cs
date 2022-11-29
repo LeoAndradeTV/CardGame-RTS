@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class CardBank : MonoBehaviour
 {
+    public static CardBank instance;
+
     [SerializeField] private List<CardData> cardDataToBuy = new List<CardData>();
     [SerializeField] private List<Transform> bankPlacementPoints = new List<Transform>();
     [SerializeField] private Card cardPrefab;
 
-    private List<Card> cardsOnCardBank = new List<Card>();
-    private bool[] locationIsFilled;
+    public List<Card> cardsOnCardBank = new List<Card>();
+    public bool[] locationIsFilled;
 
     private bool placementPointsAreFull => cardsOnCardBank.Count == bankPlacementPoints.Count;
     private bool purchaseDeckIsEmpty => cardDataToBuy.Count == 0;
@@ -17,17 +19,15 @@ public class CardBank : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         locationIsFilled = new bool[bankPlacementPoints.Count];
         PlaceCardToBuy();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void PlaceCardToBuy()
+    public void PlaceCardToBuy()
     {
         for (int i = 0; i < bankPlacementPoints.Count; i++)
         {
@@ -36,6 +36,7 @@ public class CardBank : MonoBehaviour
 
             int index = Random.Range(0, cardDataToBuy.Count);
             CardData currentData = cardDataToBuy[index];
+            currentData.CardStatus = CardStatus.Available;
 
             if (locationIsFilled[i])
                 continue;
@@ -44,9 +45,11 @@ public class CardBank : MonoBehaviour
             locationIsFilled[i] = true;
 
             cardsOnCardBank.Add(cardToAdd);
-            cardToAdd.SetUpCard(currentData, CardStatus.Available);
+            cardToAdd.SetUpCard(currentData);
+            cardToAdd.indexInHand = i;
 
             cardDataToBuy.RemoveAt(index);
+
         }
     }
 }

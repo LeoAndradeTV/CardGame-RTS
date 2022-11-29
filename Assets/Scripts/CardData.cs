@@ -6,6 +6,7 @@ using UnityEngine;
 public class CardData : ScriptableObject
 {
     public CardType CardType;
+    public CardStatus CardStatus;
     public new string name;
     public string description;
     public int price;

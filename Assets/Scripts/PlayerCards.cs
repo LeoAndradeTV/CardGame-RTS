@@ -36,6 +36,10 @@ public class PlayerCards : MonoBehaviour
         {
             playerDeck.Add(cardData[1]);
         }
+        for (int i = 0; i < 4; i++)
+        {
+            playerDeck.Add(cardData[2]);
+        }
 
         //TODO: Add one type of attack card
     }
@@ -64,7 +68,7 @@ public class PlayerCards : MonoBehaviour
 
             // Adds card to list
             cardsInHand.Add(card);
-            card.SetUpCard(currentData, CardStatus.Bought);
+            card.SetUpCard(currentData);
 
             playerDeck.RemoveAt(index);
 
@@ -102,5 +106,9 @@ public class PlayerCards : MonoBehaviour
         Actions.OnDrawCardsClicked -= DrawCards;
         Actions.OnShuffleCardsClicked -= ShuffleCards;
 
+    }
+    public void AddCardToDiscardFromBank(Card card)
+    {
+        playerDiscard.Add(card.currentData);
     }
 }
