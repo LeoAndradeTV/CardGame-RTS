@@ -22,6 +22,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private Button buyButton;
     [SerializeField] private Button goToTableButton;
     [SerializeField] private Button goToBoardButton;
+    [SerializeField] private Button buildButton;
     [SerializeField] private Vector3 cameraOnBoard;
     [SerializeField] private Vector3 cameraOnTable;
     [SerializeField] private new Camera camera;
@@ -38,6 +39,7 @@ public class UIHandler : MonoBehaviour
         {
             instance = this;
         }
+        SetBuildButton(false);
         HideAllMenus();
     }
 
@@ -88,7 +90,6 @@ public class UIHandler : MonoBehaviour
         discardButton.onClick.AddListener(delegate { DiscardButtonClicked(card); });
         StartCoroutine(ShowCardMenuCoroutine());
     }
-
     public void ShowBuyMenu(Card card)
     {
         buyButton.onClick.RemoveAllListeners();
@@ -100,6 +101,7 @@ public class UIHandler : MonoBehaviour
     {
         card.Play();
         PlayerCards.instance.DiscardCard(card);
+        SetBuildButton(PlayerCards.instance.GetCardsInHand() == 0);
     }
     public void DiscardButtonClicked(Card card)
     {
@@ -180,6 +182,10 @@ public class UIHandler : MonoBehaviour
     {
         StopCoroutine(LerpCamera(camera.transform.position, cameraOnTable));
         StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard));
+    }
+    public void SetBuildButton(bool set)
+    {
+        buildButton.gameObject.SetActive(set);
     }
     private void OnEnable()
     {
