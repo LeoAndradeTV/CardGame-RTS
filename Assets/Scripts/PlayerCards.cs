@@ -10,7 +10,7 @@ public class PlayerCards : MonoBehaviour
     [SerializeField] private Card cardPrefab;
     private List<CardData> playerDeck = new List<CardData>();
     private List<CardData> playerDiscard = new List<CardData>();
-    private List<Card> cardsInHand = new List<Card>();
+    public List<Card> cardsInHand = new List<Card>();
 
     private bool deckIsEmpty => playerDeck.Count == 0;
     private bool handIsFull => cardsInHand.Count >= 5;

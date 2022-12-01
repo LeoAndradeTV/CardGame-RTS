@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BuildManager : MonoBehaviour
 {
+    [SerializeField] private BuildPlacement buildPlacement;
+
     public void Build(BuildingData buildingData)
     {
         if (!PlayerHasEnoughMaterials(buildingData))
@@ -60,12 +62,14 @@ public class BuildManager : MonoBehaviour
     }
     private void BuildSiege()
     {
+        buildPlacement.SelectObject(1);
         BuildingCounter.SiegeAmount++;
         Debug.Log($"Siege: {BuildingCounter.SiegeAmount}");
 
     }
     private void BuildWall()
     {
+        buildPlacement.SelectObject(0);
         BuildingCounter.WallAmount++;
         Debug.Log($"Walls: {BuildingCounter.WallAmount}");
     }

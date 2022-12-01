@@ -106,6 +106,10 @@ public class UIHandler : MonoBehaviour
     public void DiscardButtonClicked(Card card)
     {
         PlayerCards.instance.DiscardCard(card);
+        if (PlayerCards.instance.cardsInHand.Count == 0)
+        {
+            buildButton.gameObject.SetActive(true);
+        }
         HideAllMenus();
     }
     public void HarvestWood()

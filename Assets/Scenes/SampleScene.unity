@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 6e9c0d09e806244428a749be905eae32, type: 2}
 --- !u!1 &48299784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1560,14 +1560,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.64846087, y: -0, z: -0, w: 0.761248}
+  m_LocalRotation: {x: 0.649448, y: 0, z: 0, w: 0.760406}
   m_LocalPosition: {x: 0, y: 140, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 80.851, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 81, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2172,7 +2172,7 @@ MonoBehaviour:
   goToBoardButton: {fileID: 1832177115}
   buildButton: {fileID: 2121749386}
   cameraOnBoard: {x: 0, y: 140, z: -9}
-  cameraOnTable: {x: 0, y: 796, z: 398.5}
+  cameraOnTable: {x: 0, y: 521, z: 290}
   camera: {fileID: 330585545}
   woodCounterText: {fileID: 641149276}
   rockCounterText: {fileID: 1477323377}
@@ -2827,6 +2827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40944134144e50047ba5380517c1d4ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildPlacement: {fileID: 2002079362}
 --- !u!1 &871355901
 GameObject:
   m_ObjectHideFlags: 0
@@ -4252,6 +4253,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: edef8b807fa72d247b4bd54f6572e6d1, type: 2}
   cardPrefab: {fileID: 4148298937261529663, guid: 3bd182a2f612d5144b631030a0486351,
     type: 3}
+  cardsInHand: []
 --- !u!4 &1413008047
 Transform:
   m_ObjectHideFlags: 0
@@ -6303,15 +6305,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 850354333}
-        m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
-        m_MethodName: Build
-        m_Mode: 2
+      - m_Target: {fileID: 2002079362}
+        m_TargetAssemblyTypeName: BuildPlacement, Assembly-CSharp
+        m_MethodName: SelectObject
+        m_Mode: 3
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 1452ecdf436795f41b869378927325db,
-            type: 2}
-          m_ObjectArgumentAssemblyTypeName: BuildingData, Assembly-CSharp
-          m_IntArgument: 0
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -6623,6 +6624,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1977417896}
   m_CullTransparentMesh: 1
+--- !u!1 &2002079360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2002079361}
+  - component: {fileID: 2002079362}
+  m_Layer: 0
+  m_Name: BuildPlacement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &2002079361
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002079360}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -81.43867, y: -75.65648, z: 256.19092}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2002079362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002079360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eab61dc8f36cce44a80d6995ce1c6ab6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 466358754609317192, guid: 3c7398f4c2d5fe547ad8de7511265d19, type: 3}
+  - {fileID: 7490177913258978221, guid: 7f3137bad0c9a2a49b3acdbdcf20179a, type: 3}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  materials:
+  - {fileID: 2100000, guid: a729a21600caf534aa9bf9e9c4654286, type: 2}
+  - {fileID: 2100000, guid: 924f825df4bd3a9428578f03ecd58f56, type: 2}
+  gridSize: 5
+  canPlace: 1
 --- !u!1 &2111687814
 GameObject:
   m_ObjectHideFlags: 0
@@ -7033,6 +7089,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1403122590485967866, guid: 5b772998d5c411d42900fc01d10b5b1d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4947141796524417268, guid: 5b772998d5c411d42900fc01d10b5b1d,
         type: 3}
       propertyPath: m_Name
@@ -7046,7 +7107,7 @@ PrefabInstance:
     - target: {fileID: 8439256749425913927, guid: 5b772998d5c411d42900fc01d10b5b1d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -300
       objectReference: {fileID: 0}
     - target: {fileID: 8439256749425913927, guid: 5b772998d5c411d42900fc01d10b5b1d,
         type: 3}
@@ -7056,7 +7117,7 @@ PrefabInstance:
     - target: {fileID: 8439256749425913927, guid: 5b772998d5c411d42900fc01d10b5b1d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 97.7
       objectReference: {fileID: 0}
     - target: {fileID: 8439256749425913927, guid: 5b772998d5c411d42900fc01d10b5b1d,
         type: 3}

@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - BuiltObject
   layers:
   - Default
   - TransparentFX
@@ -11,8 +12,8 @@ TagManager:
   - Card Layer
   - Water
   - UI
-  - 
-  - 
+  - Ground Layer
+  - Target Layer
   - 
   - 
   - 
