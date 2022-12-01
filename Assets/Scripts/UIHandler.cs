@@ -35,6 +35,7 @@ public class UIHandler : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+
         if (instance == null)
         {
             instance = this;
@@ -114,22 +115,22 @@ public class UIHandler : MonoBehaviour
     }
     public void HarvestWood()
     {
-        MaterialCounter.WoodCounter += 1;
+        MaterialCounter.WoodCounter += 100;
         CheckIfDoneHarvesting();
     }
     public void HarvestRock()
     {
-        MaterialCounter.RockCounter += 1;
+        MaterialCounter.RockCounter += 100;
         CheckIfDoneHarvesting();
     }
     public void HarvestString()
     {
-        MaterialCounter.StringCounter += 1;
+        MaterialCounter.StringCounter += 100;
         CheckIfDoneHarvesting();
     }
     public void HarvestIron()
     {
-        MaterialCounter.IronCounter += 1;
+        MaterialCounter.IronCounter += 100;
         CheckIfDoneHarvesting();
     }
     private void CheckIfDoneHarvesting()

@@ -47,16 +47,19 @@ public class BuildManager : MonoBehaviour
 
     private void BuildBank()
     {
+        buildPlacement.SelectObject(4);
         BuildingCounter.BankAmount++; 
         Debug.Log($"Banks: {BuildingCounter.BankAmount}");
     }
     private void BuildArchers()
     {
+        buildPlacement.SelectObject(2);
         BuildingCounter.ArchersAmount++;
         Debug.Log($"Archers: {BuildingCounter.ArchersAmount}");
     }
     private void BuildSwordsmen()
     {
+        buildPlacement.SelectObject(3);
         BuildingCounter.SwordsmenAmount++;
         Debug.Log($"Swordsmen: {BuildingCounter.SwordsmenAmount}");
     }

@@ -11,7 +11,7 @@ public class CheckBuildPlacement : MonoBehaviour
         buildPlacement = GameObject.Find("BuildPlacement").GetComponent<BuildPlacement>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("BuiltObject"))
         {
