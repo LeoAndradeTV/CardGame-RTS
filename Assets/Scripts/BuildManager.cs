@@ -33,7 +33,10 @@ public class BuildManager : MonoBehaviour
                 break;
         }
         RemoveMaterials(buildingData);
-        UIHandler.instance.ChangeToTableView();
+        if (!CameraController.instance.canMoveCamera)
+        {
+            UIHandler.instance.ChangeToTableView();
+        }
         UIHandler.instance.HideAllMenus();
     }
 
