@@ -25,6 +25,8 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private Button buildButton;
     [SerializeField] private Vector3 cameraOnBoard;
     [SerializeField] private Vector3 cameraOnTable;
+    [SerializeField] private Quaternion cameraOnBoardRotation;
+    [SerializeField] private Quaternion cameraOnTableRotation;
     [SerializeField] private new Camera camera;
 
     public TMP_Text woodCounterText;
@@ -167,12 +169,13 @@ public class UIHandler : MonoBehaviour
     {
         buildingMenu.SetActive(true);
     }
-    private IEnumerator LerpCamera(Vector3 startPos, Vector3 endPos)
+    private IEnumerator LerpCamera(Vector3 startPos, Vector3 endPos, Quaternion startRot, Quaternion endRot)
     {
         float difference = 0;
         while (difference < 1)
         {
             camera.transform.position = Vector3.Lerp(startPos, endPos, difference);
+            camera.transform.rotation = Quaternion.Lerp(startRot, endRot, difference);
             difference += Time.deltaTime * 2;
             yield return null;
         }
@@ -180,13 +183,17 @@ public class UIHandler : MonoBehaviour
     }
     public void ChangeToTableView()
     {
-        StopCoroutine(LerpCamera(camera.transform.position, cameraOnBoard));
-        StartCoroutine(LerpCamera(camera.transform.position, cameraOnTable));
+        StopCoroutine(LerpCamera(camera.transform.position, cameraOnBoard, camera.transform.rotation, cameraOnBoardRotation));
+        StartCoroutine(LerpCamera(camera.transform.position, cameraOnTable, camera.transform.rotation, cameraOnTableRotation));
+        camera.transform.rotation = Quaternion.Euler(90, 0, 0);
+        CameraController.instance.canMoveCamera = true;
     }
     public void ChangeToBoardView()
     {
-        StopCoroutine(LerpCamera(camera.transform.position, cameraOnTable));
-        StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard));
+        StopCoroutine(LerpCamera(camera.transform.position, cameraOnTable, camera.transform.rotation, cameraOnTableRotation));
+        StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard, camera.transform.rotation, cameraOnBoardRotation));
+        camera.transform.rotation = Quaternion.Euler(81, 0, 0);
+        CameraController.instance.canMoveCamera = false;
     }
     public void SetBuildButton(bool set)
     {
