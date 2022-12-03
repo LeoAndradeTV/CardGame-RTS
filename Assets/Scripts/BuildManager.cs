@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BuildManager : MonoBehaviour
 {
+    [SerializeField] private BuildPlacement buildPlacement;
+
     public void Build(BuildingData buildingData)
     {
         if (!PlayerHasEnoughMaterials(buildingData))
@@ -31,7 +33,10 @@ public class BuildManager : MonoBehaviour
                 break;
         }
         RemoveMaterials(buildingData);
-        UIHandler.instance.ChangeToTableView();
+        if (!CameraController.instance.canMoveCamera)
+        {
+            UIHandler.instance.ChangeToTableView();
+        }
         UIHandler.instance.HideAllMenus();
     }
 
@@ -45,27 +50,32 @@ public class BuildManager : MonoBehaviour
 
     private void BuildBank()
     {
+        buildPlacement.SelectObject(4);
         BuildingCounter.BankAmount++; 
         Debug.Log($"Banks: {BuildingCounter.BankAmount}");
     }
     private void BuildArchers()
     {
+        buildPlacement.SelectObject(2);
         BuildingCounter.ArchersAmount++;
         Debug.Log($"Archers: {BuildingCounter.ArchersAmount}");
     }
     private void BuildSwordsmen()
     {
+        buildPlacement.SelectObject(3);
         BuildingCounter.SwordsmenAmount++;
         Debug.Log($"Swordsmen: {BuildingCounter.SwordsmenAmount}");
     }
     private void BuildSiege()
     {
+        buildPlacement.SelectObject(1);
         BuildingCounter.SiegeAmount++;
         Debug.Log($"Siege: {BuildingCounter.SiegeAmount}");
 
     }
     private void BuildWall()
     {
+        buildPlacement.SelectObject(0);
         BuildingCounter.WallAmount++;
         Debug.Log($"Walls: {BuildingCounter.WallAmount}");
     }

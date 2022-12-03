@@ -25,6 +25,8 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private Button buildButton;
     [SerializeField] private Vector3 cameraOnBoard;
     [SerializeField] private Vector3 cameraOnTable;
+    [SerializeField] private Quaternion cameraOnBoardRotation;
+    [SerializeField] private Quaternion cameraOnTableRotation;
     [SerializeField] private new Camera camera;
 
     public TMP_Text woodCounterText;
@@ -35,6 +37,7 @@ public class UIHandler : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+
         if (instance == null)
         {
             instance = this;
@@ -106,26 +109,30 @@ public class UIHandler : MonoBehaviour
     public void DiscardButtonClicked(Card card)
     {
         PlayerCards.instance.DiscardCard(card);
+        if (PlayerCards.instance.cardsInHand.Count == 0)
+        {
+            buildButton.gameObject.SetActive(true);
+        }
         HideAllMenus();
     }
     public void HarvestWood()
     {
-        MaterialCounter.WoodCounter += 1;
+        MaterialCounter.WoodCounter += 100;
         CheckIfDoneHarvesting();
     }
     public void HarvestRock()
     {
-        MaterialCounter.RockCounter += 1;
+        MaterialCounter.RockCounter += 100;
         CheckIfDoneHarvesting();
     }
     public void HarvestString()
     {
-        MaterialCounter.StringCounter += 1;
+        MaterialCounter.StringCounter += 100;
         CheckIfDoneHarvesting();
     }
     public void HarvestIron()
     {
-        MaterialCounter.IronCounter += 1;
+        MaterialCounter.IronCounter += 100;
         CheckIfDoneHarvesting();
     }
     private void CheckIfDoneHarvesting()
@@ -162,26 +169,30 @@ public class UIHandler : MonoBehaviour
     {
         buildingMenu.SetActive(true);
     }
-    private IEnumerator LerpCamera(Vector3 startPos, Vector3 endPos)
+    private IEnumerator LerpCamera(Vector3 startPos, Vector3 endPos, Quaternion startRot, Quaternion endRot, bool moveCamera)
     {
         float difference = 0;
         while (difference < 1)
         {
             camera.transform.position = Vector3.Lerp(startPos, endPos, difference);
+            camera.transform.rotation = Quaternion.Lerp(startRot, endRot, difference);
             difference += Time.deltaTime * 2;
             yield return null;
         }
         camera.transform.position = endPos;
+        camera.transform.rotation = endRot;
+        CameraController.instance.canMoveCamera = moveCamera;
     }
     public void ChangeToTableView()
     {
-        StopCoroutine(LerpCamera(camera.transform.position, cameraOnBoard));
-        StartCoroutine(LerpCamera(camera.transform.position, cameraOnTable));
+        StartCoroutine(LerpCamera(camera.transform.position, cameraOnTable, camera.transform.rotation, cameraOnTableRotation, true));
+        Actions.ChangeCardInteractable?.Invoke(false);   // Player cards can't be selected
+        
     }
     public void ChangeToBoardView()
     {
-        StopCoroutine(LerpCamera(camera.transform.position, cameraOnTable));
-        StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard));
+        StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard, camera.transform.rotation, cameraOnBoardRotation, false));
+        Actions.ChangeCardInteractable?.Invoke(true);    // Player cards can be selected
     }
     public void SetBuildButton(bool set)
     {
