@@ -8,7 +8,7 @@ public class BuildPlacement : MonoBehaviour
     public GameObject[] objects;
     private GameObject pendingObject;
 
-    private Vector3 pos;
+    public Vector3 pos;
     private RaycastHit hit;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Material[] materials;
