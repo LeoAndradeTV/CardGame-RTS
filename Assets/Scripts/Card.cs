@@ -12,6 +12,7 @@ public class Card : MonoBehaviour
     public CardStatus cardStatus;
     public int indexInHand;
     public int price;
+    private bool canSelectCard = true;
     [SerializeField] private TMP_Text cardNameText;
     [SerializeField] private TMP_Text cardDescriptionText;
     [SerializeField] private TMP_Text cardPriceText;
@@ -35,7 +36,7 @@ public class Card : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!UIHandler.instance.allMenusAreClosed)
+        if (!UIHandler.instance.allMenusAreClosed || !canSelectCard)
             return;
 
         if (cardStatus == CardStatus.Bought)
@@ -44,7 +45,6 @@ public class Card : MonoBehaviour
             return;
         }
 
-        // TODO: Open buy menu
         if (cardStatus == CardStatus.Available)
         {
             UIHandler.instance.ShowBuyMenu(this);
@@ -82,4 +82,18 @@ public class Card : MonoBehaviour
         Table.Instance.GoldAmount += 5;
     }
 
+    private void SetCardInteractable(bool interactable)
+    {
+        canSelectCard = interactable;
+    }
+
+    private void OnEnable()
+    {
+        Actions.ChangeCardInteractable += SetCardInteractable;
+    }
+
+    private void OnDisable()
+    {
+        Actions.ChangeCardInteractable -= SetCardInteractable;
+    }
 }

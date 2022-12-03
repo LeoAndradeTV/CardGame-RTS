@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BuildPlacement : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class BuildPlacement : MonoBehaviour
     private Material startingMaterial;
 
     public bool canPlace = true;
+    public bool mouseOverUIElement => EventSystem.current.IsPointerOverGameObject();
 
 
     private void Update()
@@ -32,7 +34,13 @@ public class BuildPlacement : MonoBehaviour
             //pendingObject.transform.position = pos;
             if (Input.GetMouseButtonDown(0) && canPlace)
             {
-                PlaceObject();
+                if (mouseOverUIElement)
+                {
+                    Destroy(pendingObject);
+                } else
+                {
+                    PlaceObject();
+                }
             }
             if (Input.GetMouseButtonDown(1))
             {
@@ -54,12 +62,12 @@ public class BuildPlacement : MonoBehaviour
     public void SelectObject(int index)
     {
         pendingObject = Instantiate(objects[index], pos, transform.rotation);
-        startingMaterial = pendingObject.GetComponent<MeshRenderer>().material;
+        startingMaterial = pendingObject.GetComponentInChildren<MeshRenderer>().material;
     }
 
     public void PlaceObject()
     {
-        pendingObject.GetComponent<MeshRenderer>().material = startingMaterial;
+        pendingObject.GetComponentInChildren<MeshRenderer>().material = startingMaterial;
 
         pendingObject = null;
     }
@@ -87,10 +95,10 @@ public class BuildPlacement : MonoBehaviour
 
         if (canPlace)
         {
-            pendingObject.GetComponent<MeshRenderer>().material = materials[0];
+            pendingObject.GetComponentInChildren<MeshRenderer>().material = materials[0];
             return;
         }
 
-        pendingObject.GetComponent<MeshRenderer>().material = materials[1];
+        pendingObject.GetComponentInChildren<MeshRenderer>().material = materials[1];
     }
 }

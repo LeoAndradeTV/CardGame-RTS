@@ -169,7 +169,7 @@ public class UIHandler : MonoBehaviour
     {
         buildingMenu.SetActive(true);
     }
-    private IEnumerator LerpCamera(Vector3 startPos, Vector3 endPos, Quaternion startRot, Quaternion endRot)
+    private IEnumerator LerpCamera(Vector3 startPos, Vector3 endPos, Quaternion startRot, Quaternion endRot, bool moveCamera)
     {
         float difference = 0;
         while (difference < 1)
@@ -180,20 +180,19 @@ public class UIHandler : MonoBehaviour
             yield return null;
         }
         camera.transform.position = endPos;
+        camera.transform.rotation = endRot;
+        CameraController.instance.canMoveCamera = moveCamera;
     }
     public void ChangeToTableView()
     {
-        StopCoroutine(LerpCamera(camera.transform.position, cameraOnBoard, camera.transform.rotation, cameraOnBoardRotation));
-        StartCoroutine(LerpCamera(camera.transform.position, cameraOnTable, camera.transform.rotation, cameraOnTableRotation));
-        camera.transform.rotation = Quaternion.Euler(90, 0, 0);
-        CameraController.instance.canMoveCamera = true;
+        StartCoroutine(LerpCamera(camera.transform.position, cameraOnTable, camera.transform.rotation, cameraOnTableRotation, true));
+        Actions.ChangeCardInteractable?.Invoke(false);   // Player cards can't be selected
+        
     }
     public void ChangeToBoardView()
     {
-        StopCoroutine(LerpCamera(camera.transform.position, cameraOnTable, camera.transform.rotation, cameraOnTableRotation));
-        StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard, camera.transform.rotation, cameraOnBoardRotation));
-        camera.transform.rotation = Quaternion.Euler(81, 0, 0);
-        CameraController.instance.canMoveCamera = false;
+        StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard, camera.transform.rotation, cameraOnBoardRotation, false));
+        Actions.ChangeCardInteractable?.Invoke(true);    // Player cards can be selected
     }
     public void SetBuildButton(bool set)
     {
