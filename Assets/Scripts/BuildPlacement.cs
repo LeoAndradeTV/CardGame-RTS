@@ -8,7 +8,7 @@ public class BuildPlacement : MonoBehaviour
     public GameObject[] objects;
     private GameObject pendingObject;
 
-    private Vector3 pos;
+    public Vector3 pos;
     private RaycastHit hit;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Material[] materials;
@@ -16,6 +16,7 @@ public class BuildPlacement : MonoBehaviour
     public float gridSize;
     private float rotateAmount = 45f;
     private Material startingMaterial;
+    private MeshRenderer[] meshRenderers;
 
     public bool canPlace = true;
     public bool mouseOverUIElement => EventSystem.current.IsPointerOverGameObject();
@@ -25,7 +26,7 @@ public class BuildPlacement : MonoBehaviour
     {
         if (pendingObject != null)
         {
-
+            Debug.Log("We got here");
             pendingObject.transform.position = new Vector3(
                 RoundToNearestGrid(pos.x),
                 RoundToNearestGrid(pos.y),
@@ -37,7 +38,8 @@ public class BuildPlacement : MonoBehaviour
                 if (mouseOverUIElement)
                 {
                     Destroy(pendingObject);
-                } else
+                }
+                else
                 {
                     PlaceObject();
                 }
@@ -67,7 +69,12 @@ public class BuildPlacement : MonoBehaviour
 
     public void PlaceObject()
     {
-        pendingObject.GetComponentInChildren<MeshRenderer>().material = startingMaterial;
+        meshRenderers = pendingObject.GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer renderer in meshRenderers)
+        {
+            renderer.material = startingMaterial;
+        }
+        //pendingObject.GetComponentInChildren<MeshRenderer>().material = startingMaterial;
 
         pendingObject = null;
     }
@@ -92,13 +99,23 @@ public class BuildPlacement : MonoBehaviour
     {
         if (pendingObject == null)
             return;
-
+        meshRenderers = pendingObject.GetComponentsInChildren<MeshRenderer>();
         if (canPlace)
         {
-            pendingObject.GetComponentInChildren<MeshRenderer>().material = materials[0];
+            foreach (MeshRenderer renderer in meshRenderers)
+            {
+                renderer.material = materials[0];
+            }
+            //pendingObject.GetComponentInChildren<MeshRenderer>().material = startingMaterial;
             return;
         }
+        
+        foreach (MeshRenderer renderer in meshRenderers)
+        {
+            renderer.material = materials[1];
+        }
 
-        pendingObject.GetComponentInChildren<MeshRenderer>().material = materials[1];
+        //pendingObject.GetComponentInChildren<MeshRenderer>().material = materials[1];
+
     }
 }
