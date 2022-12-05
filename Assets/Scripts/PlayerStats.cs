@@ -38,28 +38,18 @@ public class PlayerStats : MonoBehaviour
         {
             case BuildType.Bank:
                 BuildingCounter.BankAmount++;
-                Debug.Log($"Banks: {BuildingCounter.BankAmount}");
-                Debug.Log($"{PlayerStats.Instance.GoldAmount}");
                 break;
             case BuildType.Archers:
                 BuildingCounter.ArchersAmount++;
-                Debug.Log($"Archers: {BuildingCounter.ArchersAmount}");
-                Debug.Log($"{PlayerStats.Instance.rangedAttackStat}");
                 break;
             case BuildType.Swordsmen:
                 BuildingCounter.SwordsmenAmount++;
-                Debug.Log($"Swordsmen: {BuildingCounter.SwordsmenAmount}");
-                Debug.Log($"{PlayerStats.Instance.meleeAttackStat}");
                 break;
             case BuildType.Siege:
                 BuildingCounter.SiegeAmount++;
-                Debug.Log($"Siege: {BuildingCounter.SiegeAmount}");
-                Debug.Log($"{PlayerStats.Instance.rangedAttackStat}");
                 break;
             case BuildType.Wall:
                 BuildingCounter.WallAmount++;
-                Debug.Log($"Walls: {BuildingCounter.WallAmount}");
-                Debug.Log($"{PlayerStats.Instance.protectionStat}");
                 break;
         }
     }

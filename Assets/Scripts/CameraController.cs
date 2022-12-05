@@ -31,7 +31,7 @@ public class CameraController : MonoBehaviour
     {
         if (!canMoveCamera)
         {
-            currentZoom = 277f;
+            currentZoom = UIHandler.instance.lastCameraPositionOnTable.y;
             return;
         }
 

@@ -10,6 +10,7 @@ public class UIHandler : MonoBehaviour
 
     public bool allMenusAreClosed = true;
     public int harvests;
+    public int materialsPerHarvest = 1;
 
     [SerializeField] private GameObject cardSelectionMenu;
     [SerializeField] private GameObject materialSelectionMenu;
@@ -33,6 +34,7 @@ public class UIHandler : MonoBehaviour
     public TMP_Text rockCounterText;
     public TMP_Text stringCounterText;
     public TMP_Text ironCounterText;
+    public Vector3 lastCameraPositionOnTable;
 
     // Start is called before the first frame update
     void Awake()
@@ -44,6 +46,7 @@ public class UIHandler : MonoBehaviour
         }
         SetBuildButton(false);
         HideAllMenus();
+        lastCameraPositionOnTable = cameraOnTable;
     }
 
     public IEnumerator HideAllMenusCoroutine()
@@ -81,9 +84,10 @@ public class UIHandler : MonoBehaviour
         materialSelectionMenu.SetActive(true);
         allMenusAreClosed = false;
     }
-    public void OpenMaterialMenu()
+    public void OpenMaterialMenu(int materialPerHarvest)
     {
         StartCoroutine(ShowMaterialMenu());
+        materialsPerHarvest = materialPerHarvest;
     }
     public void ShowAndSetCardPlayMenu(Card card)
     {
@@ -102,8 +106,8 @@ public class UIHandler : MonoBehaviour
     }
     public void PlayButtonClicked(Card card)
     {
-        card.Play();
         PlayerCards.instance.DiscardCard(card);
+        card.Play();    
         SetBuildButton(PlayerCards.instance.GetCardsInHand() == 0);
     }
     public void DiscardButtonClicked(Card card)
@@ -117,22 +121,22 @@ public class UIHandler : MonoBehaviour
     }
     public void HarvestWood()
     {
-        MaterialCounter.WoodCounter += 100;
+        MaterialCounter.WoodCounter += materialsPerHarvest;
         CheckIfDoneHarvesting();
     }
     public void HarvestRock()
     {
-        MaterialCounter.RockCounter += 100;
+        MaterialCounter.RockCounter += materialsPerHarvest;
         CheckIfDoneHarvesting();
     }
     public void HarvestString()
     {
-        MaterialCounter.StringCounter += 100;
+        MaterialCounter.StringCounter += materialsPerHarvest;
         CheckIfDoneHarvesting();
     }
     public void HarvestIron()
     {
-        MaterialCounter.IronCounter += 100;
+        MaterialCounter.IronCounter += materialsPerHarvest;
         CheckIfDoneHarvesting();
     }
     private void CheckIfDoneHarvesting()
@@ -151,7 +155,7 @@ public class UIHandler : MonoBehaviour
             Debug.Log("Not enough gold");
             return;
         }
-        card.currentData.CardStatus = CardStatus.Bought;
+
         PlayerStats.Instance.GoldAmount -= card.price;
         PlayerCards.instance.AddCardToDiscardFromBank(card);
         CardBank.instance.cardsOnCardBank.Remove(card);
@@ -185,12 +189,13 @@ public class UIHandler : MonoBehaviour
     }
     public void ChangeToTableView()
     {
-        StartCoroutine(LerpCamera(camera.transform.position, cameraOnTable, camera.transform.rotation, cameraOnTableRotation, true));
+        StartCoroutine(LerpCamera(camera.transform.position, lastCameraPositionOnTable, camera.transform.rotation, cameraOnTableRotation, true));
         Actions.ChangeCardInteractable?.Invoke(false);   // Player cards can't be selected
-        
+
     }
     public void ChangeToBoardView()
     {
+        lastCameraPositionOnTable = camera.transform.position;
         StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard, camera.transform.rotation, cameraOnBoardRotation, false));
         Actions.ChangeCardInteractable?.Invoke(true);    // Player cards can be selected
     }

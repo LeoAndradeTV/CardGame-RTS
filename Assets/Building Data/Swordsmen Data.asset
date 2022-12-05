@@ -15,7 +15,7 @@ MonoBehaviour:
   buildingType: 2
   buildingName: Swordsmen
   buildingDescription: Strong melee attack and defense
-  buildingWoodRequirement: 1
-  buildingRockRequirement: 0
+  buildingWoodRequirement: 0
+  buildingRockRequirement: 1
   buildingStringRequirement: 0
   buildingIronRequirement: 1

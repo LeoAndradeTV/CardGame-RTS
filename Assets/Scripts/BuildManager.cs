@@ -46,40 +46,4 @@ public class BuildManager : MonoBehaviour
         return hasEnough;
 
     }
-
-    //public void BuildBank()
-    //{
-    //    BuildingCounter.BankAmount++;
-    //    Debug.Log($"Banks: {BuildingCounter.BankAmount}");
-    //    Debug.Log($"{PlayerStats.Instance.GoldAmount}");
-    //}
-    //public void BuildArchers()
-    //{
-    //    BuildingCounter.ArchersAmount++;
-    //    Debug.Log($"Archers: {BuildingCounter.ArchersAmount}");
-    //    Debug.Log($"{PlayerStats.Instance.rangedAttackStat}");
-    //}
-    //public void BuildSwordsmen()
-    //{
-    //    BuildingCounter.SwordsmenAmount++;
-    //    Debug.Log($"Swordsmen: {BuildingCounter.SwordsmenAmount}");
-    //    Debug.Log($"{PlayerStats.Instance.meleeAttackStat}");
-
-    //}
-    //public void BuildSiege()
-    //{
-
-    //    BuildingCounter.SiegeAmount++;
-    //    Debug.Log($"Siege: {BuildingCounter.SiegeAmount}");
-    //    Debug.Log($"{PlayerStats.Instance.rangedAttackStat}");
-
-
-    //}
-    //public void BuildWall()
-    //{
-    //    BuildingCounter.WallAmount++;
-    //    Debug.Log($"Walls: {BuildingCounter.WallAmount}");
-    //    Debug.Log($"{PlayerStats.Instance.protectionStat}");
-
-    //}
 }

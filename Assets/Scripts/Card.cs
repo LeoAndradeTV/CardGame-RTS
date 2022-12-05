@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using System;
 
 public class Card : MonoBehaviour
 {
-    
+
     private CardType cardType;
     public CardData currentData { get; private set; }
     public CardStatus cardStatus;
@@ -50,7 +51,7 @@ public class Card : MonoBehaviour
             UIHandler.instance.ShowBuyMenu(this);
             return;
         }
-        
+
     }
 
     public void Play()
@@ -61,18 +62,64 @@ public class Card : MonoBehaviour
                 PlayGold();
                 break;
             case CardType.OneFarmer:
-                PlayFarmers(1);
+                HarvestMaterial(1, 1);
                 break;
             case CardType.TwoFarmers:
-                PlayFarmers(2);
+                HarvestMaterial(2, 1);
+                break;
+            case CardType.ThreeFarmers:
+                HarvestMaterial(3, 1);
+                break;
+            case CardType.MachineOne:
+                HarvestMaterial(4, 1);
+                break;
+            case CardType.MachineTwo:
+                HarvestMaterial(2, 2);
+                break;
+            case CardType.MachineThree:
+                HarvestTwoWood();
+                break;
+            case CardType.MachineFour:
+                HarvestTwoRock();
+                break;
+            case CardType.MachineFive:
+                HarvestTwoString();
+                break;
+            case CardType.MachineSix:
+                HarvestTwoIron();
+                break;
+            case CardType.Overtime:
+                HarvestMaterial(1, 1);
+                PlayerCards.instance.DrawCards();
                 break;
         }
     }
 
-    private static void PlayFarmers(int harvests)
+    private void HarvestTwoIron()
+    {
+        UIHandler.instance.materialsPerHarvest = 4;
+        UIHandler.instance.HarvestIron();
+    }
+    private void HarvestTwoString()
+    {
+        UIHandler.instance.materialsPerHarvest = 4;
+        UIHandler.instance.HarvestString();
+    }
+    private void HarvestTwoRock()
+    {
+        UIHandler.instance.materialsPerHarvest = 4;
+        UIHandler.instance.HarvestRock();
+    }
+    private void HarvestTwoWood()
+    {
+        UIHandler.instance.materialsPerHarvest = 4;
+        UIHandler.instance.HarvestWood();
+    }
+
+    private void HarvestMaterial(int harvests, int materialsPerHarvest)
     {
         UIHandler.instance.HideAllMenus();
-        UIHandler.instance.OpenMaterialMenu();
+        UIHandler.instance.OpenMaterialMenu(materialsPerHarvest);
         UIHandler.instance.harvests = harvests;
     }
 
@@ -80,6 +127,7 @@ public class Card : MonoBehaviour
     {
         UIHandler.instance.HideAllMenus();
         PlayerStats.Instance.GoldAmount += BuildingCounter.BankAmount * 3;
+
     }
 
     private void SetCardInteractable(bool interactable)
