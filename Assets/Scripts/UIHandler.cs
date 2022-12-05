@@ -96,7 +96,7 @@ public class UIHandler : MonoBehaviour
     public void ShowBuyMenu(Card card)
     {
         buyButton.onClick.RemoveAllListeners();
-        buyButton.onClick.AddListener(delegate { BuyButtonClicked(card, Table.Instance.GoldAmount); });
+        buyButton.onClick.AddListener(delegate { BuyButtonClicked(card, PlayerStats.Instance.GoldAmount); });
         StartCoroutine(ShowBuyMenuCoroutine());
 
     }
@@ -152,7 +152,7 @@ public class UIHandler : MonoBehaviour
             return;
         }
         card.currentData.CardStatus = CardStatus.Bought;
-        Table.Instance.GoldAmount -= card.price;
+        PlayerStats.Instance.GoldAmount -= card.price;
         PlayerCards.instance.AddCardToDiscardFromBank(card);
         CardBank.instance.cardsOnCardBank.Remove(card);
         CardBank.instance.locationIsFilled[card.indexInHand] = false;

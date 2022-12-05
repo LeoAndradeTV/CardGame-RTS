@@ -79,7 +79,7 @@ public class Card : MonoBehaviour
     private static void PlayGold()
     {
         UIHandler.instance.HideAllMenus();
-        Table.Instance.GoldAmount += 5;
+        PlayerStats.Instance.GoldAmount += BuildingCounter.BankAmount * 3;
     }
 
     private void SetCardInteractable(bool interactable)

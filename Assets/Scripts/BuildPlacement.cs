@@ -7,6 +7,7 @@ public class BuildPlacement : MonoBehaviour
 {
     public GameObject[] objects;
     private GameObject pendingObject;
+    private BuildingData pendingObjectBuildingData;
 
     public Vector3 pos;
     private RaycastHit hit;
@@ -33,7 +34,7 @@ public class BuildPlacement : MonoBehaviour
                 RoundToNearestGrid(pos.z));
 
             //pendingObject.transform.position = pos;
-            if (Input.GetMouseButtonDown(0) && canPlace)
+            if (Input.GetMouseButtonDown(0))
             {
                 if (mouseOverUIElement)
                 {
@@ -41,7 +42,11 @@ public class BuildPlacement : MonoBehaviour
                 }
                 else
                 {
-                    PlaceObject();
+                    if (canPlace)
+                    {
+                        PlaceObject(pendingObjectBuildingData.buildingType);
+                    }
+                    
                 }
             }
             if (Input.GetMouseButtonDown(1))
@@ -61,20 +66,21 @@ public class BuildPlacement : MonoBehaviour
         }
     }
 
-    public void SelectObject(int index)
+    public void SelectObject(int index, BuildingData buildingData)
     {
         pendingObject = Instantiate(objects[index], pos, transform.rotation);
         startingMaterial = pendingObject.GetComponentInChildren<MeshRenderer>().material;
+        pendingObjectBuildingData = buildingData;
     }
 
-    public void PlaceObject()
+    public void PlaceObject(BuildType building)
     {
         meshRenderers = pendingObject.GetComponentsInChildren<MeshRenderer>();
         foreach (MeshRenderer renderer in meshRenderers)
         {
             renderer.material = startingMaterial;
         }
-        //pendingObject.GetComponentInChildren<MeshRenderer>().material = startingMaterial;
+        Actions.OnBuildingBuilt?.Invoke(pendingObjectBuildingData);
 
         pendingObject = null;
     }

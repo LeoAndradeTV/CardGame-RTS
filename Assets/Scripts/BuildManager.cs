@@ -17,22 +17,21 @@ public class BuildManager : MonoBehaviour
         switch (buildingData.buildingType)
         {
             case BuildType.Bank:
-                BuildBank();
+                buildPlacement.SelectObject(4, buildingData);
                 break;
             case BuildType.Archers:
-                BuildArchers();
+                buildPlacement.SelectObject(2, buildingData);
                 break;
             case BuildType.Swordsmen:
-                BuildSwordsmen();
+                buildPlacement.SelectObject(3, buildingData);
                 break;
             case BuildType.Siege:
-                BuildSiege();
+                buildPlacement.SelectObject(1, buildingData);
                 break;
             case BuildType.Wall:
-                BuildWall();
+                buildPlacement.SelectObject(0, buildingData);
                 break;
         }
-        RemoveMaterials(buildingData);
         if (!CameraController.instance.canMoveCamera)
         {
             UIHandler.instance.ChangeToTableView();
@@ -48,43 +47,39 @@ public class BuildManager : MonoBehaviour
 
     }
 
-    private void BuildBank()
-    {
-        buildPlacement.SelectObject(4);
-        BuildingCounter.BankAmount++; 
-        Debug.Log($"Banks: {BuildingCounter.BankAmount}");
-    }
-    private void BuildArchers()
-    {
-        buildPlacement.SelectObject(2);
-        BuildingCounter.ArchersAmount++;
-        Debug.Log($"Archers: {BuildingCounter.ArchersAmount}");
-    }
-    private void BuildSwordsmen()
-    {
-        buildPlacement.SelectObject(3);
-        BuildingCounter.SwordsmenAmount++;
-        Debug.Log($"Swordsmen: {BuildingCounter.SwordsmenAmount}");
-    }
-    private void BuildSiege()
-    {
-        buildPlacement.SelectObject(1);
-        BuildingCounter.SiegeAmount++;
-        Debug.Log($"Siege: {BuildingCounter.SiegeAmount}");
+    //public void BuildBank()
+    //{
+    //    BuildingCounter.BankAmount++;
+    //    Debug.Log($"Banks: {BuildingCounter.BankAmount}");
+    //    Debug.Log($"{PlayerStats.Instance.GoldAmount}");
+    //}
+    //public void BuildArchers()
+    //{
+    //    BuildingCounter.ArchersAmount++;
+    //    Debug.Log($"Archers: {BuildingCounter.ArchersAmount}");
+    //    Debug.Log($"{PlayerStats.Instance.rangedAttackStat}");
+    //}
+    //public void BuildSwordsmen()
+    //{
+    //    BuildingCounter.SwordsmenAmount++;
+    //    Debug.Log($"Swordsmen: {BuildingCounter.SwordsmenAmount}");
+    //    Debug.Log($"{PlayerStats.Instance.meleeAttackStat}");
 
-    }
-    private void BuildWall()
-    {
-        buildPlacement.SelectObject(0);
-        BuildingCounter.WallAmount++;
-        Debug.Log($"Walls: {BuildingCounter.WallAmount}");
-    }
+    //}
+    //public void BuildSiege()
+    //{
 
-    private void RemoveMaterials(BuildingData buildingData)
-    {
-        MaterialCounter.WoodCounter -= buildingData.buildingWoodRequirement;
-        MaterialCounter.RockCounter -= buildingData.buildingRockRequirement;
-        MaterialCounter.StringCounter -= buildingData.buildingStringRequirement;
-        MaterialCounter.IronCounter -= buildingData.buildingIronRequirement;
-    }
+    //    BuildingCounter.SiegeAmount++;
+    //    Debug.Log($"Siege: {BuildingCounter.SiegeAmount}");
+    //    Debug.Log($"{PlayerStats.Instance.rangedAttackStat}");
+
+
+    //}
+    //public void BuildWall()
+    //{
+    //    BuildingCounter.WallAmount++;
+    //    Debug.Log($"Walls: {BuildingCounter.WallAmount}");
+    //    Debug.Log($"{PlayerStats.Instance.protectionStat}");
+
+    //}
 }
