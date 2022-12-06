@@ -16,6 +16,7 @@ public class AttackMenuManager : MonoBehaviour
     [SerializeField] private TMP_Text swordsmenCount;
     [SerializeField] private TMP_Text siegesCount;
     [SerializeField] private Button attackButton;
+    [SerializeField] private AttackUnitsSpawner attackUnitsSpawner;
 
     private int archersCommitted;
     private int swordsmenCommitted;
@@ -42,6 +43,7 @@ public class AttackMenuManager : MonoBehaviour
         siegesCommitted = Mathf.RoundToInt(siegesSlider.value);
         UIHandler.instance.HideAllMenus();
         UIHandler.instance.ChangeToTableView();
+        attackUnitsSpawner.SpawnUnits(archersCommitted, swordsmenCommitted, siegesCommitted);
     }
     private void UpdateUnitCount()
     {
