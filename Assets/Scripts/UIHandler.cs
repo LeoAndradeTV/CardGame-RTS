@@ -17,6 +17,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private GameObject playerHUD;
     [SerializeField] private GameObject cardPurchaseMenu;
     [SerializeField] private GameObject buildingMenu;
+    [SerializeField] private GameObject attackMenu;
     [SerializeField] private Button playButton;
     [SerializeField] private Button discardButton;
     [SerializeField] private Button backButton;
@@ -57,6 +58,7 @@ public class UIHandler : MonoBehaviour
         cardSelectionMenu.SetActive(!allMenusAreClosed);
         cardPurchaseMenu.SetActive(!allMenusAreClosed);
         buildingMenu.SetActive(!allMenusAreClosed);
+        attackMenu.SetActive(!allMenusAreClosed);
         playerHUD.SetActive(allMenusAreClosed);
     }
     public void HideAllMenus()
@@ -83,6 +85,16 @@ public class UIHandler : MonoBehaviour
         yield return new WaitForEndOfFrame();
         materialSelectionMenu.SetActive(true);
         allMenusAreClosed = false;
+    }
+    private IEnumerator ShowAttackMenuCoroutine()
+    {
+        yield return new WaitForEndOfFrame();
+        attackMenu.SetActive(true);
+        allMenusAreClosed = false;
+    }
+    public void ShowAttackMenu()
+    {
+        StartCoroutine(ShowAttackMenuCoroutine());
     }
     public void OpenMaterialMenu(int materialPerHarvest)
     {

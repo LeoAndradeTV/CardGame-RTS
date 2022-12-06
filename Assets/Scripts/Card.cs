@@ -92,7 +92,17 @@ public class Card : MonoBehaviour
                 HarvestMaterial(1, 1);
                 PlayerCards.instance.DrawCards();
                 break;
+            case CardType.RegularAttack:
+                Attack();
+                break;
         }
+    }
+
+    private void Attack()
+    {
+        UIHandler.instance.HideAllMenus();
+        UIHandler.instance.ShowAttackMenu();
+        Debug.Log("Attack card played");
     }
 
     private void HarvestTwoIron()

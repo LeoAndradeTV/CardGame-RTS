@@ -14,5 +14,6 @@ public enum CardType
    MachineFour,
    MachineFive,
    MachineSix,
-   Overtime
+   Overtime,
+   RegularAttack
 }
