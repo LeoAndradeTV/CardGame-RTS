@@ -11,6 +11,11 @@ public class CheckBuildPlacement : MonoBehaviour
         buildPlacement = GameObject.Find("BuildPlacement").GetComponent<BuildPlacement>();
     }
 
+    private void FixedUpdate()
+    {
+        buildPlacement.canPlace = buildPlacement.pos.z < buildZMax;
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("BuiltObject"))
