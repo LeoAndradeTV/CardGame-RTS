@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 255834303604685284}
   - component: {fileID: 255834303598979310}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: projectile_lvl3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 8306173523926087383}
   - component: {fileID: -7227055737486027030}
   - component: {fileID: -6292571766164857672}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TT_Catapult_lvl3
   m_TagString: BuiltObject
   m_Icon: {fileID: 0}
@@ -216,6 +216,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stoppingDistance: 50
   animator: {fileID: 255834303594862116}
+  projectile: {fileID: 3665280816592428482, guid: 974be7c18d5fed84fb89db260556724b,
+    type: 3}
+  launchPosition: {fileID: 255834303604685260}
+  launchAngle: {x: 0, y: 1, z: 1}
+  launchForce: 18
+  hasTarget: 0
+  startProjectileTimer: 0.95
 --- !u!1 &255834303604254176
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +232,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685248}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685250}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -291,7 +298,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685252}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -323,7 +330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685254}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BONE_BASE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,7 +366,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685256}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_side_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -390,7 +397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685258}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +428,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685260}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -452,7 +459,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685262}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_side_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,7 +490,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685264}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_wheel002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -515,7 +522,7 @@ GameObject:
   m_Component:
   - component: {fileID: 255834303604685266}
   - component: {fileID: 255834303598979300}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Catapult_lvl1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -609,7 +616,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685268}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_wheel 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -640,7 +647,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685270}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_wheel001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -672,7 +679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 255834303604685272}
   - component: {fileID: 255834303598979298}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: projectile_lvl1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -758,7 +765,7 @@ GameObject:
   m_Component:
   - component: {fileID: 255834303604685274}
   - component: {fileID: 255834303598979308}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: projectile_lvl2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -844,7 +851,7 @@ GameObject:
   m_Component:
   - component: {fileID: 255834303604685276}
   - component: {fileID: 255834303598979302}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Catapult_lvl2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -942,7 +949,7 @@ GameObject:
   - component: {fileID: 7005136976033262951}
   - component: {fileID: 3098778408511173730}
   - component: {fileID: 8671381544485062138}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Catapult_lvl3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

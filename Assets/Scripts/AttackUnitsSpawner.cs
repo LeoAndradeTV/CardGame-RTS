@@ -14,20 +14,38 @@ public class AttackUnitsSpawner : MonoBehaviour
     {
         spawnPositions.Clear();
         buildSpawnPositions(archers + swordsmen + sieges);
-        for (int j = 0; j < archers; j++)
-        {  
-            Instantiate(unitPrefabs[0], transform.position + spawnPositions[0], Quaternion.identity);
-            spawnPositions.RemoveAt(0);
-        }
-        for (int j = 0; j < swordsmen; j++)
-        {
-            Instantiate(unitPrefabs[1], transform.position + spawnPositions[0], Quaternion.identity);
-            spawnPositions.RemoveAt(0);
-        }
+        SpawnSieges(sieges);
+        SpawnArchers(archers);
+        SpawnSwordsmen(swordsmen);
+    }
+
+
+    private void InstantiateUnit(int unitNumber)
+    {
+        Instantiate(unitPrefabs[unitNumber], transform.position + spawnPositions[0], Quaternion.identity);
+        spawnPositions.RemoveAt(0);
+    }
+
+    private void SpawnSieges(int sieges)
+    {
         for (int j = 0; j < sieges; j++)
         {
-            Instantiate(unitPrefabs[2], transform.position + spawnPositions[0], Quaternion.identity);
-            spawnPositions.RemoveAt(0);
+            InstantiateUnit(2);
+        }
+    }
+    private void SpawnArchers(int archers)
+    {
+        for (int j = 0; j < archers; j++)
+        {
+            InstantiateUnit(0);
+        }
+    }
+
+    private void SpawnSwordsmen(int swordsmen)
+    {
+        for (int j = 0; j < swordsmen; j++)
+        {
+            InstantiateUnit(1);
         }
     }
 

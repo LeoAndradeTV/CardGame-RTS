@@ -10,6 +10,7 @@ public class UnitController : MonoBehaviour
 
     public LayerMask targetsMask;
     
+    
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,7 @@ public class UnitController : MonoBehaviour
                 // move our player
                 motor.MoveToPoint(hit.point);
             }
+            motor.hasTarget = true;
         }
     }
 }
