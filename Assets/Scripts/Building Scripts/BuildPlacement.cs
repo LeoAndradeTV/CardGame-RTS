@@ -20,6 +20,7 @@ public class BuildPlacement : MonoBehaviour
     private MeshRenderer[] meshRenderers;
 
     public bool canPlace = true;
+    public GameObject overlappingGameObject;
     public bool mouseOverUIElement => EventSystem.current.IsPointerOverGameObject();
 
 
@@ -45,6 +46,10 @@ public class BuildPlacement : MonoBehaviour
                     if (canPlace)
                     {
                         PlaceObject(pendingObjectBuildingData.buildingType);
+                        if (overlappingGameObject != null)
+                        {
+                            Destroy(overlappingGameObject);
+                        }
                     }
                     
                 }

@@ -37,8 +37,9 @@ public class UnitMotor : MonoBehaviour
             projectileTimer -= Time.deltaTime;
             if (projectileTimer <= Mathf.Epsilon && launchPosition != null)
             {
-                var proj = Instantiate(projectile, launchPosition.position, Quaternion.identity);
-                proj.GetComponent<Rigidbody>().AddForce(launchAngle * launchForce, ForceMode.Impulse);
+                var proj = Instantiate(projectile, launchPosition.position, transform.rotation);
+                launchAngle.x = -launchPosition.rotation.y;
+                proj.GetComponent<Rigidbody>().AddForce((transform.forward + Vector3.up) * launchForce, ForceMode.Impulse);
                 projectileTimer = startProjectileTimer;
             }
         }
@@ -46,8 +47,8 @@ public class UnitMotor : MonoBehaviour
 
     public virtual void MoveToPoint(Vector3 point)
     {
-        Vector3 finalDestination = new Vector3(point.x + transform.position.x, point.y, point.z);
-        agent.SetDestination(finalDestination);
+      //Vector3 finalDestination = new Vector3(point.x + transform.position.x, point.y, point.z);
+        agent.SetDestination(point);
         agent.stoppingDistance = stoppingDistance;
     }
 }

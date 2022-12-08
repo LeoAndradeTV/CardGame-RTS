@@ -14097,7 +14097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5101f07af8984d90de143aabf13e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stoppingDistance: 25
+  stoppingDistance: 30
   animator: {fileID: 9563318}
   projectile: {fileID: 4637601011943652244, guid: 40294f5bbdfe7f24dbe0f531e896f4fe,
     type: 3}

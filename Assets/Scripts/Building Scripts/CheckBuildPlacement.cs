@@ -23,6 +23,10 @@ public class CheckBuildPlacement : MonoBehaviour
         if (other.gameObject.CompareTag("BuiltObject"))
         {
             buildPlacement.canPlace = false;
+        } else if (other.gameObject.CompareTag("Vegetation")) 
+        {
+            buildPlacement.canPlace = true;
+            buildPlacement.overlappingGameObject = other.gameObject;
         }
     }
 
@@ -31,6 +35,11 @@ public class CheckBuildPlacement : MonoBehaviour
         if (other.gameObject.CompareTag("BuiltObject"))
         {
             buildPlacement.canPlace = true;
+        }
+        else if (other.gameObject.CompareTag("Vegetation"))
+        {
+            buildPlacement.canPlace = true;
+            buildPlacement.overlappingGameObject = null;
         }
     }
 }

@@ -32,8 +32,8 @@ public class UnitController : MonoBehaviour
             {
                 // move our player
                 motor.MoveToPoint(hit.point);
+                motor.hasTarget = true;
             }
-            motor.hasTarget = true;
         }
     }
 }

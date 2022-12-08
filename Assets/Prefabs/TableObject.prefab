@@ -191,7 +191,6 @@ MonoBehaviour:
   - {fileID: 4191675654781762231}
   - {fileID: 4191675656046076616}
   locationIsFilled: 0000000000
-  goldText: {fileID: 4191675655786012729}
 --- !u!1 &4191675654736559365
 GameObject:
   m_ObjectHideFlags: 0
