@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyProjectile : MonoBehaviour
+public class SwordsmenDamage : MonoBehaviour
 {
     [SerializeField] private int damage;
     [SerializeField] private HealthBar healthBar;
@@ -17,11 +17,5 @@ public class DestroyProjectile : MonoBehaviour
         healthBar.currentHealth -= damage;
         healthBar.SetHealth(healthBar.currentHealth);
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        DealDamage();
-        Destroy(gameObject);
-    }
-
+    
 }

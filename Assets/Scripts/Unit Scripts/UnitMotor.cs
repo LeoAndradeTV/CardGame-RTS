@@ -15,7 +15,6 @@ public class UnitMotor : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] GameObject projectile;
     [SerializeField] Transform launchPosition;
-    public Vector3 launchAngle;
     public float launchForce;
     public bool hasTarget;
     public float startProjectileTimer;
@@ -38,7 +37,6 @@ public class UnitMotor : MonoBehaviour
             if (projectileTimer <= Mathf.Epsilon && launchPosition != null)
             {
                 var proj = Instantiate(projectile, launchPosition.position, transform.rotation);
-                launchAngle.x = -launchPosition.rotation.y;
                 proj.GetComponent<Rigidbody>().AddForce((transform.forward + Vector3.up) * launchForce, ForceMode.Impulse);
                 projectileTimer = startProjectileTimer;
             }
