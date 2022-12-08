@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyProjectile : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
     [SerializeField] private int damage;
     [SerializeField] private HealthBar healthBar;

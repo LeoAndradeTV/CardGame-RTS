@@ -14,8 +14,12 @@ public class SwordsmenDamage : MonoBehaviour
 
     public void DealDamage()
     {
-        healthBar.currentHealth -= damage;
-        healthBar.SetHealth(healthBar.currentHealth);
+        if (healthBar != null)
+        {
+            healthBar.currentHealth -= damage;
+            healthBar.SetHealth(healthBar.currentHealth);
+        }
+        
     }
     
 }
