@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CardBank : MonoBehaviour
 {
-    public static CardBank instance;
-
     [SerializeField] private List<CardData> cardDataToBuy = new List<CardData>();
     [SerializeField] private List<Transform> bankPlacementPoints = new List<Transform>();
     [SerializeField] private Card cardPrefab;
@@ -19,10 +17,6 @@ public class CardBank : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
         locationIsFilled = new bool[bankPlacementPoints.Count];
         PlaceCardToBuy();
     }
@@ -51,5 +45,21 @@ public class CardBank : MonoBehaviour
             cardDataToBuy.RemoveAt(index);
 
         }
+    }
+
+    public void CardWasBought(Card card, int goldAmount)
+    {
+        cardsOnCardBank.Remove(card);
+        locationIsFilled[card.indexInHand] = false;
+        PlaceCardToBuy();
+        Destroy(card.gameObject);
+    }
+    private void OnEnable()
+    {
+        Actions.OnCardBought += CardWasBought;
+    }
+    private void OnDisable()
+    {
+        Actions.OnCardBought -= CardWasBought;
     }
 }

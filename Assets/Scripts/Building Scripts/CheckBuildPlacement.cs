@@ -13,7 +13,7 @@ public class CheckBuildPlacement : MonoBehaviour
         buildPlacement = GameObject.Find("BuildPlacement").GetComponent<BuildPlacement>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         buildPlacement.canPlace = buildPlacement.pos.z < buildZMax;
     }
@@ -23,7 +23,7 @@ public class CheckBuildPlacement : MonoBehaviour
         if (other.gameObject.CompareTag("BuiltObject"))
         {
             buildPlacement.canPlace = false;
-        } else if (other.gameObject.CompareTag("Vegetation")) 
+        } else if (other.gameObject.CompareTag("Vegetation") && buildPlacement.pos.z < buildZMax) 
         {
             buildPlacement.canPlace = true;
             buildPlacement.overlappingGameObject = other.gameObject;

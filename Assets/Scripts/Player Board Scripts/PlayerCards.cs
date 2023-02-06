@@ -81,6 +81,7 @@ public class PlayerCards : MonoBehaviour
         cardsInHand.Remove(card);
         Table.Instance.locationIsFilled[card.indexInHand] = false;
         Destroy(card.gameObject);
+        UIHandler.instance.SetBuildButton(GetCardsInHand() == 0);
     }
     public void ShuffleCards()
     {
@@ -104,11 +105,15 @@ public class PlayerCards : MonoBehaviour
     {
         Actions.OnDrawCardsClicked += DrawCards;
         Actions.OnShuffleCardsClicked += ShuffleCards;
+        Actions.OnCardPlayedClicked += DiscardCard;
+        Actions.OnCardDiscardClicked += DiscardCard;
     }
     private void OnDisable()
     {
         Actions.OnDrawCardsClicked -= DrawCards;
         Actions.OnShuffleCardsClicked -= ShuffleCards;
+        Actions.OnCardPlayedClicked -= DiscardCard;
+        Actions.OnCardDiscardClicked -= DiscardCard;
 
     }
     public void AddCardToDiscardFromBank(Card card)

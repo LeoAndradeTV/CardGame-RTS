@@ -9,18 +9,18 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
-        healthBar = GameObject.Find("Health Bar").GetComponent<HealthBar>();
+        //healthBar = GameObject.Find("Health Bar").GetComponent<HealthBar>();
     }
 
     public void DealDamage()
     {
-        healthBar.currentHealth -= damage;
-        healthBar.SetHealth(healthBar.currentHealth);
+        //healthBar.currentHealth -= damage;
+        //healthBar.SetHealth(healthBar.currentHealth);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        DealDamage();
+        //DealDamage();
         Destroy(gameObject);
     }
 

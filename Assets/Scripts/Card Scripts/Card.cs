@@ -96,6 +96,7 @@ public class Card : MonoBehaviour
                 Attack();
                 break;
         }
+        Debug.Log(cardType);
     }
 
     private void Attack()
@@ -107,23 +108,23 @@ public class Card : MonoBehaviour
 
     private void HarvestTwoIron()
     {
-        UIHandler.instance.materialsPerHarvest = 4;
-        UIHandler.instance.HarvestIron();
+        GameManager.instance.materialsPerHarvest = 4;
+        GameManager.instance.HarvestIron();
     }
     private void HarvestTwoString()
     {
-        UIHandler.instance.materialsPerHarvest = 4;
-        UIHandler.instance.HarvestString();
+        GameManager.instance.materialsPerHarvest = 4;
+        GameManager.instance.HarvestString();
     }
     private void HarvestTwoRock()
     {
-        UIHandler.instance.materialsPerHarvest = 4;
-        UIHandler.instance.HarvestRock();
+        GameManager.instance.materialsPerHarvest = 4;
+        GameManager.instance.HarvestRock();
     }
     private void HarvestTwoWood()
     {
-        UIHandler.instance.materialsPerHarvest = 4;
-        UIHandler.instance.HarvestWood();
+        GameManager.instance.materialsPerHarvest = 4;
+        GameManager.instance.HarvestWood();
     }
 
     private void HarvestMaterial(int harvests, int materialsPerHarvest)
