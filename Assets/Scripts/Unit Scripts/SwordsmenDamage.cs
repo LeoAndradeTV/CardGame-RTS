@@ -9,7 +9,7 @@ public class SwordsmenDamage : MonoBehaviour
 
     private void Start()
     {
-        healthBar = GameObject.Find("Health Bar").GetComponent<HealthBar>();
+        //healthBar = GameObject.Find("Health Bar").GetComponent<HealthBar>();
     }
 
     public void DealDamage()

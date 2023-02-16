@@ -46,6 +46,11 @@ public class UIHandler : MonoBehaviour
     public TMP_Text stringCounterText;
     public TMP_Text ironCounterText;
 
+    [Header("Images")]
+    [SerializeField] private Transform cardInPlayMenuSpawn;
+    [SerializeField] private Transform cardInBuyMenuSpawn;
+
+
 
     // Start is called before the first frame update
     void Awake()
@@ -84,9 +89,15 @@ public class UIHandler : MonoBehaviour
     }
     public void ShowBuyMenu(Card card)
     {
+        if (cardInBuyMenuSpawn.gameObject.transform.childCount > 0)
+        {
+            Destroy(cardInBuyMenuSpawn.gameObject.transform.GetChild(0).gameObject);
+        }
         buyButton.onClick.RemoveAllListeners();
         buyButton.onClick.AddListener(delegate { BuyButtonClicked(card, PlayerStats.Instance.GoldAmount); });
         StartCoroutine(ShowBuyMenuCoroutine());
+        var cardInMenu = Instantiate(card, cardInBuyMenuSpawn);
+        SetUpCardInMenu(cardInMenu);
 
     }
     private IEnumerator ShowBuyMenuCoroutine()
@@ -123,16 +134,33 @@ public class UIHandler : MonoBehaviour
     }
     public void ShowAndSetCardPlayMenu(Card card)
     {
+        //Destroy any previous instantiated card
+        if (cardInPlayMenuSpawn.gameObject.transform.childCount > 0)
+        {
+            Destroy(cardInPlayMenuSpawn.gameObject.transform.GetChild(0).gameObject);
+        }
+
         playButton.onClick.RemoveAllListeners();
         discardButton.onClick.RemoveAllListeners();
-        playButton.onClick.AddListener(delegate { PlayButtonClicked(card); });
-        discardButton.onClick.AddListener(delegate { DiscardButtonClicked(card); });
+        playButton.onClick.AddListener(() => PlayButtonClicked(card));
+        discardButton.onClick.AddListener(() => DiscardButtonClicked(card));
         StartCoroutine(ShowCardMenuCoroutine());
+        var cardInMenu = Instantiate(card, cardInPlayMenuSpawn);
+        SetUpCardInMenu(cardInMenu);
     }
+
+    private static void SetUpCardInMenu(Card cardInMenu)
+    {
+        cardInMenu.transform.localScale *= 5;
+        cardInMenu.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        cardInMenu.transform.localPosition = Vector3.zero;
+    }
+
     public void PlayButtonClicked(Card card)
     {
         Actions.OnCardPlayedClicked?.Invoke(card);
         card.Play();
+        
     }
     public void DiscardButtonClicked(Card card)
     {

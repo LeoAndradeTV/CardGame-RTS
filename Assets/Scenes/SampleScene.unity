@@ -4819,7 +4819,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -49.322495
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5404027568004638117, guid: 951b914daeb03924ea46308e0e67a7b6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404027568004638117, guid: 951b914daeb03924ea46308e0e67a7b6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 73
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8152654730107299078, guid: 951b914daeb03924ea46308e0e67a7b6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 951b914daeb03924ea46308e0e67a7b6, type: 3}
 --- !u!114 &505652443 stripped
 MonoBehaviour:
@@ -5780,6 +5791,7 @@ MonoBehaviour:
   rockCounterText: {fileID: 384786665}
   stringCounterText: {fileID: 1590716310}
   ironCounterText: {fileID: 1677245371}
+  cardInPlayMenuSpawn: {fileID: 1392508412}
 --- !u!114 &649498966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12625,6 +12637,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1080961278}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1392508412 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5404027568004638117, guid: 951b914daeb03924ea46308e0e67a7b6,
+    type: 3}
+  m_PrefabInstance: {fileID: 505652442}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1413008045
 GameObject:
   m_ObjectHideFlags: 0
@@ -18300,21 +18318,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5771897356097208931, guid: 6693ff2a34b041c42b153955bd05ec87,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 5771897356193284881, guid: 6693ff2a34b041c42b153955bd05ec87,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 5771897356231735415, guid: 6693ff2a34b041c42b153955bd05ec87,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.75
-      objectReference: {fileID: 0}
     - target: {fileID: 5771897356380939923, guid: 6693ff2a34b041c42b153955bd05ec87,
         type: 3}
       propertyPath: m_Pivot.x
@@ -18424,26 +18427,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Card Bank Object
-      objectReference: {fileID: 0}
-    - target: {fileID: 5771897356444914259, guid: 6693ff2a34b041c42b153955bd05ec87,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 5771897356845982277, guid: 6693ff2a34b041c42b153955bd05ec87,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 5771897357246311218, guid: 6693ff2a34b041c42b153955bd05ec87,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 5771897357493607299, guid: 6693ff2a34b041c42b153955bd05ec87,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6693ff2a34b041c42b153955bd05ec87, type: 3}
