@@ -8,5 +8,6 @@ public enum TurnPhases
     BuyCards,
     PlayCards,
     Build,
+    Attack,
     EndTurn
 }
