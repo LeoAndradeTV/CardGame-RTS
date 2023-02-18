@@ -94,7 +94,7 @@ public class UIHandler : MonoBehaviour
             Destroy(cardInBuyMenuSpawn.gameObject.transform.GetChild(0).gameObject);
         }
         buyButton.onClick.RemoveAllListeners();
-        buyButton.onClick.AddListener(delegate { BuyButtonClicked(card, PlayerStats.Instance.GoldAmount); });
+        buyButton.onClick.AddListener(()=>BuyButtonClicked(card, PlayerStats.Instance.GoldAmount));
         StartCoroutine(ShowBuyMenuCoroutine());
         var cardInMenu = Instantiate(card, cardInBuyMenuSpawn);
         SetUpCardInMenu(cardInMenu);

@@ -14,6 +14,7 @@ public class SwordsmenDamage : MonoBehaviour
 
     public void DealDamage()
     {
+        damage = PlayerStats.Instance.meleeAttackStat;
         if (healthBar != null)
         {
             healthBar.currentHealth -= damage;

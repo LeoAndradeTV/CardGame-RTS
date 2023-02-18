@@ -14,6 +14,14 @@ public class Projectile : MonoBehaviour
 
     public void DealDamage()
     {
+        if (gameObject.CompareTag("Arrow"))
+        {
+            damage = PlayerStats.Instance.archersAttackStat;
+        } else if (gameObject.CompareTag("Siege")) 
+        { 
+            damage = PlayerStats.Instance.siegeAttackStat;
+        }
+        
         //healthBar.currentHealth -= damage;
         //healthBar.SetHealth(healthBar.currentHealth);
     }

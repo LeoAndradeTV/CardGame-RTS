@@ -14,11 +14,12 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public float maxHealth = 100;
-    public float currentHealth = 100;
-    public float meleeAttackStat => BuildingCounter.SwordsmenAmount * 5f;
-    public float rangedAttackStat => BuildingCounter.SiegeAmount * 10f + BuildingCounter.ArchersAmount * 5;
-    public float protectionStat => BuildingCounter.WallAmount * 10f + 100f;
+    public int maxHealth => 10000;
+    public int currentHealth = 10000;
+    public int meleeAttackStat => BuildingCounter.SwordsmenAmount * 5;
+    public int siegeAttackStat => BuildingCounter.SiegeAmount * 10;   
+    public int archersAttackStat =>BuildingCounter.ArchersAmount * 5;
+    public int protectionStat => BuildingCounter.WallAmount * 10;
     public int GoldAmount
     {
         get { return goldAmount; }
