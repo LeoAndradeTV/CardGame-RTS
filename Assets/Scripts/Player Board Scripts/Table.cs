@@ -21,6 +21,7 @@ public class Table : MonoBehaviour
         {
             Instance = this;
         }
+        drawButton.interactable = false;
     }
 
     public void DrawCard()

@@ -5,9 +5,9 @@ using UnityEngine;
 public static class BuildingCounter
 {
     private static int bankAmount;
-    private static int archersAmount = 10;
-    private static int swordsmenAmount = 10;
-    private static int siegeAmount = 10;
+    private static int archersAmount;
+    private static int swordsmenAmount;
+    private static int siegeAmount;
     private static int wallAmount;
 
     public static int BankAmount

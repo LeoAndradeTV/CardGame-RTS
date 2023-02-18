@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
         //FOR TESTING ONLY
-        PlayerStats.Instance.GoldAmount = 100;
+        PlayerStats.Instance.GoldAmount = 0;
     }
 
     public void StartTurn()

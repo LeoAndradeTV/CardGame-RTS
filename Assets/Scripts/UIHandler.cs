@@ -27,6 +27,8 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private Button goToTableButton;
     [SerializeField] private Button goToBoardButton;
     [SerializeField] private Button buildButton;
+    [SerializeField] private Button finishBuildingButton;
+    [SerializeField] private Button endTurnButton;
     [SerializeField] private Button woodButton;
     [SerializeField] private Button rockButton;
     [SerializeField] private Button ironButton;
@@ -59,7 +61,8 @@ public class UIHandler : MonoBehaviour
         {
             instance = this;
         }
-        SetBuildButton(false);
+        SetBuildsButton(false);
+        SetEndTurnButton(false);
         HideAllMenus();
         lastCameraPositionOnTable = cameraOnTable;
     }
@@ -197,13 +200,28 @@ public class UIHandler : MonoBehaviour
     {
         Actions.OnCardBought?.Invoke(card, goldAmount);
     }
-    public void SetBuildButton(bool set)
+    public void SetBuildsButton(bool set)
     {
         buildButton.gameObject.SetActive(set);
+        finishBuildingButton.gameObject.SetActive(set);
+    }
+    public void SetEndTurnButton(bool set)
+    {
+        endTurnButton.gameObject.SetActive(set);
     }
     public void BuildButtonClicked()
     {
         buildingMenu.SetActive(true);
+    }
+    public void FinishBuildingButtonClicked()
+    {
+        SetBuildsButton(false);
+        ChangeToBoardView();
+        Actions.OnFinishedBuilding?.Invoke();
+    }
+    public void OnEndTurnClicked()
+    {
+        Actions.OnTurnEnded?.Invoke();
     }
     private IEnumerator LerpCamera(Vector3 startPos, Vector3 endPos, Quaternion startRot, Quaternion endRot, bool moveCamera)
     {
