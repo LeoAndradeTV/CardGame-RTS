@@ -10,13 +10,16 @@ public class UIHandler : MonoBehaviour
 
     public bool allMenusAreClosed = true;
     public int harvests;
-    public int materialsPerHarvest = 1;
 
+    [Header("Menus")]
     [SerializeField] private GameObject cardSelectionMenu;
     [SerializeField] private GameObject materialSelectionMenu;
     [SerializeField] private GameObject playerHUD;
     [SerializeField] private GameObject cardPurchaseMenu;
     [SerializeField] private GameObject buildingMenu;
+    [SerializeField] private GameObject attackMenu;
+
+    [Header("Buttons")]
     [SerializeField] private Button playButton;
     [SerializeField] private Button discardButton;
     [SerializeField] private Button backButton;
@@ -24,22 +27,34 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private Button goToTableButton;
     [SerializeField] private Button goToBoardButton;
     [SerializeField] private Button buildButton;
+    [SerializeField] private Button woodButton;
+    [SerializeField] private Button rockButton;
+    [SerializeField] private Button ironButton;
+    [SerializeField] private Button stringButton;
+
+    [Header("Camera Properties")]
     [SerializeField] private Vector3 cameraOnBoard;
     [SerializeField] private Vector3 cameraOnTable;
     [SerializeField] private Quaternion cameraOnBoardRotation;
     [SerializeField] private Quaternion cameraOnTableRotation;
     [SerializeField] private new Camera camera;
+    public Vector3 lastCameraPositionOnTable;
 
+    [Header("Text Properties")]
     public TMP_Text woodCounterText;
     public TMP_Text rockCounterText;
     public TMP_Text stringCounterText;
     public TMP_Text ironCounterText;
-    public Vector3 lastCameraPositionOnTable;
+
+    [Header("Images")]
+    [SerializeField] private Transform cardInPlayMenuSpawn;
+    [SerializeField] private Transform cardInBuyMenuSpawn;
+
+
 
     // Start is called before the first frame update
     void Awake()
     {
-
         if (instance == null)
         {
             instance = this;
@@ -49,6 +64,10 @@ public class UIHandler : MonoBehaviour
         lastCameraPositionOnTable = cameraOnTable;
     }
 
+    public void HideAllMenus()
+    {
+        StartCoroutine(HideAllMenusCoroutine());
+    }
     public IEnumerator HideAllMenusCoroutine()
     {
         yield return new WaitForEndOfFrame();
@@ -57,11 +76,8 @@ public class UIHandler : MonoBehaviour
         cardSelectionMenu.SetActive(!allMenusAreClosed);
         cardPurchaseMenu.SetActive(!allMenusAreClosed);
         buildingMenu.SetActive(!allMenusAreClosed);
+        attackMenu.SetActive(!allMenusAreClosed);
         playerHUD.SetActive(allMenusAreClosed);
-    }
-    public void HideAllMenus()
-    {
-        StartCoroutine(HideAllMenusCoroutine());
     }
     private IEnumerator ShowCardMenuCoroutine()
     {
@@ -71,6 +87,19 @@ public class UIHandler : MonoBehaviour
         cardSelectionMenu.SetActive(!allMenusAreClosed);
         playerHUD.SetActive(allMenusAreClosed);
     }
+    public void ShowBuyMenu(Card card)
+    {
+        if (cardInBuyMenuSpawn.gameObject.transform.childCount > 0)
+        {
+            Destroy(cardInBuyMenuSpawn.gameObject.transform.GetChild(0).gameObject);
+        }
+        buyButton.onClick.RemoveAllListeners();
+        buyButton.onClick.AddListener(delegate { BuyButtonClicked(card, PlayerStats.Instance.GoldAmount); });
+        StartCoroutine(ShowBuyMenuCoroutine());
+        var cardInMenu = Instantiate(card, cardInBuyMenuSpawn);
+        SetUpCardInMenu(cardInMenu);
+
+    }
     private IEnumerator ShowBuyMenuCoroutine()
     {
         yield return new WaitForEndOfFrame();
@@ -78,74 +107,77 @@ public class UIHandler : MonoBehaviour
         cardPurchaseMenu.SetActive(!allMenusAreClosed);
         playerHUD.SetActive(allMenusAreClosed);
     }
-    private IEnumerator ShowMaterialMenu()
+    private IEnumerator ShowAndSetMaterialMenu()
     {
         yield return new WaitForEndOfFrame();
+        woodButton.onClick.AddListener(GameManager.instance.HarvestWood);
+        rockButton.onClick.AddListener(GameManager.instance.HarvestRock);
+        ironButton.onClick.AddListener(GameManager.instance.HarvestIron);
+        stringButton.onClick.AddListener(GameManager.instance.HarvestString);
         materialSelectionMenu.SetActive(true);
+        allMenusAreClosed = false;
+    }
+    public void ShowAttackMenu()
+    {
+        StartCoroutine(ShowAttackMenuCoroutine());
+    }
+    private IEnumerator ShowAttackMenuCoroutine()
+    {
+        yield return new WaitForEndOfFrame();
+        attackMenu.SetActive(true);
         allMenusAreClosed = false;
     }
     public void OpenMaterialMenu(int materialPerHarvest)
     {
-        StartCoroutine(ShowMaterialMenu());
-        materialsPerHarvest = materialPerHarvest;
+        StartCoroutine(ShowAndSetMaterialMenu());
+        GameManager.instance.materialsPerHarvest = materialPerHarvest;
     }
     public void ShowAndSetCardPlayMenu(Card card)
     {
+        //Destroy any previous instantiated card
+        if (cardInPlayMenuSpawn.gameObject.transform.childCount > 0)
+        {
+            Destroy(cardInPlayMenuSpawn.gameObject.transform.GetChild(0).gameObject);
+        }
+
         playButton.onClick.RemoveAllListeners();
         discardButton.onClick.RemoveAllListeners();
-        playButton.onClick.AddListener(delegate { PlayButtonClicked(card); });
-        discardButton.onClick.AddListener(delegate { DiscardButtonClicked(card); });
+        playButton.onClick.AddListener(() => PlayButtonClicked(card));
+        discardButton.onClick.AddListener(() => DiscardButtonClicked(card));
         StartCoroutine(ShowCardMenuCoroutine());
+        var cardInMenu = Instantiate(card, cardInPlayMenuSpawn);
+        SetUpCardInMenu(cardInMenu);
     }
-    public void ShowBuyMenu(Card card)
-    {
-        buyButton.onClick.RemoveAllListeners();
-        buyButton.onClick.AddListener(delegate { BuyButtonClicked(card, PlayerStats.Instance.GoldAmount); });
-        StartCoroutine(ShowBuyMenuCoroutine());
 
+    private static void SetUpCardInMenu(Card cardInMenu)
+    {
+        cardInMenu.transform.localScale *= 5;
+        cardInMenu.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        cardInMenu.transform.localPosition = Vector3.zero;
     }
+
     public void PlayButtonClicked(Card card)
     {
-        PlayerCards.instance.DiscardCard(card);
-        card.Play();    
-        SetBuildButton(PlayerCards.instance.GetCardsInHand() == 0);
+        Actions.OnCardPlayedClicked?.Invoke(card);
+        card.Play();
+        
     }
     public void DiscardButtonClicked(Card card)
     {
-        PlayerCards.instance.DiscardCard(card);
-        if (PlayerCards.instance.cardsInHand.Count == 0)
-        {
-            buildButton.gameObject.SetActive(true);
-        }
+        Actions.OnCardDiscardClicked?.Invoke(card); 
         HideAllMenus();
     }
-    public void HarvestWood()
-    {
-        MaterialCounter.WoodCounter += materialsPerHarvest;
-        CheckIfDoneHarvesting();
-    }
-    public void HarvestRock()
-    {
-        MaterialCounter.RockCounter += materialsPerHarvest;
-        CheckIfDoneHarvesting();
-    }
-    public void HarvestString()
-    {
-        MaterialCounter.StringCounter += materialsPerHarvest;
-        CheckIfDoneHarvesting();
-    }
-    public void HarvestIron()
-    {
-        MaterialCounter.IronCounter += materialsPerHarvest;
-        CheckIfDoneHarvesting();
-    }
-    private void CheckIfDoneHarvesting()
+    public void CheckIfDoneHarvesting()
     {
         harvests--;
         if (harvests == 0)
         {
             materialSelectionMenu.SetActive(false);
             allMenusAreClosed = true;
+            woodButton.onClick.RemoveAllListeners();
+            rockButton.onClick.RemoveAllListeners();
+            ironButton.onClick.RemoveAllListeners();
+            stringButton.onClick.RemoveAllListeners();
         }
     }
     private void BuyButtonBehaviour(Card card, int goldAmount)
@@ -158,16 +190,16 @@ public class UIHandler : MonoBehaviour
 
         PlayerStats.Instance.GoldAmount -= card.price;
         PlayerCards.instance.AddCardToDiscardFromBank(card);
-        CardBank.instance.cardsOnCardBank.Remove(card);
-        CardBank.instance.locationIsFilled[card.indexInHand] = false;
-        CardBank.instance.PlaceCardToBuy();
-        Destroy(card.gameObject);
         HideAllMenus();
 
     }
     private void BuyButtonClicked(Card card, int goldAmount)
     {
         Actions.OnCardBought?.Invoke(card, goldAmount);
+    }
+    public void SetBuildButton(bool set)
+    {
+        buildButton.gameObject.SetActive(set);
     }
     public void BuildButtonClicked()
     {
@@ -199,10 +231,7 @@ public class UIHandler : MonoBehaviour
         StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard, camera.transform.rotation, cameraOnBoardRotation, false));
         Actions.ChangeCardInteractable?.Invoke(true);    // Player cards can be selected
     }
-    public void SetBuildButton(bool set)
-    {
-        buildButton.gameObject.SetActive(set);
-    }
+    
     private void OnEnable()
     {
         Actions.OnCardBought += BuyButtonBehaviour;

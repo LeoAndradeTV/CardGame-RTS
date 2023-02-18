@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 255834303604685284}
   - component: {fileID: 255834303598979310}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: projectile_lvl3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,11 @@ GameObject:
   m_Component:
   - component: {fileID: 255834303604685286}
   - component: {fileID: 255834303594862116}
-  m_Layer: 0
+  - component: {fileID: -5033334049424087534}
+  - component: {fileID: 8306173523926087383}
+  - component: {fileID: -7227055737486027030}
+  - component: {fileID: -6292571766164857672}
+  m_Layer: 9
   m_Name: TT_Catapult_lvl3
   m_TagString: BuiltObject
   m_Icon: {fileID: 0}
@@ -135,7 +139,7 @@ Animator:
   m_GameObject: {fileID: 255834303604254086}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a568148748050d646b5be25edaa7d066, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a42d22f21c52d9948a13c9e169661461, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -145,6 +149,80 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!195 &-5033334049424087534
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255834303604254086}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 10
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 20000
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!54 &8306173523926087383
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255834303604254086}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &-7227055737486027030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255834303604254086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da01b9f3a682a5140931143630c0ff68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetsMask:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!114 &-6292571766164857672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255834303604254086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c5101f07af8984d90de143aabf13e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stoppingDistance: 50
+  animator: {fileID: 255834303594862116}
+  projectile: {fileID: 3665280816592428482, guid: 974be7c18d5fed84fb89db260556724b,
+    type: 3}
+  launchPosition: {fileID: 255834303604685260}
+  launchAngle: {x: 0, y: 1, z: 1}
+  launchForce: 17
+  hasTarget: 0
+  startProjectileTimer: 0.9
 --- !u!1 &255834303604254176
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +232,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685248}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685250}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +298,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685252}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685254}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BONE_BASE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,7 +366,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685256}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_side_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685258}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,7 +428,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685260}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -381,7 +459,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685262}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_side_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -412,7 +490,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685264}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_wheel002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +522,7 @@ GameObject:
   m_Component:
   - component: {fileID: 255834303604685266}
   - component: {fileID: 255834303598979300}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Catapult_lvl1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -538,7 +616,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685268}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_wheel 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,7 +647,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255834303604685270}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone_wheel001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -601,7 +679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 255834303604685272}
   - component: {fileID: 255834303598979298}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: projectile_lvl1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -687,7 +765,7 @@ GameObject:
   m_Component:
   - component: {fileID: 255834303604685274}
   - component: {fileID: 255834303598979308}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: projectile_lvl2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -773,7 +851,7 @@ GameObject:
   m_Component:
   - component: {fileID: 255834303604685276}
   - component: {fileID: 255834303598979302}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Catapult_lvl2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -871,7 +949,7 @@ GameObject:
   - component: {fileID: 7005136976033262951}
   - component: {fileID: 3098778408511173730}
   - component: {fileID: 8671381544485062138}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Catapult_lvl3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
