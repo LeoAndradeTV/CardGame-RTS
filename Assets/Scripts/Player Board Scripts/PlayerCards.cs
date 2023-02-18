@@ -72,7 +72,7 @@ public class PlayerCards : MonoBehaviour
 
             SetDrawAndShuffleButtons(!deckIsEmpty);
         }
-        UIHandler.instance.SetBuildButton(false);
+        UIHandler.instance.SetBuildsButton(false);
 
     }
     public void DiscardCard(Card card)
@@ -81,7 +81,6 @@ public class PlayerCards : MonoBehaviour
         cardsInHand.Remove(card);
         Table.Instance.locationIsFilled[card.indexInHand] = false;
         Destroy(card.gameObject);
-        UIHandler.instance.SetBuildButton(GetCardsInHand() == 0);
     }
     public void ShuffleCards()
     {
