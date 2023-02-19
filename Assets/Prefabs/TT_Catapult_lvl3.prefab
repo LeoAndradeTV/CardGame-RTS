@@ -98,8 +98,8 @@ GameObject:
   - component: {fileID: 255834303594862116}
   - component: {fileID: -5033334049424087534}
   - component: {fileID: 8306173523926087383}
-  - component: {fileID: -7227055737486027030}
   - component: {fileID: -6292571766164857672}
+  - component: {fileID: -8874936438752940116}
   m_Layer: 9
   m_Name: TT_Catapult_lvl3
   m_TagString: BuiltObject
@@ -189,21 +189,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-7227055737486027030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 255834303604254086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da01b9f3a682a5140931143630c0ff68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetsMask:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!114 &-6292571766164857672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +209,18 @@ MonoBehaviour:
   launchForce: 17
   hasTarget: 0
   startProjectileTimer: 0.9
+--- !u!114 &-8874936438752940116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255834303604254086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1100913b2d796504f918028dabd2be53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &255834303604254176
 GameObject:
   m_ObjectHideFlags: 0

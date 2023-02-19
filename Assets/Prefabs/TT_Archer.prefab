@@ -13912,8 +13912,8 @@ GameObject:
   - component: {fileID: -9139041097126504945}
   - component: {fileID: 6587048467440969427}
   - component: {fileID: 7147780570912162634}
-  - component: {fileID: 8602141073770427086}
   - component: {fileID: -1256879774859391985}
+  - component: {fileID: -6917073486999601250}
   m_Layer: 9
   m_Name: TT_Archer
   m_TagString: Untagged
@@ -14072,21 +14072,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8602141073770427086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 179124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da01b9f3a682a5140931143630c0ff68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetsMask:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!114 &-1256879774859391985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14107,6 +14092,18 @@ MonoBehaviour:
   launchForce: 12
   hasTarget: 0
   startProjectileTimer: 1.4
+--- !u!114 &-6917073486999601250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1100913b2d796504f918028dabd2be53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &179126
 GameObject:
   m_ObjectHideFlags: 0

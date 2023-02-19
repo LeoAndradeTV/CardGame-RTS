@@ -53,6 +53,7 @@ public class AttackMenuManager : MonoBehaviour
         UIHandler.instance.HideAllMenus();
         UIHandler.instance.ChangeToTableView();
         attackUnitsSpawner.SpawnUnits(archersCommitted, swordsmenCommitted, siegesCommitted);
+        GameStateManager.instance.SwitchState(GameStateManager.instance.attackState);
     }
     private void UpdateUnitCount()
     {
