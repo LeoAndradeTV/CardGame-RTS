@@ -12,14 +12,17 @@ public class UnitMotor : MonoBehaviour
 
     protected NavMeshAgent agent;
     [SerializeField] float stoppingDistance;
-    [SerializeField] Animator animator;
+    public Animator animator;
     [SerializeField] GameObject projectile;
     [SerializeField] Transform launchPosition;
     public float launchForce;
     public bool hasTarget;
     public float startProjectileTimer;
     private float projectileTimer;
-    private bool AgentIsStopped => agent.velocity.magnitude == 0f;
+    public bool AgentIsStopped => agent.velocity.magnitude == 0f;
+    public float AgentRemainingDistance => agent.remainingDistance;
+    public bool hasCalculatedPath => agent.pathPending == false;
+    public bool isAttacking = false;
 
     // Start is called before the first frame update
     void Start()
@@ -29,9 +32,14 @@ public class UnitMotor : MonoBehaviour
     }
     private void Update()
     {
-        animator.SetBool(IsStopped, AgentIsStopped);
-        animator.SetBool(IsAttacking, hasTarget && AgentIsStopped);
-        if (hasTarget && AgentIsStopped)
+        if (!AgentIsStopped)
+        {
+            if (AgentRemainingDistance < stoppingDistance)
+            {
+                agent.velocity = Vector3.zero;
+            }
+        }
+        if (isAttacking)
         {
             projectileTimer -= Time.deltaTime;
             if (projectileTimer <= Mathf.Epsilon && launchPosition != null)
@@ -45,8 +53,12 @@ public class UnitMotor : MonoBehaviour
 
     public virtual void MoveToPoint(Vector3 point)
     {
-      //Vector3 finalDestination = new Vector3(point.x + transform.position.x, point.y, point.z);
         agent.SetDestination(point);
         agent.stoppingDistance = stoppingDistance;
+    }
+
+    public float GetStoppingDistance()
+    {
+        return stoppingDistance;
     }
 }

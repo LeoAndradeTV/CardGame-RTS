@@ -6,9 +6,9 @@ public class AttackUnitsSpawner : MonoBehaviour
 {
     public GameObject[] unitPrefabs;
     private List<Vector3> spawnPositions = new List<Vector3>();
-    private float maxX = 40;
-    private float maxZ = 20;
-    float x = 0, y = 0, z = 0;
+    private float maxX = 80;
+    private float maxZ = 40;
+    float x = -40, y = 0, z = 0;
 
     public void SpawnUnits(int archers, int swordsmen, int sieges)
     {
@@ -56,11 +56,11 @@ public class AttackUnitsSpawner : MonoBehaviour
             Vector3 spawnPos = new Vector3(x, y, z);
             if (x < maxX)
             {
-                x += 2;
+                x += 8;
             } else
             {
-                z += 3;
-                x = 0;
+                z += 8;
+                x = -40;
             }
             if (z > maxZ)
             {

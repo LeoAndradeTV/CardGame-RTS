@@ -98,8 +98,8 @@ GameObject:
   - component: {fileID: 255834303594862116}
   - component: {fileID: -5033334049424087534}
   - component: {fileID: 8306173523926087383}
-  - component: {fileID: -7227055737486027030}
   - component: {fileID: -6292571766164857672}
+  - component: {fileID: -8874936438752940116}
   m_Layer: 9
   m_Name: TT_Catapult_lvl3
   m_TagString: BuiltObject
@@ -116,8 +116,8 @@ Transform:
   m_GameObject: {fileID: 255834303604254086}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 255834303604685254}
   - {fileID: 255834303604685266}
@@ -161,11 +161,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 10
+  m_Speed: 30
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 20000
-  m_StoppingDistance: 0
+  m_StoppingDistance: 70
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -187,23 +187,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &-7227055737486027030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 255834303604254086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da01b9f3a682a5140931143630c0ff68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetsMask:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!114 &-6292571766164857672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,14 +201,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5101f07af8984d90de143aabf13e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stoppingDistance: 50
+  stoppingDistance: 70
   animator: {fileID: 255834303594862116}
   projectile: {fileID: 3665280816592428482, guid: 974be7c18d5fed84fb89db260556724b,
     type: 3}
   launchPosition: {fileID: 255834303604685260}
-  launchForce: 17
+  launchForce: 35
   hasTarget: 0
   startProjectileTimer: 0.9
+  isAttacking: 0
+--- !u!114 &-8874936438752940116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255834303604254086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1100913b2d796504f918028dabd2be53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &255834303604254176
 GameObject:
   m_ObjectHideFlags: 0

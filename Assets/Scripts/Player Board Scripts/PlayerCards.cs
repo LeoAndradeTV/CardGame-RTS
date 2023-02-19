@@ -34,7 +34,7 @@ public class PlayerCards : MonoBehaviour
         }
         for (int i = 0; i < 3; i++)
         {
-            playerDeck.Add(cardData[1]);
+            playerDeck.Add(cardData[2]);
         }
 
         //TODO: Add one type of attack card
