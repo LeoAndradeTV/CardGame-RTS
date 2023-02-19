@@ -14429,6 +14429,7 @@ GameObject:
   - component: {fileID: -1259440574584978036}
   - component: {fileID: -703710168062761080}
   - component: {fileID: -9080507987743779933}
+  - component: {fileID: -2900217759858675931}
   m_Layer: 9
   m_Name: TT_HeavySwordman
   m_TagString: Untagged
@@ -14567,7 +14568,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.75
   m_Height: 2.0520267
   m_Direction: 1
   m_Center: {x: 0, y: 0.91572475, z: 0}
@@ -14599,13 +14600,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5101f07af8984d90de143aabf13e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stoppingDistance: 7
+  stoppingDistance: 10
   animator: {fileID: 9553400}
-  projectile: {fileID: 0}
-  launchPosition: {fileID: 0}
-  launchForce: 0
   hasTarget: 0
-  startProjectileTimer: 0
   isAttacking: 0
 --- !u!114 &-703710168062761080
 MonoBehaviour:
@@ -14633,6 +14630,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1100913b2d796504f918028dabd2be53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2900217759858675931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eea959cd7e2e9346a6d4c3fb5eb8ec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 0}
+  launchPosition: {fileID: 0}
+  launchForce: 0
+  clip: {fileID: 0}
+  ammoAmount: 0
 --- !u!1 &182750
 GameObject:
   m_ObjectHideFlags: 0
@@ -18037,7 +18051,6 @@ GameObject:
   - component: {fileID: 2248465132813737670}
   - component: {fileID: 7787879884599040328}
   - component: {fileID: 314324064102615729}
-  - component: {fileID: 7292078774484552501}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -18110,20 +18123,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7292078774484552501
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616987984691565206}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &1090534237786047566
 GameObject:
   m_ObjectHideFlags: 0
@@ -18967,7 +18966,6 @@ GameObject:
   - component: {fileID: 9128588624356945362}
   - component: {fileID: 155608825321069081}
   - component: {fileID: 8147459140235213862}
-  - component: {fileID: 575830537233067366}
   m_Layer: 0
   m_Name: Cylinder (2)
   m_TagString: Untagged
@@ -19040,20 +19038,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &575830537233067366
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7263501294761579799}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &7618586578548359100
 GameObject:
   m_ObjectHideFlags: 0
