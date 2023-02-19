@@ -21,6 +21,8 @@ public class UnitMotor : MonoBehaviour
     private float projectileTimer;
     public bool AgentIsStopped => agent.velocity.magnitude == 0f;
     public float AgentRemainingDistance => agent.remainingDistance;
+    public bool hasCalculatedPath => agent.pathPending == false;
+    public bool isAttacking = false;
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +32,14 @@ public class UnitMotor : MonoBehaviour
     }
     private void Update()
     {
-        animator.SetBool(IsStopped, AgentIsStopped);
-        if (hasTarget && AgentIsStopped)
+        if (!AgentIsStopped)
+        {
+            if (AgentRemainingDistance < stoppingDistance)
+            {
+                agent.velocity = Vector3.zero;
+            }
+        }
+        if (isAttacking)
         {
             projectileTimer -= Time.deltaTime;
             if (projectileTimer <= Mathf.Epsilon && launchPosition != null)
@@ -47,7 +55,6 @@ public class UnitMotor : MonoBehaviour
     {
         agent.SetDestination(point);
         agent.stoppingDistance = stoppingDistance;
-        Debug.Log(agent.hasPath);
     }
 
     public float GetStoppingDistance()

@@ -14,6 +14,7 @@ public class ChooseTargetState : AttackBaseState
         cam = Camera.main;
         targetsMask = LayerMask.GetMask("Target Layer");
         motor = manager.GetComponent<UnitMotor>();
+        motor.animator.SetBool(motor.IsStopped, true);
         GameStateManager.instance.hasAttacked = true;
         Debug.Log("Choose Target State");
 

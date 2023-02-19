@@ -11,11 +11,14 @@ public class AttackingState : AttackBaseState
     {
         Debug.Log("Attacking State");
         motor = manager.GetComponent<UnitMotor>();
-        motor.animator.SetBool(motor.IsAttacking, motor.hasTarget && motor.AgentIsStopped);
+        motor.animator.SetBool(motor.IsAttacking, true);
+        motor.isAttacking = true;
     }
 
     public override void ExitState(AttackStateManager manager)
     {
+        motor.animator.SetBool(motor.IsAttacking, false);
+        motor.isAttacking = false;
         manager.SwitchState(manager.deploymentState);
     }
 

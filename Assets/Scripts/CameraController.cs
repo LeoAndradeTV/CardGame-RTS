@@ -12,10 +12,10 @@ public class CameraController : MonoBehaviour
     private float zoomSpeed = 40f;
     private float minZoom = 25f;
     private float maxZoom = 277f;
-    private float minVertical = 128f;
-    private float maxVertical = 350f;
-    private float minHorizontal = -90f;
-    private float maxHorizontal = 90f;
+    private float minVertical = 110f;
+    private float maxVertical = 375f;
+    private float minHorizontal = -110f;
+    private float maxHorizontal = 110f;
 
     // Start is called before the first frame update
     void Awake()

@@ -262,7 +262,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   m_LocalRotation: {x: 0.649448, y: 0, z: 0, w: 0.760406}
-  m_LocalPosition: {x: -0.75, y: 140, z: -9}
+  m_LocalPosition: {x: 0, y: 140, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1727,6 +1727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1a3616ed618f14db469dfb22ff3ac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasAttacked: 0
 --- !u!4 &489487699
 Transform:
   m_ObjectHideFlags: 0
@@ -2384,7 +2385,7 @@ MonoBehaviour:
   ironButton: {fileID: 424786798}
   stringButton: {fileID: 1804521739}
   cameraOnBoard: {x: 0, y: 140, z: -9}
-  cameraOnTable: {x: 0, y: 277, z: 247}
+  cameraOnTable: {x: 0, y: 149, z: 171}
   cameraOnBoardRotation: {x: 0.64944804, y: 0, z: 0, w: 0.76040596}
   cameraOnTableRotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
   camera: {fileID: 330585545}
@@ -3218,7 +3219,7 @@ MonoBehaviour:
   cardData:
   - {fileID: 11400000, guid: 94e09e02b102561498f42e1c895a708c, type: 2}
   - {fileID: 11400000, guid: fe601eeec536f524891bfa201b434491, type: 2}
-  - {fileID: 11400000, guid: edef8b807fa72d247b4bd54f6572e6d1, type: 2}
+  - {fileID: 11400000, guid: ac40921daa1b6d04da21638ac4e30945, type: 2}
   cardPrefab: {fileID: 4148298937261529663, guid: 3bd182a2f612d5144b631030a0486351,
     type: 3}
   cardsInHand: []
@@ -3679,10 +3680,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2255617481347592143, guid: 5b772998d5c411d42900fc01d10b5b1d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 391.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2255617481598780640, guid: 5b772998d5c411d42900fc01d10b5b1d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -245.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2255617481648838077, guid: 5b772998d5c411d42900fc01d10b5b1d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 258.9
+      objectReference: {fileID: 0}
     - target: {fileID: 4947141796524417268, guid: 5b772998d5c411d42900fc01d10b5b1d,
         type: 3}
       propertyPath: m_Name
       value: Fighting Area Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 6000555202356853501, guid: 5b772998d5c411d42900fc01d10b5b1d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -114.1
       objectReference: {fileID: 0}
     - target: {fileID: 8439256749425913927, guid: 5b772998d5c411d42900fc01d10b5b1d,
         type: 3}
