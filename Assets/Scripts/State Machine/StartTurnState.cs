@@ -28,6 +28,6 @@ public class StartTurnState : GameStateAbstract
 
     public override void UpdateState(GameStateManager manager)
     {
-        throw new System.NotImplementedException();
+        
     }
 }

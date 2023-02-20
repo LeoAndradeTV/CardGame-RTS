@@ -10,15 +10,11 @@ public class UnitMotor : MonoBehaviour
     public readonly int IsStopped = Animator.StringToHash("b_isStopped");
     public readonly int IsAttacking = Animator.StringToHash("b_isAttacking");
 
+    private LaunchProjectile launchProjectile;
     protected NavMeshAgent agent;
     [SerializeField] float stoppingDistance;
     public Animator animator;
-    [SerializeField] GameObject projectile;
-    [SerializeField] Transform launchPosition;
-    public float launchForce;
     public bool hasTarget;
-    public float startProjectileTimer;
-    private float projectileTimer;
     public bool AgentIsStopped => agent.velocity.magnitude == 0f;
     public float AgentRemainingDistance => agent.remainingDistance;
     public bool hasCalculatedPath => agent.pathPending == false;
@@ -28,7 +24,8 @@ public class UnitMotor : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        projectileTimer = startProjectileTimer;
+        launchProjectile = GetComponent<LaunchProjectile>();
+        
     }
     private void Update()
     {
@@ -41,13 +38,7 @@ public class UnitMotor : MonoBehaviour
         }
         if (isAttacking)
         {
-            projectileTimer -= Time.deltaTime;
-            if (projectileTimer <= Mathf.Epsilon && launchPosition != null)
-            {
-                var proj = Instantiate(projectile, launchPosition.position, transform.rotation);
-                proj.GetComponent<Rigidbody>().AddForce((transform.forward + Vector3.up) * launchForce, ForceMode.Impulse);
-                projectileTimer = startProjectileTimer;
-            }
+            //launchProjectile.Launch();
         }
     }
 

@@ -13914,6 +13914,7 @@ GameObject:
   - component: {fileID: 7147780570912162634}
   - component: {fileID: -1256879774859391985}
   - component: {fileID: -6917073486999601250}
+  - component: {fileID: 5371870044057972161}
   m_Layer: 9
   m_Name: TT_Archer
   m_TagString: Untagged
@@ -14052,10 +14053,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.7857783
   m_Height: 1.8611727
   m_Direction: 1
-  m_Center: {x: 0, y: 0.8538747, z: 0}
+  m_Center: {x: 0.00034224987, y: 0.8538747, z: -0.041451693}
 --- !u!54 &7147780570912162634
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -14086,12 +14087,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stoppingDistance: 40
   animator: {fileID: 9563318}
-  projectile: {fileID: 4637601011943652244, guid: 40294f5bbdfe7f24dbe0f531e896f4fe,
-    type: 3}
-  launchPosition: {fileID: 425848}
-  launchForce: 16
   hasTarget: 0
-  startProjectileTimer: 1.4
   isAttacking: 0
 --- !u!114 &-6917073486999601250
 MonoBehaviour:
@@ -14105,6 +14101,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1100913b2d796504f918028dabd2be53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5371870044057972161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eea959cd7e2e9346a6d4c3fb5eb8ec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 4637601011943652244, guid: 40294f5bbdfe7f24dbe0f531e896f4fe,
+    type: 3}
+  launchPosition: {fileID: 425848}
+  launchForce: 18
+  clip: {fileID: 7400000, guid: a2a6b6556c8685346b4ebd69a0631792, type: 2}
+  ammoAmount: 12
 --- !u!1 &179126
 GameObject:
   m_ObjectHideFlags: 0
@@ -19054,7 +19068,6 @@ GameObject:
   - component: {fileID: 897197738697972176}
   - component: {fileID: 3436796625215689243}
   - component: {fileID: 5493901327260855464}
-  - component: {fileID: 1323317029445843785}
   m_Layer: 0
   m_Name: Cylinder (2)
   m_TagString: Untagged
@@ -19127,20 +19140,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &1323317029445843785
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5585519336027205687}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &6048517321130579262
 GameObject:
   m_ObjectHideFlags: 0
@@ -19272,7 +19271,7 @@ Transform:
   - {fileID: 4554398382176959353}
   m_Father: {fileID: 497262}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 6.9186416, y: -7.452261, z: 155.78886}
 --- !u!1 &6730048630474392294
 GameObject:
   m_ObjectHideFlags: 0
@@ -19384,7 +19383,6 @@ GameObject:
   - component: {fileID: 2329344284931244793}
   - component: {fileID: 5779712596455420921}
   - component: {fileID: 5515214595421046550}
-  - component: {fileID: 6455918998125585518}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -19457,20 +19455,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &6455918998125585518
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7350460746939988437}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &7711230265315715249
 GameObject:
   m_ObjectHideFlags: 0
