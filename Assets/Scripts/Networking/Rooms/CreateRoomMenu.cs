@@ -21,6 +21,7 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
 
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 4;
+        roomOptions.BroadcastPropsChangeToAll = true;
         if (roomName.Equals(String.Empty))
         {
             Debug.Log("Room name can't be empty");
