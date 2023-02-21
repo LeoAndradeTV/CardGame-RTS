@@ -4,15 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using System;
 
 public class PlayerListingsMenu : MonoBehaviourPunCallbacks
 {
     private const string GAMEPLAY_LEVEL_NAME = "GameplayScene";
+    private const string IS_READY_HASHTABLE_KEY = "IsReady";
+
 
     [SerializeField] private PlayerListing playerListingsPrefab;
     [SerializeField] private Transform content;
     [SerializeField] private GameObject startButton;
     [SerializeField] private TMP_Text readyUpText;
+
+    private ExitGames.Client.Photon.Hashtable myProperties = new ExitGames.Client.Photon.Hashtable();
 
     private List<PlayerListing> listings = new List<PlayerListing>();
     private RoomsCanvases _roomsCanvases;
@@ -29,6 +34,8 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
         SetReadyUp(false);
         GetCurrentRoomPlayers();
         ShowStartButton();
+        myProperties[IS_READY_HASHTABLE_KEY] = false;
+        PhotonNetwork.SetPlayerCustomProperties(myProperties);
     }
 
     public override void OnDisable()
@@ -70,8 +77,6 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
         int index = listings.FindIndex(x => x.Player == player);
         if (index != -1)
         {
-            listings[index].Ready = (bool)player.CustomProperties["IsReady"];
-            Debug.Log(listings[index].Ready);
             listings[index].SetPlayerInfo(player);
         }
         else
@@ -127,8 +132,10 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
 
     public void OnClick_Ready()
     {
-         SetReadyUp(!ready);
-         base.photonView.RPC("RPC_ChangeReadyState", RpcTarget.All, PhotonNetwork.LocalPlayer, ready);
+        SetReadyUp(!ready);
+        myProperties[IS_READY_HASHTABLE_KEY] = ready;
+        PhotonNetwork.SetPlayerCustomProperties(myProperties);
+        base.photonView.RPC("RPC_ChangeReadyState", RpcTarget.All, PhotonNetwork.LocalPlayer, ready);
     }
 
     [PunRPC]
@@ -138,8 +145,20 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
         if (index != -1)
         {
             listings[index].Ready = ready;
-            listings[index].SetIsReady(ready);
+            //if (myProperties.ContainsKey(IS_READY_HASHTABLE_KEY))
+            //{
+
+            //    myProperties[IS_READY_HASHTABLE_KEY] = ready;
+            //    PhotonNetwork.SetPlayerCustomProperties(myProperties);
+            //}
+            //else
+            //{
+            //    myProperties[IS_READY_HASHTABLE_KEY] = ready;
+            //    PhotonNetwork.SetPlayerCustomProperties(myProperties);
+            //}
             listings[index].ReadyCheckMark.SetActive(ready);
+            //Debug.Log($"{player.NickName} changed their IsReady key to: {player.CustomProperties["IsReady"]}");
+
         }
     }
 }
