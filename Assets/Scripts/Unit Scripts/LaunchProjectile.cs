@@ -7,10 +7,7 @@ public class LaunchProjectile : MonoBehaviour
     public GameObject projectile;
     public Transform launchPosition;
     public float launchForce;
-    private float startingTimer;
-    private float waitTime;
     public AnimationClip clip;
-    private float currentTimer;
 
     public int ammoAmount;
     private List<GameObject> instatiatedProjectiles;
@@ -19,9 +16,6 @@ public class LaunchProjectile : MonoBehaviour
     void Start()
     {
         instatiatedProjectiles= new List<GameObject>();
-        startingTimer = clip.length;
-        waitTime = startingTimer / 3;
-        currentTimer = startingTimer;
 
         InstantiateProjectiles();
     }
@@ -32,6 +26,7 @@ public class LaunchProjectile : MonoBehaviour
         if (projectile != null )
             {
                 projectile.transform.position = launchPosition.position;
+                projectile.transform.rotation = launchPosition.rotation;
                 projectile.SetActive(true);
                 ApplyForce(projectile);
             }
@@ -51,7 +46,7 @@ public class LaunchProjectile : MonoBehaviour
         
         for (int i = 0; i < ammoAmount; i++)
         {
-            var proj = Instantiate(projectile, launchPosition.position, transform.rotation);
+            var proj = Instantiate(projectile, transform.position, transform.rotation);
             proj.gameObject.SetActive(false);
             instatiatedProjectiles.Add(proj);
 

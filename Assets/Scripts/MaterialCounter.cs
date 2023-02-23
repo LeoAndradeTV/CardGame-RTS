@@ -10,7 +10,7 @@ public static class MaterialCounter
         set 
         { 
             woodCounter = value;
-            UIHandler.instance.woodCounterText.text = $"Wood: {woodCounter}";
+            UIHandler.instance.woodCounterText.text = $"x{woodCounter}";
         }
     
    }
@@ -20,7 +20,7 @@ public static class MaterialCounter
         set
         {
             rockCounter = value;
-            UIHandler.instance.rockCounterText.text = $"Rock: {rockCounter}";
+            UIHandler.instance.rockCounterText.text = $"x{rockCounter}";
         }
 
     }
@@ -30,7 +30,7 @@ public static class MaterialCounter
         set
         {
             stringCounter = value;
-            UIHandler.instance.stringCounterText.text = $"String: {stringCounter}";
+            UIHandler.instance.stringCounterText.text = $"x{stringCounter}";
         }
 
     }
@@ -40,7 +40,7 @@ public static class MaterialCounter
         set
         {
             ironCounter = value;
-            UIHandler.instance.ironCounterText.text = $"Iron: {ironCounter}";
+            UIHandler.instance.ironCounterText.text = $"x{ironCounter}";
         }
 
     }

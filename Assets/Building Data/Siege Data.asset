@@ -15,7 +15,7 @@ MonoBehaviour:
   buildingType: 3
   buildingName: Siege
   buildingDescription: Strong and slow attacks from range
-  buildingWoodRequirement: 1
-  buildingRockRequirement: 1
+  buildingWoodRequirement: 2
+  buildingRockRequirement: 2
   buildingStringRequirement: 1
   buildingIronRequirement: 0
