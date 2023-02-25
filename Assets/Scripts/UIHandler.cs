@@ -188,6 +188,7 @@ public class UIHandler : MonoBehaviour
         if (goldAmount < card.price)
         {
             Debug.Log("Not enough gold");
+            HideAllMenus();
             return;
         }
 

@@ -4,11 +4,12 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
 using System;
+using Photon.Pun;
 
-public class Card : MonoBehaviour
+public class Card : MonoBehaviourPunCallbacks
 {
 
-    private CardType cardType;
+    public CardType cardType;
     public CardData currentData { get; private set; }
     public CardStatus cardStatus;
     public int indexInHand;
@@ -18,15 +19,33 @@ public class Card : MonoBehaviour
     [SerializeField] private TMP_Text cardDescriptionText;
     [SerializeField] private TMP_Text cardPriceText;
 
+    private PhotonView photonView;
+    public PhotonView PhotonView { get { return photonView; } }
 
+    
     public void SetUpCard(CardData cardData)
     {
         currentData = cardData;
-        cardType = cardData.CardType;
+        cardType = cardData.cardType;
         cardNameText.text = cardData.name;
         cardDescriptionText.text = cardData.description;
-        cardStatus = cardData.CardStatus;
+        cardStatus = cardData.cardStatus;
         price = cardData.price;
+        if (price == 0)
+        {
+            cardPriceText.gameObject.SetActive(false);
+            return;
+        }
+        cardPriceText.text = $"Price: {price}";
+    }
+
+    public void SyncAcrossNetwork(CardType type, string name, string description, CardStatus status, int money)
+    {
+        cardType = type;
+        cardNameText.text = name;
+        cardDescriptionText.text = description;
+        cardStatus = status;
+        price = money;
         if (price == 0)
         {
             cardPriceText.gameObject.SetActive(false);
@@ -146,13 +165,15 @@ public class Card : MonoBehaviour
         canSelectCard = interactable;
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         Actions.ChangeCardInteractable += SetCardInteractable;
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         Actions.ChangeCardInteractable -= SetCardInteractable;
     }
 }

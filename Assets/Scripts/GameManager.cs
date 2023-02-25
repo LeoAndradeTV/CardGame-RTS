@@ -1,9 +1,13 @@
+using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameObject cardBankPrefab;
+
     public static GameManager instance;
     public int materialsPerHarvest = 1;
 
@@ -16,6 +20,16 @@ public class GameManager : MonoBehaviour
         }
         //FOR TESTING ONLY
         PlayerStats.Instance.GoldAmount = 100;
+
+        InitializeNetworkObjects();
+    }
+
+    private void InitializeNetworkObjects()
+    {
+        if (!PhotonNetwork.IsConnected) { return; }
+
+        if (!PhotonNetwork.IsMasterClient) { return; }
+        PhotonNetwork.Instantiate(cardBankPrefab.name, cardBankPrefab.transform.position, cardBankPrefab.transform.rotation);
     }
 
     public void StartTurn()
