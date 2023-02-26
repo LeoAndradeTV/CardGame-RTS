@@ -39,13 +39,14 @@ public class Card : MonoBehaviourPunCallbacks
         cardPriceText.text = $"Price: {price}";
     }
 
-    public void SyncAcrossNetwork(CardType type, string name, string description, CardStatus status, int money)
+    public void SyncAcrossNetwork(CardType type, string name, string description, CardStatus status, int money, int index)
     {
         cardType = type;
         cardNameText.text = name;
         cardDescriptionText.text = description;
         cardStatus = status;
         price = money;
+        indexInHand = index;
         if (price == 0)
         {
             cardPriceText.gameObject.SetActive(false);
@@ -127,21 +128,25 @@ public class Card : MonoBehaviourPunCallbacks
 
     private void HarvestTwoIron()
     {
+        UIHandler.instance.HideAllMenus();
         GameManager.instance.materialsPerHarvest = 4;
         GameManager.instance.HarvestIron();
     }
     private void HarvestTwoString()
     {
+        UIHandler.instance.HideAllMenus();
         GameManager.instance.materialsPerHarvest = 4;
         GameManager.instance.HarvestString();
     }
     private void HarvestTwoRock()
     {
+        UIHandler.instance.HideAllMenus();
         GameManager.instance.materialsPerHarvest = 4;
         GameManager.instance.HarvestRock();
     }
     private void HarvestTwoWood()
     {
+        UIHandler.instance.HideAllMenus();
         GameManager.instance.materialsPerHarvest = 4;
         GameManager.instance.HarvestWood();
     }

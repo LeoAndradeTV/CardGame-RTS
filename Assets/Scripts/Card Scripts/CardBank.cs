@@ -14,7 +14,6 @@ public class CardBank : MonoBehaviourPunCallbacks
     [SerializeField] private List<Transform> bankPlacementPoints = new List<Transform>();
     [SerializeField] private Card cardPrefab;
 
-    public List<CardData> buyDeck = new List<CardData>();
     public List<GameObject> cardsToPlace = new List<GameObject>();
     public List<GameObject> cardsOnCardBank = new List<GameObject>();
     public List<CardData> cardDatasOnCardBank = new List<CardData>();
@@ -32,9 +31,10 @@ public class CardBank : MonoBehaviourPunCallbacks
         //PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
         GameDeckDatabase.locationIsFilled = new bool[bankPlacementPoints.Count];
 
+        GameDeckDatabase.GenerateBuyDeck(cardDataToBuy);
+
         if (PhotonNetwork.IsMasterClient)
         {
-            GameDeckDatabase.GenerateBuyDeck(cardDataToBuy);
             GameDeckDatabase.GetCardsToPlace();
             PlaceCardsOnBank(GameDeckDatabase.cardsToPlace, GameDeckDatabase.emptyIndexes);
             //SynchronizeCards(viewIDs, GameDeckDatabase.cardsToPlace);
@@ -52,17 +52,7 @@ public class CardBank : MonoBehaviourPunCallbacks
             GameObject card = PhotonNetwork.Instantiate(cardPrefab.gameObject.name, bankPlacementPoints[indexes[i]].position, Quaternion.Euler(90f, 0f, 0f));
             Card cardComponent = card.GetComponent<Card>();
             int viewId = card.GetPhotonView().ViewID;
-            cardComponent.indexInHand = indexes[i];
-            photonView.RPC("SynchronizeCards", RpcTarget.All, viewId, data[i].cardType, data[i].name, data[i].description, data[i].cardStatus, data[i].price);
-        }
-    }
-    public void SetUpCardsLocally(List<int> indexesToPlace)
-    {
-        GameObject[] cards = GameObject.FindGameObjectsWithTag("Card");
-        for (int i = 0; i < cards.Length; i++)
-        {
-            //if (cards[i].GetComponent<Card>().cardStatus == CardStatus.Bought) { continue; }
-            cards[i].GetComponent<Card>().SetUpCard(buyDeck[indexesToPlace[i]]);
+            photonView.RPC("SynchronizeCards", RpcTarget.All, viewId, data[i].cardType, data[i].name, data[i].description, data[i].cardStatus, data[i].price, indexes[i]);
         }
     }
 
@@ -77,6 +67,7 @@ public class CardBank : MonoBehaviourPunCallbacks
         // Find CardData that matches card name and set it up to go on player deck
         int index = cardDataToBuy.FindIndex(x => x.name == card.cardNameText.text);
         card.SetUpCard(cardDataToBuy[index]);
+        card.cardStatus = CardStatus.Bought;
         PlayerCards.instance.AddCardToDiscardFromBank(card);
 
         // Set location in bank to not filled
@@ -100,9 +91,9 @@ public class CardBank : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void SynchronizeCards(int id, CardType type, string name, string description, CardStatus status, int money)
+    public void SynchronizeCards(int id, CardType type, string name, string description, CardStatus status, int money, int indexInHand)
     {
-        PhotonView.Find(id).gameObject.GetComponent<Card>().SyncAcrossNetwork(type, name, description, status, money);  
+        PhotonView.Find(id).gameObject.GetComponent<Card>().SyncAcrossNetwork(type, name, description, status, money, indexInHand);  
     }
 
     public override void OnEnable()
