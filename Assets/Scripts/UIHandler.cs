@@ -90,7 +90,7 @@ public class UIHandler : MonoBehaviour
         cardSelectionMenu.SetActive(!allMenusAreClosed);
         playerHUD.SetActive(allMenusAreClosed);
     }
-    public void ShowBuyMenu(Card card)
+    public void ShowBuyMenu(Card card, CardData data)
     {
         if (cardInBuyMenuSpawn.gameObject.transform.childCount > 0)
         {
@@ -137,7 +137,7 @@ public class UIHandler : MonoBehaviour
     }
     public void ShowAndSetCardPlayMenu(Card card)
     {
-        //Destroy any previous instantiated card
+        //Destroy any previously instantiated card
         if (cardInPlayMenuSpawn.gameObject.transform.childCount > 0)
         {
             Destroy(cardInPlayMenuSpawn.gameObject.transform.GetChild(0).gameObject);
@@ -193,7 +193,7 @@ public class UIHandler : MonoBehaviour
         }
 
         PlayerStats.Instance.GoldAmount -= card.price;
-        PlayerCards.instance.AddCardToDiscardFromBank(card);
+        
         HideAllMenus();
 
     }

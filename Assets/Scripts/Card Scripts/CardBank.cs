@@ -68,15 +68,26 @@ public class CardBank : MonoBehaviourPunCallbacks
 
     public void CardWasBought(Card card, int goldAmount)
     {
+        // Check that player has enough gold to buy card
         if (goldAmount < card.price)
         {
             return;
         }
 
+        // Find CardData that matches card name and set it up to go on player deck
+        int index = cardDataToBuy.FindIndex(x => x.name == card.cardNameText.text);
+        card.SetUpCard(cardDataToBuy[index]);
+        PlayerCards.instance.AddCardToDiscardFromBank(card);
+
+        // Set location in bank to not filled
         GameDeckDatabase.locationIsFilled[card.indexInHand] = false;
+
+        // Substitute card on bank across the network
         PhotonNetwork.Destroy(card.gameObject);
         GameDeckDatabase.GetCardsToPlace();
         PlaceCardsOnBank(GameDeckDatabase.cardsToPlace, GameDeckDatabase.emptyIndexes);
+
+        // Reset all locations to filled
         SetLocationsToFilled();
     }
 

@@ -15,7 +15,7 @@ public class Card : MonoBehaviourPunCallbacks
     public int indexInHand;
     public int price;
     private bool canSelectCard = true;
-    [SerializeField] private TMP_Text cardNameText;
+    public TMP_Text cardNameText;
     [SerializeField] private TMP_Text cardDescriptionText;
     [SerializeField] private TMP_Text cardPriceText;
 
@@ -67,7 +67,7 @@ public class Card : MonoBehaviourPunCallbacks
 
         if (cardStatus == CardStatus.Available)
         {
-            UIHandler.instance.ShowBuyMenu(this);
+            UIHandler.instance.ShowBuyMenu(this, currentData);
             return;
         }
 
