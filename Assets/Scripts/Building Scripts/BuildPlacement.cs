@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +7,8 @@ using UnityEngine.EventSystems;
 
 public class BuildPlacement : MonoBehaviour
 {
+    private Player player;
+
     public GameObject[] objects;
     private GameObject pendingObject;
     private BuildingData pendingObjectBuildingData;
@@ -23,16 +27,21 @@ public class BuildPlacement : MonoBehaviour
     public GameObject overlappingGameObject;
     public bool mouseOverUIElement => EventSystem.current.IsPointerOverGameObject();
 
+    private void OnEnable()
+    {
+        player = PhotonNetwork.LocalPlayer;
+    }
 
     private void Update()
     {
         if (pendingObject != null)
         {
-            Debug.Log("We got here");
             pendingObject.transform.position = new Vector3(
                 RoundToNearestGrid(pos.x),
                 RoundToNearestGrid(pos.y),
                 RoundToNearestGrid(pos.z));
+
+            pendingObject.transform.rotation = GameManager.instance.bankRotations[player.ActorNumber - 1];
 
             //pendingObject.transform.position = pos;
             if (Input.GetMouseButtonDown(0))

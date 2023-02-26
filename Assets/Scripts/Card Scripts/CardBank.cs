@@ -9,6 +9,7 @@ using UnityEngine.Rendering;
 
 public class CardBank : MonoBehaviourPunCallbacks
 {
+    private Player player;
 
     [SerializeField] private List<CardData> cardDataToBuy = new List<CardData>();
     public List<Transform> bankPlacementPoints = new List<Transform>();
@@ -26,6 +27,7 @@ public class CardBank : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Awake()
     {
+        player = PhotonNetwork.LocalPlayer;
         photonView = GetComponent<PhotonView>();
 
         //PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
@@ -53,6 +55,7 @@ public class CardBank : MonoBehaviourPunCallbacks
             Card cardComponent = card.GetComponent<Card>();
             int viewId = card.GetPhotonView().ViewID;
             photonView.RPC("SynchronizeCards", RpcTarget.All, viewId, data[i].cardType, data[i].name, data[i].description, data[i].cardStatus, data[i].price, indexes[i]);
+
         }
     }
 
@@ -77,6 +80,7 @@ public class CardBank : MonoBehaviourPunCallbacks
         PhotonNetwork.Destroy(card.gameObject);
         GameDeckDatabase.GetCardsToPlace();
         PlaceCardsOnBank(GameDeckDatabase.cardsToPlace, GameDeckDatabase.emptyIndexes);
+
 
         // Reset all locations to filled
         SetLocationsToFilled();

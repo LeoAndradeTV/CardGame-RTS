@@ -1864,13 +1864,25 @@ MonoBehaviour:
   ironButton: {fileID: 424786798}
   stringButton: {fileID: 1804521739}
   cameraOnBoard:
-  - {x: 0, y: 140, z: -9}
+  - {x: 0, y: 140, z: 0}
+  - {x: 247, y: 140, z: 247}
+  - {x: 0, y: 140, z: 500}
+  - {x: -250, y: 140, z: 247}
   cameraOnTable:
   - {x: 0, y: 165, z: 179}
+  - {x: 68, y: 165, z: 247}
+  - {x: 0, y: 165, z: 312}
+  - {x: -68, y: 165, z: 247}
   cameraOnBoardRotation:
   - {x: 0.64944804, y: 0, z: 0, w: 0.76040596}
+  - {x: 0.45922914, y: -0.5376882, z: 0.45922914, w: 0.5376882}
+  - {x: -0.000000028388286, y: 0.7604058, z: -0.6494483, w: -0.000000033238393}
+  - {x: 0.45922905, y: 0.53768826, z: -0.45922905, w: 0.53768826}
   cameraOnTableRotation:
   - {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
+  - {x: -0.49987787, y: 0.5001221, z: -0.49987787, w: -0.5001221}
+  - {x: -0.00000003090862, y: 0.70710677, z: -0.70710677, w: -0.00000003090862}
+  - {x: 0.49999997, y: 0.49999997, z: -0.49999997, w: 0.49999997}
   camera: {fileID: 0}
   lastCameraPositionOnTable: {x: 0, y: 0, z: 0}
   woodCounterText: {fileID: 959787325}
@@ -2809,6 +2821,7 @@ GameObject:
   - component: {fileID: 1319212246}
   - component: {fileID: 1319212245}
   - component: {fileID: 1319212244}
+  - component: {fileID: 1319212248}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2915,6 +2928,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 81, y: 0, z: 0}
+--- !u!114 &1319212248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319212243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddf706da8ea8ec444a0bd21116ebdab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canMoveCamera: 0
 --- !u!224 &1326275872 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3993953578246723149, guid: 78cb42a9dda58d841a04c578e31429d5,

@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SetPlayersPositionAndRotation(Vector3 position, Quaternion rotation, Vector3 camPos, Quaternion camRot)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(3f);
         GameObject bank = GameObject.FindGameObjectWithTag("CardBank");
         bank.transform.position = position;
         bank.transform.rotation = rotation;
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Player actor number is {player.ActorNumber}, bank position is {position}");
     }
 
-    private void SetUpCardsOnBank(CardBank bank, List<Transform> positions, Quaternion rotation)
+    public void SetUpCardsOnBank(CardBank bank, List<Transform> positions, Quaternion rotation)
     {
         Card[] cards = FindObjectsOfType<Card>();
         for (int i = 0; i < cards.Length; i++)
