@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00ae0854ef5ef345a598169c0931ce1, type: 3}
   m_Name: Attack - Regular
   m_EditorClassIdentifier: 
-  CardType: 11
-  CardStatus: 1
+  cardType: 11
+  cardStatus: 1
   name: Normal Attack
   description: Fight your opponent 1:1
   price: 5

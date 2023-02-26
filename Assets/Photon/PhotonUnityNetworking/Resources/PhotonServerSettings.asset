@@ -42,6 +42,17 @@ MonoBehaviour:
   - RPC_ChangeReadyState
   - GetPlayerReady
   - RPC_GetPlayerReady
+  - PlaceCardToBuy
+  - SetUpCard
+  - GenerateBuyDeck
+  - PlaceCardsOnBank
+  - CardsToPlace
+  - GetCardsToPlace
+  - GetEmptySpots
+  - SyncDatabases
+  - RPC_SetUpCard
+  - SynchronizeCards
+  - SyncAcrossNetwork
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

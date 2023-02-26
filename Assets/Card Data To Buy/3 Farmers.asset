@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00ae0854ef5ef345a598169c0931ce1, type: 3}
   m_Name: 3 Farmers
   m_EditorClassIdentifier: 
-  CardType: 3
-  CardStatus: 1
+  cardType: 3
+  cardStatus: 1
   name: 3 Farmers
   description: Can harvest any 3 materials
   price: 5

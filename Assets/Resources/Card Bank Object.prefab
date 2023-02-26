@@ -202,6 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5771897356380939923}
   - component: {fileID: 5771897356380939922}
+  - component: {fileID: 2535000240260427970}
   m_Layer: 0
   m_Name: Card Bank Object
   m_TagString: CardBank
@@ -283,8 +284,32 @@ MonoBehaviour:
   - {fileID: 5771897357493607299}
   cardPrefab: {fileID: 4148298937261529663, guid: 3bd182a2f612d5144b631030a0486351,
     type: 3}
+  buyDeck: []
+  cardsToPlace: []
   cardsOnCardBank: []
-  locationIsFilled: 
+  cardDatasOnCardBank: []
+--- !u!114 &2535000240260427970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5771897356380939925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5771897356444914258
 GameObject:
   m_ObjectHideFlags: 0

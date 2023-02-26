@@ -4,29 +4,49 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
 using System;
+using Photon.Pun;
 
-public class Card : MonoBehaviour
+public class Card : MonoBehaviourPunCallbacks
 {
 
-    private CardType cardType;
+    public CardType cardType;
     public CardData currentData { get; private set; }
     public CardStatus cardStatus;
     public int indexInHand;
     public int price;
     private bool canSelectCard = true;
-    [SerializeField] private TMP_Text cardNameText;
+    public TMP_Text cardNameText;
     [SerializeField] private TMP_Text cardDescriptionText;
     [SerializeField] private TMP_Text cardPriceText;
 
+    private PhotonView photonView;
+    public PhotonView PhotonView { get { return photonView; } }
 
+    
     public void SetUpCard(CardData cardData)
     {
         currentData = cardData;
-        cardType = cardData.CardType;
+        cardType = cardData.cardType;
         cardNameText.text = cardData.name;
         cardDescriptionText.text = cardData.description;
-        cardStatus = cardData.CardStatus;
+        cardStatus = cardData.cardStatus;
         price = cardData.price;
+        if (price == 0)
+        {
+            cardPriceText.gameObject.SetActive(false);
+            return;
+        }
+        cardPriceText.text = $"Price: {price}";
+    }
+
+    public void SyncAcrossNetwork(CardType type, string name, string description, CardStatus status, int money, int index)
+    {
+        cardType = type;
+        cardNameText.text = name;
+        cardDescriptionText.text = description;
+        cardStatus = status;
+        price = money;
+        indexInHand = index;
         if (price == 0)
         {
             cardPriceText.gameObject.SetActive(false);
@@ -48,7 +68,7 @@ public class Card : MonoBehaviour
 
         if (cardStatus == CardStatus.Available)
         {
-            UIHandler.instance.ShowBuyMenu(this);
+            UIHandler.instance.ShowBuyMenu(this, currentData);
             return;
         }
 
@@ -108,21 +128,25 @@ public class Card : MonoBehaviour
 
     private void HarvestTwoIron()
     {
+        UIHandler.instance.HideAllMenus();
         GameManager.instance.materialsPerHarvest = 4;
         GameManager.instance.HarvestIron();
     }
     private void HarvestTwoString()
     {
+        UIHandler.instance.HideAllMenus();
         GameManager.instance.materialsPerHarvest = 4;
         GameManager.instance.HarvestString();
     }
     private void HarvestTwoRock()
     {
+        UIHandler.instance.HideAllMenus();
         GameManager.instance.materialsPerHarvest = 4;
         GameManager.instance.HarvestRock();
     }
     private void HarvestTwoWood()
     {
+        UIHandler.instance.HideAllMenus();
         GameManager.instance.materialsPerHarvest = 4;
         GameManager.instance.HarvestWood();
     }
@@ -146,13 +170,15 @@ public class Card : MonoBehaviour
         canSelectCard = interactable;
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         Actions.ChangeCardInteractable += SetCardInteractable;
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         Actions.ChangeCardInteractable -= SetCardInteractable;
     }
 }

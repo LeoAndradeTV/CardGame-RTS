@@ -5,17 +5,18 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using System;
+using Unity.VisualScripting;
 
 public class PlayerListingsMenu : MonoBehaviourPunCallbacks
 {
     private const string GAMEPLAY_LEVEL_NAME = "GameplayScene";
     private const string IS_READY_HASHTABLE_KEY = "IsReady";
 
-
     [SerializeField] private PlayerListing playerListingsPrefab;
     [SerializeField] private Transform content;
     [SerializeField] private GameObject startButton;
     [SerializeField] private TMP_Text readyUpText;
+
 
     private ExitGames.Client.Photon.Hashtable myProperties = new ExitGames.Client.Photon.Hashtable();
 
@@ -127,6 +128,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
             PhotonNetwork.LoadLevel(GAMEPLAY_LEVEL_NAME);
+
         }
     }
 
@@ -145,19 +147,9 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
         if (index != -1)
         {
             listings[index].Ready = ready;
-            //if (myProperties.ContainsKey(IS_READY_HASHTABLE_KEY))
-            //{
-
-            //    myProperties[IS_READY_HASHTABLE_KEY] = ready;
-            //    PhotonNetwork.SetPlayerCustomProperties(myProperties);
-            //}
-            //else
-            //{
-            //    myProperties[IS_READY_HASHTABLE_KEY] = ready;
-            //    PhotonNetwork.SetPlayerCustomProperties(myProperties);
-            //}
+            
             listings[index].ReadyCheckMark.SetActive(ready);
-            //Debug.Log($"{player.NickName} changed their IsReady key to: {player.CustomProperties["IsReady"]}");
+            
 
         }
     }
