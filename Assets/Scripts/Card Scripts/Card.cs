@@ -161,7 +161,7 @@ public class Card : MonoBehaviourPunCallbacks
     private static void PlayGold()
     {
         UIHandler.instance.HideAllMenus();
-        PlayerStats.Instance.GoldAmount += BuildingCounter.BankAmount * 3;
+        Table.Instance.GoldAmount += BuildingCounter.BankAmount * 3;
 
     }
 

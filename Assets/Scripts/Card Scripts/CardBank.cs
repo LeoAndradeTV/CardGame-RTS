@@ -11,7 +11,7 @@ public class CardBank : MonoBehaviourPunCallbacks
 {
 
     [SerializeField] private List<CardData> cardDataToBuy = new List<CardData>();
-    [SerializeField] private List<Transform> bankPlacementPoints = new List<Transform>();
+    public List<Transform> bankPlacementPoints = new List<Transform>();
     [SerializeField] private Card cardPrefab;
 
     public List<GameObject> cardsToPlace = new List<GameObject>();

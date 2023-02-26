@@ -16,7 +16,7 @@ public class StartTurnState : GameStateAbstract
                 card.GetComponent<BoxCollider>().enabled = false;
             }
         }
-        PlayerStats.Instance.GoldAmount += BuildingCounter.BankAmount * 5;
+        Table.Instance.GoldAmount += BuildingCounter.BankAmount * 5;
         Debug.Log("Hello from start turn");
         ExitState(manager);
     }

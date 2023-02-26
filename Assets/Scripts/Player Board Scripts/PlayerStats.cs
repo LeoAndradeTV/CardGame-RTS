@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Diagnostics.Contracts;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -20,17 +21,6 @@ public class PlayerStats : MonoBehaviour
     public int siegeAttackStat => BuildingCounter.SiegeAmount * 10;   
     public int archersAttackStat =>BuildingCounter.ArchersAmount * 5;
     public int protectionStat => BuildingCounter.WallAmount * 10;
-    public int GoldAmount
-    {
-        get { return goldAmount; }
-        set
-        {
-            goldAmount = value;
-            goldText.text = goldAmount.ToString();
-        }
-    }
-    private int goldAmount;
-    public TMP_Text goldText;
 
 
     public void UpdatePlayerStats(BuildingData buildingData)

@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +14,7 @@ public class PlayerCards : MonoBehaviour
     private List<CardData> playerDiscard = new List<CardData>();
     public List<Card> cardsInHand = new List<Card>();
 
+    private Player player;
     private bool deckIsEmpty => playerDeck.Count == 0;
     private bool handIsFull => cardsInHand.Count >= 5;
 
@@ -22,6 +25,7 @@ public class PlayerCards : MonoBehaviour
         {
             instance = this;
         }
+        player = PhotonNetwork.LocalPlayer;
         CreateInitialDeck();
     }
 
@@ -58,7 +62,7 @@ public class PlayerCards : MonoBehaviour
                 continue;
 
             // Makes and places card
-            Card card = Instantiate(cardPrefab, Table.Instance.cardLocations[i].position, Quaternion.Euler(90f, 0f, 0f));
+            Card card = Instantiate(cardPrefab, Table.Instance.cardLocations[i].position, GameManager.instance.cardRotations[player.ActorNumber - 1]);
             
             card.indexInHand = i;
             Table.Instance.locationIsFilled[i] = true;
