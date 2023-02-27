@@ -53,6 +53,9 @@ MonoBehaviour:
   - RPC_SetUpCard
   - SynchronizeCards
   - SyncAcrossNetwork
+  - PlaceCardsLocally
+  - DestroyCardLocally
+  - ChangeActivePlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

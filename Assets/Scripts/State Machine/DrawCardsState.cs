@@ -8,12 +8,25 @@ public class DrawCardsState : GameStateAbstract
 {
     private const string PLAYER_TABLE_TAG = "PlayerTable";
 
+    private GameObject[] cards;
+
     private GameObject table;
     private Card[] playerCards;
     private bool hasDrawnCards = false;
 
     public override void EnterState(GameStateManager manager)
     {
+        cards = GameObject.FindGameObjectsWithTag("Card");
+        foreach (GameObject card in cards)
+        {
+            if (card.GetComponent<Card>().cardStatus == CardStatus.Available)
+            {
+                card.GetComponent<Collider>().enabled = false;
+            }
+        }
+
+        Table.Instance.GoldAmount += BuildingCounter.BankAmount * 5;
+
         Debug.Log("Hello from draw cards");
         table = GameObject.FindGameObjectWithTag(PLAYER_TABLE_TAG);
         table.GetComponent<Table>().drawButton.interactable = true;

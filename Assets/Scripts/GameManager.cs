@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameStateManager gameStateManager;
+
     [SerializeField] private GameObject playerBoardPrefab;
     [SerializeField] private GameObject cardBankPrefab;
     [SerializeField] private GameObject fightingAreaPrefab;
@@ -18,6 +20,13 @@ public class GameManager : MonoBehaviour
     public List<Vector3> cameraOnBoardPositions = new List<Vector3>();
     public List<Quaternion> cameraOnBoardRotations = new List<Quaternion>();
     public List<Quaternion> cardRotations = new List<Quaternion>();
+
+    public List<Transform> player1CardBank = new List<Transform>();
+    public List<Transform> player2CardBank = new List<Transform>();
+    public List<Transform> player3CardBank = new List<Transform>();
+    public List<Transform> player4CardBank = new List<Transform>();
+
+    public List<List<Transform>> playerBankCardsTransforms = new List<List<Transform>>();
 
     private Player player;
 
@@ -33,6 +42,11 @@ public class GameManager : MonoBehaviour
         }
 
         player = PhotonNetwork.LocalPlayer;
+
+        playerBankCardsTransforms.Add(player1CardBank);
+        playerBankCardsTransforms.Add(player2CardBank);
+        playerBankCardsTransforms.Add(player3CardBank);
+        playerBankCardsTransforms.Add(player4CardBank);
 
         Instantiate(playerBoardPrefab, boardPositions[player.ActorNumber - 1], boardRotations[player.ActorNumber - 1]);
 
@@ -66,13 +80,14 @@ public class GameManager : MonoBehaviour
         bank.transform.rotation = rotation;
         Camera.main.transform.position = camPos;
         Camera.main.transform.rotation = camRot;
-        SetUpCardsOnBank(bank.GetComponent<CardBank>(), bank.GetComponent<CardBank>().bankPlacementPoints, cardRotations[player.ActorNumber - 1]);
+        SetUpCardsOnBank(bank.GetComponent<CardBank>(), playerBankCardsTransforms[player.ActorNumber - 1], cardRotations[player.ActorNumber - 1]);
+        gameStateManager.gameObject.SetActive(true);
         Debug.Log($"Player actor number is {player.ActorNumber}, bank position is {position}");
     }
 
     public void SetUpCardsOnBank(CardBank bank, List<Transform> positions, Quaternion rotation)
     {
-        Card[] cards = FindObjectsOfType<Card>();
+        GameObject[] cards = GameObject.FindGameObjectsWithTag("Card");
         for (int i = 0; i < cards.Length; i++)
         {
             cards[i].transform.position = positions[i].position;
