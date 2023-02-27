@@ -3169,20 +3169,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8492246541635984501, guid: 881bb8bdbb5ada643ba97b4a0043f918,
-        type: 3}
-      propertyPath: attackUnitsSpawner
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 8492246541635984503, guid: 881bb8bdbb5ada643ba97b4a0043f918,
         type: 3}
       propertyPath: m_Name
       value: Attack Menu
-      objectReference: {fileID: 0}
-    - target: {fileID: 8492246541635984503, guid: 881bb8bdbb5ada643ba97b4a0043f918,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8492246541774274595, guid: 881bb8bdbb5ada643ba97b4a0043f918,
         type: 3}
@@ -3199,7 +3189,8 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6925949941643452727, guid: 881bb8bdbb5ada643ba97b4a0043f918, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 881bb8bdbb5ada643ba97b4a0043f918, type: 3}
 --- !u!1 &1238993088 stripped
 GameObject:

@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackUnitsSpawner : MonoBehaviour
+public class AttackUnitsSpawner : MonoBehaviourPunCallbacks, IPunObservable
 {
     public GameObject[] unitPrefabs;
     private List<Vector3> spawnPositions = new List<Vector3>();
@@ -22,7 +23,7 @@ public class AttackUnitsSpawner : MonoBehaviour
 
     private void InstantiateUnit(int unitNumber)
     {
-        Instantiate(unitPrefabs[unitNumber], transform.position + spawnPositions[0], Quaternion.identity);
+        PhotonNetwork.Instantiate(unitPrefabs[unitNumber].name, transform.position + spawnPositions[0], Quaternion.identity);
         spawnPositions.RemoveAt(0);
     }
 
@@ -68,5 +69,10 @@ public class AttackUnitsSpawner : MonoBehaviour
             }
             spawnPositions.Add(spawnPos);
         }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        
     }
 }
