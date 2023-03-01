@@ -1,9 +1,13 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackStateManager : MonoBehaviour
 {
+    private Player player; 
+
     public AttackBaseState currentState;
     public GameStateAbstract lastGameState;
     public AttackingState attackingState = new AttackingState();
@@ -11,9 +15,13 @@ public class AttackStateManager : MonoBehaviour
     public DeploymentState deploymentState = new DeploymentState();
     public MoveToTargetState moveToTargetState = new MoveToTargetState();
 
+    public UnitMotor[] unitsOnTheBoard;
+
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
+        player = PhotonNetwork.LocalPlayer;
+        if (player.ActorNumber - 1 != GameStateManager.instance.activePlayerNumber) { return; }
         currentState = deploymentState;
         currentState.EnterState(this);
     }
@@ -21,6 +29,8 @@ public class AttackStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(currentState == null) { return; }
+        if (player.ActorNumber - 1 != GameStateManager.instance.activePlayerNumber) { return; }
         currentState.UpdateState(this);
     }
 

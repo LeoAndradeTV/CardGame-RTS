@@ -61,11 +61,18 @@ public class GameStateManager : MonoBehaviour
     {
         return lastState;    
     }
+    
     [PunRPC]
     private void ChangeActivePlayer()
     {
         activePlayerNumber = (activePlayerNumber + 1) % PhotonNetwork.CurrentRoom.PlayerCount;
         Debug.Log($"My number is {player.ActorNumber - 1} and the active player is {activePlayerNumber}");
+    }
+
+    [PunRPC]
+    private void DestroyProjectile(int viewId)
+    {
+        PhotonNetwork.Destroy(PhotonView.Find(viewId).gameObject);
     }
 
 }

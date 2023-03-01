@@ -27,6 +27,12 @@ public class WaitingForTurnState : GameStateAbstract
 
     public override void ExitState(GameStateManager manager)
     {
+        Projectile[] projectiles = GameObject.FindObjectsOfType<Projectile>();
+        int rounds = projectiles.Length;
+        for (int i = 0; i < rounds; i++)
+        {
+            MonoBehaviour.Destroy(projectiles[i].gameObject);
+        }
         manager.SwitchState(manager.drawCardsState);
     }
 

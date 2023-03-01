@@ -10347,7 +10347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &440634
 Transform:
   m_ObjectHideFlags: 0
@@ -13913,7 +13913,6 @@ GameObject:
   - component: {fileID: 6587048467440969427}
   - component: {fileID: 7147780570912162634}
   - component: {fileID: -1256879774859391985}
-  - component: {fileID: -6917073486999601250}
   - component: {fileID: 5371870044057972161}
   - component: {fileID: 4985595228314698766}
   - component: {fileID: -6859410680438845840}
@@ -13933,7 +13932,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 179124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 175}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -14034,7 +14033,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 30
+  m_Speed: 25
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 20000
@@ -14092,18 +14091,6 @@ MonoBehaviour:
   animator: {fileID: 9563318}
   hasTarget: 0
   isAttacking: 0
---- !u!114 &-6917073486999601250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 179124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1100913b2d796504f918028dabd2be53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5371870044057972161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14184,7 +14171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PositionModel:
     SynchronizeEnabled: 1
-    TeleportEnabled: 1
+    TeleportEnabled: 0
     TeleportIfDistanceGreaterThan: 3
     InterpolateOption: 2
     InterpolateMoveTowardsSpeed: 1
@@ -15063,7 +15050,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &449304
 Transform:
   m_ObjectHideFlags: 0
@@ -15086,7 +15073,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 182528}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

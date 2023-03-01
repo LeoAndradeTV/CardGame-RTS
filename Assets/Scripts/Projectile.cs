@@ -10,11 +10,12 @@ public class Projectile : MonoBehaviour
 
     private Rigidbody rb;
 
-    private void Start()
+    private void OnEnable()
     {
         //healthBar = GameObject.Find("Health Bar").GetComponent<HealthBar>();
 
         rb = GetComponent<Rigidbody>();
+        GetComponent<Collider>().enabled = true;
     }
 
     public void DealDamage()
@@ -23,7 +24,7 @@ public class Projectile : MonoBehaviour
         {
             damage = PlayerStats.Instance.archersAttackStat;
         }
-        else if (gameObject.CompareTag("Siege"))
+        else if (gameObject.CompareTag("Rock"))
         {
             damage = PlayerStats.Instance.siegeAttackStat;
         }
@@ -45,5 +46,7 @@ public class Projectile : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
             rb.velocity = Vector3.zero;
         }
+        GetComponent<Collider>().enabled = false;
+
     }
 }

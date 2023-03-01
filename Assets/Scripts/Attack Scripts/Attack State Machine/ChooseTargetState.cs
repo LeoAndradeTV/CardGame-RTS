@@ -5,7 +5,6 @@ using UnityEngine;
 public class ChooseTargetState : AttackBaseState
 {
     Camera cam;
-    UnitMotor motor;
 
     public LayerMask targetsMask;
 
@@ -13,8 +12,10 @@ public class ChooseTargetState : AttackBaseState
     {
         cam = Camera.main;
         targetsMask = LayerMask.GetMask("Target Layer");
-        motor = manager.GetComponent<UnitMotor>();
-        motor.animator.SetBool(motor.IsStopped, true);
+        foreach (UnitMotor motor in manager.unitsOnTheBoard)
+        {
+            motor.animator.SetBool(motor.IsStopped, true);
+        }  
         GameStateManager.instance.hasAttacked = true;
         Debug.Log("Choose Target State");
 
@@ -37,8 +38,11 @@ public class ChooseTargetState : AttackBaseState
                 // move our player
                 
                 Vector3 moveLocation = new Vector3 (hit.point.x, 0f, hit.point.z);
-                motor.MoveToPoint(moveLocation);
-                motor.hasTarget = true;
+                foreach (UnitMotor motor in manager.unitsOnTheBoard)
+                {
+                    motor.MoveToPoint(moveLocation);
+                    motor.hasTarget = true;
+                }
                 ExitState(manager);
             }
         }
