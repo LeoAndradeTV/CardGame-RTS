@@ -22,6 +22,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private GameObject cardPurchaseMenu;
     [SerializeField] private GameObject buildingMenu;
     [SerializeField] private GameObject attackMenu;
+    [SerializeField] private GameObject healthBarArea;
 
     [Header("Buttons")]
     [SerializeField] private Button playButton;
@@ -256,6 +257,11 @@ public class UIHandler : MonoBehaviour
         lastCameraPositionOnTable = camera.transform.position;
         StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard[player.ActorNumber - 1], camera.transform.rotation, cameraOnBoardRotation[player.ActorNumber - 1], false));
         Actions.ChangeCardInteractable?.Invoke(true);    // Player cards can be selected
+    }
+
+    public void SetHealthBarArea(bool set)
+    {
+        healthBarArea.SetActive(set);
     }
     
     private void OnEnable()

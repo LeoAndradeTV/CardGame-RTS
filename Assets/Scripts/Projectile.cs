@@ -1,41 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class Projectile : MonoBehaviour
 {
-
-    [SerializeField] private int damage;
-    [SerializeField] private HealthBar healthBar;
+    private int damage;
+    [SerializeField] private int minDamage;
+    [SerializeField] private int maxDamage;
 
     private Rigidbody rb;
 
     private void OnEnable()
     {
-        //healthBar = GameObject.Find("Health Bar").GetComponent<HealthBar>();
-
+        damage = Random.Range(minDamage, maxDamage);
         rb = GetComponent<Rigidbody>();
         GetComponent<Collider>().enabled = true;
     }
 
     public void DealDamage()
     {
-        if (gameObject.CompareTag("Arrow"))
-        {
-            damage = PlayerStats.Instance.archersAttackStat;
-        }
-        else if (gameObject.CompareTag("Rock"))
-        {
-            damage = PlayerStats.Instance.siegeAttackStat;
-        }
-
-        //healthBar.currentHealth -= damage;
-        //healthBar.SetHealth(healthBar.currentHealth);
+        AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"] = (int)AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"] - damage;
+        int currentHealth = (int)AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"];
+        PhotonView healthBarView = PhotonView.Find(GameManager.instance.healthBarId);
+        healthBarView.RPC("SetHealth", RpcTarget.All, currentHealth);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        //DealDamage
+        DealDamage();
         gameObject.SetActive(false);
     }
 

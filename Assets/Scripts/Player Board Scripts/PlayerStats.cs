@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Diagnostics.Contracts;
+using Photon.Pun;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -13,9 +14,14 @@ public class PlayerStats : MonoBehaviour
         {
             Instance = this;
         }
+
+        UpdatePlayerProperties();
+        Debug.Log(playerProperties["CurrentHealth"]);
     }
 
-    public int maxHealth => 10000;
+    public ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
+
+    public int maxHealth = 10000;
     public int currentHealth = 10000;
     public int meleeAttackStat => BuildingCounter.SwordsmenAmount * 5;
     public int siegeAttackStat => BuildingCounter.SiegeAmount * 10;   
@@ -43,6 +49,8 @@ public class PlayerStats : MonoBehaviour
                 BuildingCounter.WallAmount++;
                 break;
         }
+        UpdatePlayerProperties();
+
     }
     private void RemoveMaterials(BuildingData buildingData)
     {
@@ -50,7 +58,17 @@ public class PlayerStats : MonoBehaviour
         MaterialCounter.RockCounter -= buildingData.buildingRockRequirement;
         MaterialCounter.StringCounter -= buildingData.buildingStringRequirement;
         MaterialCounter.IronCounter -= buildingData.buildingIronRequirement;
-        Debug.Log("Are we here?");
+    }
+
+    public void UpdatePlayerProperties()
+    {
+        playerProperties["MaxHealth"] = 10000;
+        playerProperties["CurrentHealth"] = 10000;
+        playerProperties["MeleeStat"] = meleeAttackStat;
+        playerProperties["SiegeStat"] = siegeAttackStat;
+        playerProperties["ArchersStat"] = archersAttackStat;
+        playerProperties["DefenseStat"] = protectionStat;
+        PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
 
     private void OnEnable()

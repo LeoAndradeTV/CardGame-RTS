@@ -12,9 +12,10 @@ public class AttackState : GameStateAbstract
     public override void EnterState(GameStateManager manager)
     {
         Debug.Log("Hello from attack state");
+        GameManager.instance.healthBar = MonoBehaviour.FindObjectOfType<HealthBar>();
+        Debug.Log($"Health Bar is null: {GameManager.instance.healthBar == null}");
         attackStateManager = MonoBehaviour.FindObjectOfType<AttackStateManager>();
         attackStateManager.enabled = true;
-        Debug.Log($"Attack State Manager is null: {attackStateManager == null}");
         manager.hasAttacked = false;
     }
 
@@ -28,7 +29,8 @@ public class AttackState : GameStateAbstract
         }
         UIHandler.instance.ChangeToBoardView();
         attackStateManager.enabled = false;
-
+        AttackStateManager.instance.targetPlayer = null;
+        AttackStateManager.instance.photonView.RPC("SetHealthBarActive", RpcTarget.All, false, GameManager.instance.healthBarId);
         manager.SwitchState(manager.GetLastState());
     }
 

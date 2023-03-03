@@ -6,7 +6,11 @@ using UnityEngine;
 
 public class AttackStateManager : MonoBehaviour
 {
-    private Player player; 
+    private Player player;
+
+    public PhotonView photonView;
+
+    public static AttackStateManager instance;
 
     public AttackBaseState currentState;
     public GameStateAbstract lastGameState;
@@ -17,10 +21,17 @@ public class AttackStateManager : MonoBehaviour
 
     public UnitMotor[] unitsOnTheBoard;
 
+    public Player targetPlayer;
+
     // Start is called before the first frame update
     void OnEnable()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         player = PhotonNetwork.LocalPlayer;
+        photonView = GetComponent<PhotonView>();
         if (player.ActorNumber - 1 != GameStateManager.instance.activePlayerNumber) { return; }
         currentState = deploymentState;
         currentState.EnterState(this);
@@ -38,5 +49,11 @@ public class AttackStateManager : MonoBehaviour
     {
         currentState = state;
         currentState.EnterState(this);
+    }
+
+    [PunRPC]
+    public void SetHealthBarActive(bool set, int viewId)
+    {
+        PhotonView.Find(viewId).gameObject.SetActive(set);
     }
 }
