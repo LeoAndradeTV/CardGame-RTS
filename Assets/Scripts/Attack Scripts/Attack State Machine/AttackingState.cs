@@ -10,6 +10,7 @@ public class AttackingState : AttackBaseState
         foreach (UnitMotor motor in manager.unitsOnTheBoard)
         {
             motor.animator.SetBool(motor.IsAttacking, true);
+            motor.gameObject.GetComponent<DestroyUnit>().enabled = true;
             motor.isAttacking = true;
         }
     }

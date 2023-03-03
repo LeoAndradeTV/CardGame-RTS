@@ -14432,6 +14432,7 @@ GameObject:
   - component: {fileID: 2353477516106532710}
   - component: {fileID: -6307915843563544787}
   - component: {fileID: -2352997773041496796}
+  - component: {fileID: 7694546488380592762}
   m_Layer: 9
   m_Name: TT_HeavySwordman
   m_TagString: Untagged
@@ -14718,6 +14719,20 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &7694546488380592762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182410}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 203f6bfc6562a1f4385a294fad498b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimumLifetime: 12
+  maximumLifetime: 15
 --- !u!1 &182750
 GameObject:
   m_ObjectHideFlags: 0
