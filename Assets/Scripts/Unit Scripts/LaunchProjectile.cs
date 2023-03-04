@@ -73,4 +73,23 @@ public class LaunchProjectile : MonoBehaviour
 
         return null;
     }
+
+    public void DestroyInstantiatedProjectiles()
+    {
+        int rounds = instatiatedProjectiles.Count;
+        for (int i = 0; i < rounds; i++)
+        {
+            Destroy(instatiatedProjectiles[i]);
+        }
+    }
+
+    private void OnEnable()
+    {
+        Actions.OnTurnEnded += DestroyInstantiatedProjectiles;
+    }
+
+    private void OnDisable()
+    {
+        Actions.OnTurnEnded -= DestroyInstantiatedProjectiles;
+    }
 }

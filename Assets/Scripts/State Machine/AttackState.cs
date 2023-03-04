@@ -12,6 +12,7 @@ public class AttackState : GameStateAbstract
     public override void EnterState(GameStateManager manager)
     {
         Debug.Log("Hello from attack state");
+        Debug.Log((int)PhotonNetwork.LocalPlayer.CustomProperties["CurrentHealth"]);
         GameManager.instance.healthBar = MonoBehaviour.FindObjectOfType<HealthBar>();
         Debug.Log($"Health Bar is null: {GameManager.instance.healthBar == null}");
         attackStateManager = MonoBehaviour.FindObjectOfType<AttackStateManager>();

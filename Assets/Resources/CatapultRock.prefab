@@ -49,8 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minDamage: 7
-  maxDamage: 9
-  healthBar: {fileID: 0}
+  maxDamage: 10
 --- !u!54 &295618597374760990
 Rigidbody:
   m_ObjectHideFlags: 0

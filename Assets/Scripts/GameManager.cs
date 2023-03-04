@@ -89,7 +89,6 @@ public class GameManager : MonoBehaviour
         healthBar = FindObjectOfType<HealthBar>();
         healthBar.gameObject.SetActive(false);
         healthBarId = healthBar.gameObject.GetPhotonView().ViewID;
-        Debug.Log($"Player actor number is {player.ActorNumber}, bank position is {position}");
     }
 
     public void SetUpCardsOnBank(CardBank bank, List<Transform> positions, Quaternion rotation)

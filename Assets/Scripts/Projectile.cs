@@ -12,24 +12,30 @@ public class Projectile : MonoBehaviour
 
     private Rigidbody rb;
 
+    private PhotonView healthBarView;
+
     private void OnEnable()
     {
         damage = Random.Range(minDamage, maxDamage);
         rb = GetComponent<Rigidbody>();
         GetComponent<Collider>().enabled = true;
+        healthBarView = PhotonView.Find(GameManager.instance.healthBarId);
+
     }
 
     public void DealDamage()
     {
         AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"] = (int)AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"] - damage;
         int currentHealth = (int)AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"];
-        PhotonView healthBarView = PhotonView.Find(GameManager.instance.healthBarId);
         healthBarView.RPC("SetHealth", RpcTarget.All, currentHealth);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        DealDamage();
+        if (GameStateManager.instance.activePlayerNumber == GameStateManager.instance.player.ActorNumber - 1)
+        {
+            DealDamage();
+        }
         gameObject.SetActive(false);
     }
 

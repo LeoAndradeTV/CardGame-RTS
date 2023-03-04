@@ -15,6 +15,8 @@ public class PlayerStats : MonoBehaviour
             Instance = this;
         }
 
+        playerProperties["MaxHealth"] = 10000;
+        playerProperties["CurrentHealth"] = 10000;
         UpdatePlayerProperties();
         Debug.Log(playerProperties["CurrentHealth"]);
     }
@@ -62,8 +64,7 @@ public class PlayerStats : MonoBehaviour
 
     public void UpdatePlayerProperties()
     {
-        playerProperties["MaxHealth"] = 10000;
-        playerProperties["CurrentHealth"] = 10000;
+        
         playerProperties["MeleeStat"] = meleeAttackStat;
         playerProperties["SiegeStat"] = siegeAttackStat;
         playerProperties["ArchersStat"] = archersAttackStat;

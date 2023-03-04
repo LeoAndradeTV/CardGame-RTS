@@ -19,13 +19,18 @@ public class HealthBar : MonoBehaviour
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
-
     }
 
     private void OnEnable()
     {
-        //SetUpHealthBar(AttackStateManager.instance.targetPlayer);
-        photonView.RPC("SetUpHealthBar", RpcTarget.All, AttackStateManager.instance.targetPlayer);
+        if (AttackStateManager.instance == null) { return; }
+
+        if (AttackStateManager.instance.targetPlayer != null)
+        {
+            photonView.RPC("SetUpHealthBar", RpcTarget.All, AttackStateManager.instance.targetPlayer);
+            photonView.RPC("SetHealth", RpcTarget.All, currentHealth);
+
+        }
     }
 
     public void SetMaxHealth(int health)
