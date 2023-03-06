@@ -112,7 +112,7 @@ public class AttackUnitsSpawner : MonoBehaviourPunCallbacks, IPunObservable
                 }
             } else if (player.ActorNumber == 3)
             {
-                if (spawnPos.x < maxXList[player.ActorNumber - 1])
+                if (spawnPos.x > maxXList[player.ActorNumber - 1])
                 {
                     spawnPos.x += xOffsetList[player.ActorNumber - 1];
                 }
@@ -127,7 +127,7 @@ public class AttackUnitsSpawner : MonoBehaviourPunCallbacks, IPunObservable
                 }
             } else if (player.ActorNumber == 4)
             {
-                if (spawnPos.z < maxZList[player.ActorNumber - 1])
+                if (spawnPos.z > maxZList[player.ActorNumber - 1])
                 {
                     spawnPos.z += xOffsetList[player.ActorNumber - 1];
                 }
