@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+using System.Net;
 
 public class LaunchProjectile : MonoBehaviour
 {
+    private PhotonView photonView;
+
     public GameObject projectile;
     public Transform launchPosition;
     public float launchForce;
@@ -15,7 +20,9 @@ public class LaunchProjectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        instatiatedProjectiles= new List<GameObject>();
+        photonView = GetComponent<PhotonView>();
+
+        instatiatedProjectiles = new List<GameObject>();
 
         InstantiateProjectiles();
     }
@@ -43,11 +50,12 @@ public class LaunchProjectile : MonoBehaviour
 
     public void InstantiateProjectiles()
     {
+        if (instatiatedProjectiles.Count != 0) { return; }
         
         for (int i = 0; i < ammoAmount; i++)
         {
             var proj = Instantiate(projectile, transform.position, transform.rotation);
-            proj.gameObject.SetActive(false);
+            proj.SetActive(false);
             instatiatedProjectiles.Add(proj);
 
         }
@@ -66,5 +74,22 @@ public class LaunchProjectile : MonoBehaviour
         return null;
     }
 
+    public void DestroyInstantiatedProjectiles()
+    {
+        int rounds = instatiatedProjectiles.Count;
+        for (int i = 0; i < rounds; i++)
+        {
+            Destroy(instatiatedProjectiles[i]);
+        }
+    }
 
+    private void OnEnable()
+    {
+        Actions.OnTurnEnded += DestroyInstantiatedProjectiles;
+    }
+
+    private void OnDisable()
+    {
+        Actions.OnTurnEnded -= DestroyInstantiatedProjectiles;
+    }
 }

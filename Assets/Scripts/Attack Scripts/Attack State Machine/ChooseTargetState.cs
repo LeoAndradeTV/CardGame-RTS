@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,6 @@ using UnityEngine;
 public class ChooseTargetState : AttackBaseState
 {
     Camera cam;
-    UnitMotor motor;
 
     public LayerMask targetsMask;
 
@@ -13,8 +13,10 @@ public class ChooseTargetState : AttackBaseState
     {
         cam = Camera.main;
         targetsMask = LayerMask.GetMask("Target Layer");
-        motor = manager.GetComponent<UnitMotor>();
-        motor.animator.SetBool(motor.IsStopped, true);
+        foreach (UnitMotor motor in manager.unitsOnTheBoard)
+        {
+            motor.animator.SetBool(motor.IsStopped, true);
+        }  
         GameStateManager.instance.hasAttacked = true;
         Debug.Log("Choose Target State");
 
@@ -37,8 +39,33 @@ public class ChooseTargetState : AttackBaseState
                 // move our player
                 
                 Vector3 moveLocation = new Vector3 (hit.point.x, 0f, hit.point.z);
-                motor.MoveToPoint(moveLocation);
-                motor.hasTarget = true;
+                foreach (UnitMotor motor in manager.unitsOnTheBoard)
+                {
+                    if (hit.collider.gameObject.name == "Player1Castle")
+                    {
+                        manager.targetPlayer = PhotonNetwork.PlayerList[0];
+                    }
+                    else if (hit.collider.gameObject.name == "Player2Castle")
+                    {
+                        manager.targetPlayer = PhotonNetwork.PlayerList[1];
+                    }
+                    else if (hit.collider.gameObject.name == "Player3Castle")
+                    {
+                        manager.targetPlayer = PhotonNetwork.PlayerList[2];
+                    }
+                    else if (hit.collider.gameObject.name == "Player4Castle")
+                    {
+                        manager.targetPlayer = PhotonNetwork.PlayerList[3];
+                    }
+                    motor.MoveToPoint(moveLocation);
+                    motor.hasTarget = true;
+                    
+                    manager.photonView.RPC("SetHealthBarActive", RpcTarget.All, true, GameManager.instance.healthBarId);
+                    Debug.Log(manager.targetPlayer.ActorNumber);
+
+
+
+                }
                 ExitState(manager);
             }
         }

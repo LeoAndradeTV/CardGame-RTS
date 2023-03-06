@@ -1,17 +1,41 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackUnitsSpawner : MonoBehaviour
+public class AttackUnitsSpawner : MonoBehaviourPunCallbacks, IPunObservable
 {
+    private Player player;
+
     public GameObject[] unitPrefabs;
     private List<Vector3> spawnPositions = new List<Vector3>();
-    private float maxX = 80;
-    private float maxZ = 40;
-    float x = -40, y = 0, z = 0;
+
+    private List<Vector3> startingOffsets = new List<Vector3>()
+        {
+            new Vector3(-60, 0, 0),
+            new Vector3(70, 0, 15),
+            new Vector3(60, 0, 145),
+            new Vector3(-60, 0, 135)
+        };
+
+    private List<float> maxXList = new List<float>() { 60f, 30f, -60f, -20f};
+    private List<float> maxZList = new List<float>() { 40f, 135f, 105f, 15f};
+
+    private List<float> xOffsetList = new List<float> { 8, -8, -8, 8 };
+    private List<float> zOffsetList = new List<float> { 8, 8, -8, -8 };
+
+    private List<Quaternion> unitRotations = new List<Quaternion>()
+    {
+        Quaternion.Euler(0, 0, 0),
+        Quaternion.Euler(0, 270, 0),
+        Quaternion.Euler(0, 180, 0),
+        Quaternion.Euler(0, 90, 0)
+    };
 
     public void SpawnUnits(int archers, int swordsmen, int sieges)
     {
+        player = PhotonNetwork.LocalPlayer;
         spawnPositions.Clear();
         buildSpawnPositions(archers + swordsmen + sieges);
         SpawnSieges(sieges);
@@ -22,7 +46,7 @@ public class AttackUnitsSpawner : MonoBehaviour
 
     private void InstantiateUnit(int unitNumber)
     {
-        Instantiate(unitPrefabs[unitNumber], transform.position + spawnPositions[0], Quaternion.identity);
+        PhotonNetwork.Instantiate(unitPrefabs[unitNumber].name, unitPrefabs[unitNumber].transform.position + spawnPositions[0], unitRotations[PhotonNetwork.LocalPlayer.ActorNumber - 1]);
         spawnPositions.RemoveAt(0);
     }
 
@@ -51,22 +75,78 @@ public class AttackUnitsSpawner : MonoBehaviour
 
     public void buildSpawnPositions(int amount)
     {
+        Vector3 spawnPos = startingOffsets[player.ActorNumber - 1];
+        spawnPositions.Add(spawnPos);
         for (int i = 0; i < amount; i++)
         {
-            Vector3 spawnPos = new Vector3(x, y, z);
-            if (x < maxX)
+            if (player.ActorNumber == 1)
             {
-                x += 8;
-            } else
-            {
-                z += 8;
-                x = -40;
+                if (spawnPos.x < maxXList[player.ActorNumber - 1])
+                {
+                    spawnPos.x += xOffsetList[player.ActorNumber - 1];
+                }
+                else
+                {
+                    spawnPos.z += zOffsetList[player.ActorNumber - 1];
+                    spawnPos.x = startingOffsets[player.ActorNumber - 1].x;
+                }
+                if (spawnPos.z > maxZList[player.ActorNumber - 1])
+                {
+                    Debug.Log("Most units deployed: 96");
+                }
             }
-            if (z > maxZ)
+            else if (player.ActorNumber == 2)
             {
-                Debug.Log("Most units deployed");
-            }
+                if (spawnPos.z < maxZList[player.ActorNumber - 1])
+                {
+                    spawnPos.z += zOffsetList[player.ActorNumber - 1];
+                }
+                else
+                {
+                    spawnPos.x += xOffsetList[player.ActorNumber - 1];
+                    spawnPos.z = startingOffsets[player.ActorNumber - 1].z;
+                }
+                if (spawnPos.x < maxXList[player.ActorNumber - 1])
+                {
+                    Debug.Log("Most units deployed: 96");
+                }
+            } else if (player.ActorNumber == 3)
+            {
+                if (spawnPos.x < maxXList[player.ActorNumber - 1])
+                {
+                    spawnPos.x += xOffsetList[player.ActorNumber - 1];
+                }
+                else
+                {
+                    spawnPos.z += zOffsetList[player.ActorNumber - 1];
+                    spawnPos.x = startingOffsets[player.ActorNumber - 1].x;
+                }
+                if (spawnPos.z > maxZList[player.ActorNumber - 1])
+                {
+                    Debug.Log("Most units deployed: 96");
+                }
+            } else if (player.ActorNumber == 4)
+            {
+                if (spawnPos.z < maxZList[player.ActorNumber - 1])
+                {
+                    spawnPos.z += xOffsetList[player.ActorNumber - 1];
+                }
+                else
+                {
+                    spawnPos.x += xOffsetList[player.ActorNumber - 1];
+                    spawnPos.z = startingOffsets[player.ActorNumber - 1].x;
+                }
+                if (spawnPos.x > maxXList[player.ActorNumber - 1])
+                {
+                    Debug.Log("Most units deployed: 96");
+                }
+            }         
             spawnPositions.Add(spawnPos);
         }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        
     }
 }

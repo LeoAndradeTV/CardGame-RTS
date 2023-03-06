@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1571198380739436724}
   - component: {fileID: -905062702791231491}
   - component: {fileID: 295618597374760990}
+  - component: {fileID: -3440362922739559479}
+  - component: {fileID: 5216385932765125011}
   m_Layer: 8
   m_Name: CatapultRock
   m_TagString: Rock
@@ -46,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed05f29065c856d48a2e6befb991f9c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 8
-  healthBar: {fileID: 0}
+  minDamage: 7
+  maxDamage: 10
 --- !u!54 &295618597374760990
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -64,6 +66,41 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-3440362922739559479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665280816592428482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!135 &5216385932765125011
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665280816592428482}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.40749735
+  m_Center: {x: 0.004637167, y: 0.0043979883, z: 0.013622493}
 --- !u!1001 &682508400913071857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -127,22 +164,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 682508400913071857}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &682508400913102929 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: 2761a09f46d73334eb35519c312da6fb,
-    type: 3}
-  m_PrefabInstance: {fileID: 682508400913071857}
-  m_PrefabAsset: {fileID: 0}
---- !u!135 &1769874684119970447
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 682508400913102929}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.40749735
-  m_Center: {x: 0.004637167, y: 0.0043979883, z: 0.013622493}

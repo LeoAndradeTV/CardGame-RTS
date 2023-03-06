@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class CameraController : MonoBehaviour
 {
     public static CameraController instance;
     public bool canMoveCamera;
+
+    private Player player;
 
     private float speed = 150f;
     private float currentZoom = 277f;
@@ -24,6 +28,7 @@ public class CameraController : MonoBehaviour
         {
             instance = this;
         }
+        player = PhotonNetwork.LocalPlayer;
     }
 
     // Update is called once per frame
@@ -38,7 +43,23 @@ public class CameraController : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        transform.position = new Vector3(transform.position.x + horizontal * speed * Time.deltaTime, currentZoom, transform.position.z + vertical * speed * Time.deltaTime);
+        if (player.ActorNumber == 1)
+        {
+            transform.position = new Vector3(transform.position.x + horizontal * speed * Time.deltaTime, currentZoom, transform.position.z + vertical * speed * Time.deltaTime);
+        }
+        else if (player.ActorNumber == 2)
+        {
+            transform.position = new Vector3(transform.position.x - vertical * speed * Time.deltaTime, currentZoom, transform.position.z + horizontal * speed * Time.deltaTime);
+        }
+        else if (player.ActorNumber == 3)
+        {
+            transform.position = new Vector3(transform.position.x - horizontal * speed * Time.deltaTime, currentZoom, transform.position.z - vertical * speed * Time.deltaTime);
+        }
+        else if (player.ActorNumber == 4)
+        {
+            transform.position = new Vector3(transform.position.x + vertical * speed * Time.deltaTime, currentZoom, transform.position.z - horizontal * speed * Time.deltaTime);
+
+        }
 
         SetCameraInBound();
 

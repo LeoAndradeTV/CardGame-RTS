@@ -1,13 +1,14 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DeploymentState : AttackBaseState
 {
-    public UnitMotor[] unitsOnTheBoard;
+    public UnitMotor[] units;
 
     public override void EnterState(AttackStateManager manager)
-    {
+    { 
         Debug.Log("Deployment State");
     }
 
@@ -18,9 +19,10 @@ public class DeploymentState : AttackBaseState
 
     public override void UpdateState(AttackStateManager manager)
     {
-        unitsOnTheBoard = GameObject.FindObjectsOfType<UnitMotor>();
-        if (unitsOnTheBoard.Length > 0 )
+        units = GameObject.FindObjectsOfType<UnitMotor>();
+        if (units.Length > 0 )
         {
+            manager.unitsOnTheBoard = units;
             ExitState(manager);
         }
     }

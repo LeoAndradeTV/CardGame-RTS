@@ -4,28 +4,31 @@ using UnityEngine;
 
 public class AttackingState : AttackBaseState
 {
-    private UnitMotor[] unitsOnTheBoard;
-    private UnitMotor motor;
 
     public override void EnterState(AttackStateManager manager)
     {
-        Debug.Log("Attacking State");
-        motor = manager.GetComponent<UnitMotor>();
-        motor.animator.SetBool(motor.IsAttacking, true);
-        motor.isAttacking = true;
+        foreach (UnitMotor motor in manager.unitsOnTheBoard)
+        {
+            motor.animator.SetBool(motor.IsAttacking, true);
+            motor.gameObject.GetComponent<DestroyUnit>().enabled = true;
+            motor.isAttacking = true;
+        }
     }
 
     public override void ExitState(AttackStateManager manager)
     {
-        motor.animator.SetBool(motor.IsAttacking, false);
-        motor.isAttacking = false;
+        foreach (UnitMotor motor in manager.unitsOnTheBoard)
+        {
+            motor.animator.SetBool(motor.IsAttacking, false);
+            motor.isAttacking = false;
+        }
         manager.SwitchState(manager.deploymentState);
     }
 
     public override void UpdateState(AttackStateManager manager)
     {
-        unitsOnTheBoard = GameObject.FindObjectsOfType<UnitMotor>();
-        if (unitsOnTheBoard.Length == 0)
+        UnitMotor[] unitsLeft = GameObject.FindObjectsOfType<UnitMotor>();
+        if (unitsLeft.Length == 0)
         {
             ExitState(manager);
         }

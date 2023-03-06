@@ -19,7 +19,7 @@ MonoBehaviour:
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
-    FixedRegion: 
+    FixedRegion: us
     Server: 
     Port: 0
     ProxyServer: 
@@ -53,6 +53,18 @@ MonoBehaviour:
   - RPC_SetUpCard
   - SynchronizeCards
   - SyncAcrossNetwork
+  - PlaceCardsLocally
+  - DestroyCardLocally
+  - ChangeActivePlayer
+  - UpdateNewObjectMaterials
+  - DestroyProjectiles
+  - DestroyProjectile
+  - SetProjectileInactive
+  - SetHealthBarActive
+  - SetHealth
+  - SetUpHealthBar
+  - RPC_BakeNaveMesh
+  - RPC_BakeNavMesh
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 1

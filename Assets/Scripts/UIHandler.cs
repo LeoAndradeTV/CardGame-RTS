@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class UIHandler : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class UIHandler : MonoBehaviour
     public bool allMenusAreClosed = true;
     public int harvests;
 
+    private Player player;
+
     [Header("Menus")]
     [SerializeField] private GameObject cardSelectionMenu;
     [SerializeField] private GameObject materialSelectionMenu;
@@ -18,6 +22,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private GameObject cardPurchaseMenu;
     [SerializeField] private GameObject buildingMenu;
     [SerializeField] private GameObject attackMenu;
+    [SerializeField] private GameObject healthBarArea;
 
     [Header("Buttons")]
     [SerializeField] private Button playButton;
@@ -35,10 +40,10 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private Button stringButton;
 
     [Header("Camera Properties")]
-    [SerializeField] private Vector3 cameraOnBoard;
-    [SerializeField] private Vector3 cameraOnTable;
-    [SerializeField] private Quaternion cameraOnBoardRotation;
-    [SerializeField] private Quaternion cameraOnTableRotation;
+    [SerializeField] private List<Vector3> cameraOnBoard;
+    [SerializeField] private List<Vector3> cameraOnTable;
+    [SerializeField] private List<Quaternion> cameraOnBoardRotation;
+    [SerializeField] private List<Quaternion> cameraOnTableRotation;
     [SerializeField] private new Camera camera;
     public Vector3 lastCameraPositionOnTable;
 
@@ -61,10 +66,13 @@ public class UIHandler : MonoBehaviour
         {
             instance = this;
         }
+        player = PhotonNetwork.LocalPlayer;
+        camera = Camera.main;
         SetBuildsButton(false);
         SetEndTurnButton(false);
         HideAllMenus();
-        lastCameraPositionOnTable = cameraOnTable;
+        Debug.Log(player.NickName);
+        lastCameraPositionOnTable = cameraOnTable[player.ActorNumber - 1];
     }
 
     public void HideAllMenus()
@@ -97,7 +105,7 @@ public class UIHandler : MonoBehaviour
             Destroy(cardInBuyMenuSpawn.gameObject.transform.GetChild(0).gameObject);
         }
         buyButton.onClick.RemoveAllListeners();
-        buyButton.onClick.AddListener(()=>BuyButtonClicked(card, PlayerStats.Instance.GoldAmount));
+        buyButton.onClick.AddListener(()=>BuyButtonClicked(card, Table.Instance.GoldAmount));
         StartCoroutine(ShowBuyMenuCoroutine());
         var cardInMenu = Instantiate(card, cardInBuyMenuSpawn);
         SetUpCardInMenu(cardInMenu);
@@ -192,7 +200,7 @@ public class UIHandler : MonoBehaviour
             return;
         }
 
-        PlayerStats.Instance.GoldAmount -= card.price;
+        Table.Instance.GoldAmount -= card.price;
         
         HideAllMenus();
 
@@ -240,15 +248,20 @@ public class UIHandler : MonoBehaviour
     }
     public void ChangeToTableView()
     {
-        StartCoroutine(LerpCamera(camera.transform.position, lastCameraPositionOnTable, camera.transform.rotation, cameraOnTableRotation, true));
+        StartCoroutine(LerpCamera(camera.transform.position, lastCameraPositionOnTable, camera.transform.rotation, cameraOnTableRotation[player.ActorNumber - 1], true));
         Actions.ChangeCardInteractable?.Invoke(false);   // Player cards can't be selected
 
     }
     public void ChangeToBoardView()
     {
         lastCameraPositionOnTable = camera.transform.position;
-        StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard, camera.transform.rotation, cameraOnBoardRotation, false));
+        StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard[player.ActorNumber - 1], camera.transform.rotation, cameraOnBoardRotation[player.ActorNumber - 1], false));
         Actions.ChangeCardInteractable?.Invoke(true);    // Player cards can be selected
+    }
+
+    public void SetHealthBarArea(bool set)
+    {
+        healthBarArea.SetActive(set);
     }
     
     private void OnEnable()

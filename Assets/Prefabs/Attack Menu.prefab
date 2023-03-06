@@ -2385,13 +2385,14 @@ GameObject:
   m_Component:
   - component: {fileID: 8492246541635984500}
   - component: {fileID: 8492246541635984501}
+  - component: {fileID: 6925949941643452727}
   m_Layer: 0
   m_Name: Attack Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8492246541635984500
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2437,7 +2438,23 @@ MonoBehaviour:
   swordsmenCount: {fileID: 8492246540294108666}
   siegesCount: {fileID: 8492246540179351362}
   attackButton: {fileID: 8492246541619933237}
-  attackUnitsSpawner: {fileID: 0}
+  attackUnitsSpawner: {fileID: 6925949941643452727}
+--- !u!114 &6925949941643452727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8492246541635984503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5c278cd9ac04f1448be5f9719565958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitPrefabs:
+  - {fileID: 179124, guid: 04c79b5f6e9ebab48af48fdcf7b6d570, type: 3}
+  - {fileID: 182410, guid: 75925c365bd895145beefbc806717633, type: 3}
+  - {fileID: 255834303604254086, guid: 023f155a2d7c46043ae7d32761d3ac34, type: 3}
 --- !u!1 &8492246541774274594
 GameObject:
   m_ObjectHideFlags: 0

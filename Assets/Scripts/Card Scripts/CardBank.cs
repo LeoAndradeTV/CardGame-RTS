@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class CardBank : MonoBehaviourPunCallbacks
 {
+    private Player player;
 
     [SerializeField] private List<CardData> cardDataToBuy = new List<CardData>();
-    [SerializeField] private List<Transform> bankPlacementPoints = new List<Transform>();
+    public List<Transform> bankPlacementPoints = new List<Transform>();
     [SerializeField] private Card cardPrefab;
 
     public List<GameObject> cardsToPlace = new List<GameObject>();
@@ -26,6 +28,7 @@ public class CardBank : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Awake()
     {
+        player = PhotonNetwork.LocalPlayer;
         photonView = GetComponent<PhotonView>();
 
         //PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
@@ -53,6 +56,7 @@ public class CardBank : MonoBehaviourPunCallbacks
             Card cardComponent = card.GetComponent<Card>();
             int viewId = card.GetPhotonView().ViewID;
             photonView.RPC("SynchronizeCards", RpcTarget.All, viewId, data[i].cardType, data[i].name, data[i].description, data[i].cardStatus, data[i].price, indexes[i]);
+            photonView.RPC("PlaceCardsLocally", RpcTarget.All, viewId, indexes[i]);
         }
     }
 
@@ -74,12 +78,49 @@ public class CardBank : MonoBehaviourPunCallbacks
         GameDeckDatabase.locationIsFilled[card.indexInHand] = false;
 
         // Substitute card on bank across the network
-        PhotonNetwork.Destroy(card.gameObject);
+        photonView.RPC("DestroyCardLocally", RpcTarget.All, card.photonView.ViewID);
         GameDeckDatabase.GetCardsToPlace();
         PlaceCardsOnBank(GameDeckDatabase.cardsToPlace, GameDeckDatabase.emptyIndexes);
 
+
         // Reset all locations to filled
         SetLocationsToFilled();
+    }
+
+    [PunRPC]
+    private void PlaceCardsLocally(int viewId, int index)
+    {
+        GameObject card = PhotonView.Find(viewId).gameObject;
+        int caseNumber = player.ActorNumber - 1;
+        switch (caseNumber)
+        {
+            case 0:
+                card.transform.position = GameManager.instance.player1CardBank[index].transform.position;
+                card.transform.rotation = GameManager.instance.player1CardBank[index].transform.rotation;
+                break;
+            case 1:
+                card.transform.position = GameManager.instance.player2CardBank[index].transform.position;
+                card.transform.rotation = GameManager.instance.player2CardBank[index].transform.rotation;
+                break;
+            case 2:
+                card.transform.position = GameManager.instance.player3CardBank[index].transform.position;
+                card.transform.rotation = GameManager.instance.player3CardBank[index].transform.rotation;
+                break;
+            case 3:
+                card.transform.position = GameManager.instance.player4CardBank[index].transform.position;
+                card.transform.rotation = GameManager.instance.player4CardBank[index].transform.rotation;
+                break;
+            default:
+                break;
+        }
+        Debug.Log($"Player number is {player.ActorNumber} Card position is {card.transform.position}, card rotation is {card.transform.rotation}");
+    }
+
+    [PunRPC]
+    private void DestroyCardLocally(int viewID)
+    {
+        GameObject cardToDestroy = PhotonView.Find(viewID).gameObject;
+        Destroy(cardToDestroy);
     }
 
     private void SetLocationsToFilled()

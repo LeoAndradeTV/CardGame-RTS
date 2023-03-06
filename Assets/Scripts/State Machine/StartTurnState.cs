@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class StartTurnState : GameStateAbstract
 {
-    private Card[] cards;
+    private GameObject[] cards;
 
     public override void EnterState(GameStateManager manager)
     {
-        cards = GameObject.FindObjectsOfType<Card>();
-        foreach (Card card in cards)
+        cards = GameObject.FindGameObjectsWithTag("Card");
+        foreach (GameObject card in cards)
         {
-            if (card.cardStatus == CardStatus.Available)
+            if (card.GetComponent<Card>().cardStatus == CardStatus.Available)
             {
-                card.GetComponent<BoxCollider>().enabled = false;
+                card.GetComponent<Collider>().enabled = false;
             }
         }
-        PlayerStats.Instance.GoldAmount += BuildingCounter.BankAmount * 5;
+        Table.Instance.GoldAmount += BuildingCounter.BankAmount * 5;
         Debug.Log("Hello from start turn");
         ExitState(manager);
     }

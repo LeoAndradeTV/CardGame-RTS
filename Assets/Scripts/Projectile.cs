@@ -1,40 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class Projectile : MonoBehaviour
 {
-
-    [SerializeField] private int damage;
-    [SerializeField] private HealthBar healthBar;
+    private int damage;
+    [SerializeField] private int minDamage;
+    [SerializeField] private int maxDamage;
 
     private Rigidbody rb;
 
-    private void Start()
-    {
-        //healthBar = GameObject.Find("Health Bar").GetComponent<HealthBar>();
+    private PhotonView healthBarView;
 
+    private void OnEnable()
+    {
+        damage = Random.Range(minDamage, maxDamage);
         rb = GetComponent<Rigidbody>();
+        GetComponent<Collider>().enabled = true;
+        healthBarView = PhotonView.Find(GameManager.instance.healthBarId);
+
     }
 
     public void DealDamage()
     {
-        if (gameObject.CompareTag("Arrow"))
-        {
-            damage = PlayerStats.Instance.archersAttackStat;
-        }
-        else if (gameObject.CompareTag("Siege"))
-        {
-            damage = PlayerStats.Instance.siegeAttackStat;
-        }
-
-        //healthBar.currentHealth -= damage;
-        //healthBar.SetHealth(healthBar.currentHealth);
+        AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"] = (int)AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"] - damage;
+        int currentHealth = (int)AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"];
+        healthBarView.RPC("SetHealth", RpcTarget.All, currentHealth);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        //DealDamage
+        if (GameStateManager.instance.activePlayerNumber == GameStateManager.instance.player.ActorNumber - 1)
+        {
+            DealDamage();
+        }
         gameObject.SetActive(false);
     }
 
@@ -45,5 +46,7 @@ public class Projectile : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
             rb.velocity = Vector3.zero;
         }
+        GetComponent<Collider>().enabled = false;
+
     }
 }
