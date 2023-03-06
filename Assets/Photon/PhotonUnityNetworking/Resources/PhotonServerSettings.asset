@@ -19,7 +19,7 @@ MonoBehaviour:
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
-    FixedRegion: 
+    FixedRegion: us
     Server: 
     Port: 0
     ProxyServer: 
@@ -64,6 +64,7 @@ MonoBehaviour:
   - SetHealth
   - SetUpHealthBar
   - RPC_BakeNaveMesh
+  - RPC_BakeNavMesh
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 1

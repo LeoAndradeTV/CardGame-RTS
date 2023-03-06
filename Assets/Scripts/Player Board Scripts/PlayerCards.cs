@@ -32,16 +32,21 @@ public class PlayerCards : MonoBehaviour
     // Create every initial card
     public void CreateInitialDeck()
     {
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 6; i++)
         {
             playerDeck.Add(cardData[0]);
         }
         for (int i = 0; i < 3; i++)
         {
+            playerDeck.Add(cardData[1]);
+        }
+        //Add one type of attack card
+        for (int i = 0; i < 1; i++)
+        {
             playerDeck.Add(cardData[2]);
         }
 
-        //TODO: Add one type of attack card
+        
     }
     public void DrawCards()
     {

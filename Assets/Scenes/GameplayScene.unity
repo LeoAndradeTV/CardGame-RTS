@@ -2199,8 +2199,8 @@ MonoBehaviour:
   lastCameraPositionOnTable: {x: 0, y: 0, z: 0}
   woodCounterText: {fileID: 959787325}
   rockCounterText: {fileID: 384786665}
-  stringCounterText: {fileID: 1590716310}
-  ironCounterText: {fileID: 1677245371}
+  stringCounterText: {fileID: 1677245371}
+  ironCounterText: {fileID: 1590716310}
   cardInPlayMenuSpawn: {fileID: 1392508412}
   cardInBuyMenuSpawn: {fileID: 514931085}
 --- !u!114 &649498966
@@ -2490,6 +2490,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 5.0000076
       objectReference: {fileID: 0}
+    - target: {fileID: 5480717013791211869, guid: aa42a573efe6af24584c025b06f35cd3,
+        type: 3}
+      propertyPath: m_Name
+      value: Iron Count Text
+      objectReference: {fileID: 0}
     - target: {fileID: 5480717013863839753, guid: aa42a573efe6af24584c025b06f35cd3,
         type: 3}
       propertyPath: m_fontSize
@@ -2529,6 +2534,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 5.0000076
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480717013863839755, guid: aa42a573efe6af24584c025b06f35cd3,
+        type: 3}
+      propertyPath: m_Name
+      value: String Count Text
       objectReference: {fileID: 0}
     - target: {fileID: 5480717014133031144, guid: aa42a573efe6af24584c025b06f35cd3,
         type: 3}

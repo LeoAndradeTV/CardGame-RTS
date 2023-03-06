@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
             cameraOnBoardRotations[player.ActorNumber - 1]));
 
         //FOR TESTING ONLY
-        Table.Instance.GoldAmount = 100;
+        Table.Instance.GoldAmount = 0;
 
     }
 

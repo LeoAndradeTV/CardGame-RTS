@@ -14619,7 +14619,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d016ba61d925ebc48acdbd9ca8cf8c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  minDamage: 2
+  maxDamage: 4
   healthBar: {fileID: 0}
 --- !u!114 &-2900217759858675931
 MonoBehaviour:
