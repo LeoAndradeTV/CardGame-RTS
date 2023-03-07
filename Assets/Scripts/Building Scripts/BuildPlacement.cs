@@ -49,7 +49,7 @@ public class BuildPlacement : MonoBehaviourPunCallbacks
                     RoundToNearestGrid(pos.z));
 
 
-            pendingObject.transform.rotation = GameManager.instance.bankRotations[player.ActorNumber - 1];
+            pendingObject.transform.rotation = GameManager.instance.bankRotations[Support.GetPlayerRoomId(player)];
 
             //pendingObject.transform.position = pos;
             if (Input.GetMouseButtonDown(0))
@@ -105,9 +105,9 @@ public class BuildPlacement : MonoBehaviourPunCallbacks
                 renderer.material = startingMaterial;
                 continue;
             }
-            renderer.material = materialsByPlayer[player.ActorNumber-1];
+            renderer.material = materialsByPlayer[Support.GetPlayerRoomId(player)];
         }
-        int materialIndex = player.ActorNumber - 1;
+        int materialIndex = Support.GetPlayerRoomId(player);
         photonView.RPC("UpdateNewObjectMaterials", RpcTarget.All, pendingObject.GetPhotonView().ViewID, materialIndex);
         Actions.OnBuildingBuilt?.Invoke(pendingObjectBuildingData);
 

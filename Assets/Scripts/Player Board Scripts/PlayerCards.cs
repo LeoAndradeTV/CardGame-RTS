@@ -67,7 +67,7 @@ public class PlayerCards : MonoBehaviour
                 continue;
 
             // Makes and places card
-            Card card = Instantiate(cardPrefab, Table.Instance.cardLocations[i].position, GameManager.instance.cardRotations[player.ActorNumber - 1]);
+            Card card = Instantiate(cardPrefab, Table.Instance.cardLocations[i].position, GameManager.instance.cardRotations[Support.GetPlayerRoomId(player)]);
             
             card.indexInHand = i;
             Table.Instance.locationIsFilled[i] = true;

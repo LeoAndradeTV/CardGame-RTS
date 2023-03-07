@@ -32,7 +32,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (GameStateManager.instance.activePlayerNumber == GameStateManager.instance.player.ActorNumber - 1)
+        if (GameStateManager.instance.activePlayerNumber == Support.GetPlayerRoomId(GameStateManager.instance.player))
         {
             DealDamage();
         }

@@ -1,11 +1,9 @@
 using Photon.Realtime;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
-using System;
-using Unity.VisualScripting;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class PlayerListingsMenu : MonoBehaviourPunCallbacks
 {
@@ -18,7 +16,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_Text readyUpText;
 
 
-    private ExitGames.Client.Photon.Hashtable myProperties = new ExitGames.Client.Photon.Hashtable();
+    private Hashtable myProperties = new Hashtable();
 
     private List<PlayerListing> listings = new List<PlayerListing>();
     private RoomsCanvases _roomsCanvases;
@@ -35,6 +33,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
         SetReadyUp(false);
         GetCurrentRoomPlayers();
         ShowStartButton();
+        myProperties["RoomID"] = -1;
         myProperties[IS_READY_HASHTABLE_KEY] = false;
         PhotonNetwork.SetPlayerCustomProperties(myProperties);
     }
@@ -125,6 +124,9 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
                 }
             }
 
+            //List<Player> players = Support.GetPlayersInRoom(PhotonNetwork.CurrentRoom.Players);
+            //Support.SetPlayersNumbers(players);
+
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
             PhotonNetwork.LoadLevel(GAMEPLAY_LEVEL_NAME);
@@ -152,5 +154,11 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
             
 
         }
+    }
+
+    [PunRPC]
+    private void UpdateRoomIDs(Player player, int id)
+    {
+        player.CustomProperties["RoomID"] = id;
     }
 }

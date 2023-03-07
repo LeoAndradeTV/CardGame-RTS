@@ -66,7 +66,6 @@ public class GameStateManager : MonoBehaviour
     private void ChangeActivePlayer()
     {
         activePlayerNumber = (activePlayerNumber + 1) % PhotonNetwork.CurrentRoom.PlayerCount;
-        Debug.Log($"My number is {player.ActorNumber - 1} and the active player is {activePlayerNumber}");
     }
 
     [PunRPC]

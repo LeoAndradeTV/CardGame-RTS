@@ -4,10 +4,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameStateManager gameStateManager;
+
+    private Hashtable playerProperties = new Hashtable();
 
     [SerializeField] private GameObject playerBoardPrefab;
     [SerializeField] private GameObject cardBankPrefab;
@@ -46,20 +50,32 @@ public class GameManager : MonoBehaviour
 
         player = PhotonNetwork.LocalPlayer;
 
+        List<Player> playersInRoom = Support.GetPlayersInRoom(PhotonNetwork.CurrentRoom.Players);
+        List<Player> sortedPlayers = Support.SortListOfPlayers(playersInRoom);
+        int index = sortedPlayers.FindIndex(x => x.NickName == player.NickName);
+        foreach (Player p in sortedPlayers)
+        {
+            Debug.Log(p.NickName);
+        }
+
+        player.CustomProperties["RoomID"] = index;
+
+        Debug.Log($"Player index is: {(int)player.CustomProperties["RoomID"]}");
+
         playerBankCardsTransforms.Add(player1CardBank);
         playerBankCardsTransforms.Add(player2CardBank);
         playerBankCardsTransforms.Add(player3CardBank);
         playerBankCardsTransforms.Add(player4CardBank);
 
-        Instantiate(playerBoardPrefab, boardPositions[player.ActorNumber - 1], boardRotations[player.ActorNumber - 1]);
+        Instantiate(playerBoardPrefab, boardPositions[Support.GetPlayerRoomId(player)], boardRotations[Support.GetPlayerRoomId(player)]);
 
         InitializeNetworkObjects();
 
         StartCoroutine(SetPlayersPositionAndRotation(
-            bankPositions[player.ActorNumber - 1], 
-            bankRotations[player.ActorNumber - 1], 
-            cameraOnBoardPositions[player.ActorNumber - 1], 
-            cameraOnBoardRotations[player.ActorNumber - 1]));
+            bankPositions[Support.GetPlayerRoomId(player)], 
+            bankRotations[Support.GetPlayerRoomId(player)], 
+            cameraOnBoardPositions[Support.GetPlayerRoomId(player)], 
+            cameraOnBoardRotations[Support.GetPlayerRoomId(player)]));
 
         //FOR TESTING ONLY
         Table.Instance.GoldAmount = 0;
@@ -84,7 +100,7 @@ public class GameManager : MonoBehaviour
         bank.transform.rotation = rotation;
         Camera.main.transform.position = camPos;
         Camera.main.transform.rotation = camRot;
-        SetUpCardsOnBank(bank.GetComponent<CardBank>(), playerBankCardsTransforms[player.ActorNumber - 1], cardRotations[player.ActorNumber - 1]);
+        SetUpCardsOnBank(bank.GetComponent<CardBank>(), playerBankCardsTransforms[Support.GetPlayerRoomId(player)], cardRotations[Support.GetPlayerRoomId(player)]);
         gameStateManager.gameObject.SetActive(true);
         healthBar = FindObjectOfType<HealthBar>();
         healthBar.gameObject.SetActive(false);

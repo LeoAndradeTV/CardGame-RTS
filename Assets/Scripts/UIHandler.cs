@@ -72,7 +72,7 @@ public class UIHandler : MonoBehaviour
         SetEndTurnButton(false);
         HideAllMenus();
         Debug.Log(player.NickName);
-        lastCameraPositionOnTable = cameraOnTable[player.ActorNumber - 1];
+        lastCameraPositionOnTable = cameraOnTable[Support.GetPlayerRoomId(player)];
     }
 
     public void HideAllMenus()
@@ -248,14 +248,14 @@ public class UIHandler : MonoBehaviour
     }
     public void ChangeToTableView()
     {
-        StartCoroutine(LerpCamera(camera.transform.position, lastCameraPositionOnTable, camera.transform.rotation, cameraOnTableRotation[player.ActorNumber - 1], true));
+        StartCoroutine(LerpCamera(camera.transform.position, lastCameraPositionOnTable, camera.transform.rotation, cameraOnTableRotation[Support.GetPlayerRoomId(player)], true));
         Actions.ChangeCardInteractable?.Invoke(false);   // Player cards can't be selected
 
     }
     public void ChangeToBoardView()
     {
         lastCameraPositionOnTable = camera.transform.position;
-        StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard[player.ActorNumber - 1], camera.transform.rotation, cameraOnBoardRotation[player.ActorNumber - 1], false));
+        StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard[Support.GetPlayerRoomId(player)], camera.transform.rotation, cameraOnBoardRotation[Support.GetPlayerRoomId(player)], false));
         Actions.ChangeCardInteractable?.Invoke(true);    // Player cards can be selected
     }
 

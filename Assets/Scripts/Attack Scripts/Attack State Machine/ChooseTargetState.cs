@@ -61,10 +61,6 @@ public class ChooseTargetState : AttackBaseState
                     motor.hasTarget = true;
                     
                     manager.photonView.RPC("SetHealthBarActive", RpcTarget.All, true, GameManager.instance.healthBarId);
-                    Debug.Log(manager.targetPlayer.ActorNumber);
-
-
-
                 }
                 ExitState(manager);
             }

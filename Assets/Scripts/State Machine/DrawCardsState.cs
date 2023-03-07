@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -24,6 +25,7 @@ public class DrawCardsState : GameStateAbstract
                 card.GetComponent<Collider>().enabled = false;
             }
         }
+        
 
         Table.Instance.GoldAmount += BuildingCounter.BankAmount * 5;
 

@@ -32,7 +32,7 @@ public class AttackStateManager : MonoBehaviour
         }
         player = PhotonNetwork.LocalPlayer;
         photonView = GetComponent<PhotonView>();
-        if (player.ActorNumber - 1 != GameStateManager.instance.activePlayerNumber) { return; }
+        if (Support.GetPlayerRoomId(player) != GameStateManager.instance.activePlayerNumber) { return; }
         currentState = deploymentState;
         currentState.EnterState(this);
     }
@@ -41,7 +41,7 @@ public class AttackStateManager : MonoBehaviour
     void Update()
     {
         if(currentState == null) { return; }
-        if (player.ActorNumber - 1 != GameStateManager.instance.activePlayerNumber) { return; }
+        if (Support.GetPlayerRoomId(player) != GameStateManager.instance.activePlayerNumber) { return; }
         currentState.UpdateState(this);
     }
 

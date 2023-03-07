@@ -43,19 +43,19 @@ public class CameraController : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        if (player.ActorNumber == 1)
+        if (Support.GetPlayerRoomId(player) == 0)
         {
             transform.position = new Vector3(transform.position.x + horizontal * speed * Time.deltaTime, currentZoom, transform.position.z + vertical * speed * Time.deltaTime);
         }
-        else if (player.ActorNumber == 2)
+        else if (Support.GetPlayerRoomId(player) == 1)
         {
             transform.position = new Vector3(transform.position.x - vertical * speed * Time.deltaTime, currentZoom, transform.position.z + horizontal * speed * Time.deltaTime);
         }
-        else if (player.ActorNumber == 3)
+        else if (Support.GetPlayerRoomId(player) == 2)
         {
             transform.position = new Vector3(transform.position.x - horizontal * speed * Time.deltaTime, currentZoom, transform.position.z - vertical * speed * Time.deltaTime);
         }
-        else if (player.ActorNumber == 4)
+        else if (Support.GetPlayerRoomId(player) == 3)
         {
             transform.position = new Vector3(transform.position.x + vertical * speed * Time.deltaTime, currentZoom, transform.position.z - horizontal * speed * Time.deltaTime);
 

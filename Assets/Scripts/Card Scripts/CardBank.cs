@@ -91,7 +91,7 @@ public class CardBank : MonoBehaviourPunCallbacks
     private void PlaceCardsLocally(int viewId, int index)
     {
         GameObject card = PhotonView.Find(viewId).gameObject;
-        int caseNumber = player.ActorNumber - 1;
+        int caseNumber = Support.GetPlayerRoomId(player);
         switch (caseNumber)
         {
             case 0:
@@ -113,7 +113,6 @@ public class CardBank : MonoBehaviourPunCallbacks
             default:
                 break;
         }
-        Debug.Log($"Player number is {player.ActorNumber} Card position is {card.transform.position}, card rotation is {card.transform.rotation}");
     }
 
     [PunRPC]
