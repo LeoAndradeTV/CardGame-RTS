@@ -26,9 +26,13 @@ public class Projectile : MonoBehaviour
 
     public void DealDamage()
     {
-        AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"] = (int)AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"] - damage;
-        int currentHealth = (int)AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"];
+        Player targetPlayer = AttackStateManager.instance.targetPlayer;
+        targetPlayer.CustomProperties["CurrentHealth"] = (int)targetPlayer.CustomProperties["CurrentHealth"] - damage;
+        int currentHealth = (int)targetPlayer.CustomProperties["CurrentHealth"];
         healthBarView.RPC("SetHealth", RpcTarget.All, currentHealth);
+
+        object[] data = new object[] { currentHealth, targetPlayer.NickName };
+        PhotonNetwork.RaiseEvent(0, data, RaiseEventOptions.Default, SendOptions.SendUnreliable);
     }
 
     private void OnCollisionEnter(Collision collision)
