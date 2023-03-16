@@ -110,6 +110,7 @@ public class GameManager : MonoBehaviour
     public void SetUpCardsOnBank(CardBank bank, List<Transform> positions, Quaternion rotation)
     {
         GameObject[] cards = GameObject.FindGameObjectsWithTag("Card");
+        Debug.Log(cards.Length);
         for (int i = 0; i < cards.Length; i++)
         {
             cards[i].transform.position = positions[i].position;
