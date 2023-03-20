@@ -13,11 +13,13 @@ public class GameManager : MonoBehaviour
 
     private Hashtable playerProperties = new Hashtable();
 
+    [Header("Prefabs to Instantiate")]
     [SerializeField] private GameObject playerBoardPrefab;
     [SerializeField] private GameObject cardBankPrefab;
     [SerializeField] private GameObject fightingAreaPrefab;
     [SerializeField] private Canvas healthBarCanvasPrefab;
 
+    [Header("Player specific lists")]
     public List<Vector3> boardPositions = new List<Vector3>();
     public List<Quaternion> boardRotations = new List<Quaternion>();
     public List<Vector3> bankPositions = new List<Vector3>();
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
     public List<Quaternion> cameraOnBoardRotations = new List<Quaternion>();
     public List<Quaternion> cardRotations = new List<Quaternion>();
 
+    [Header("Player locations")]
     public List<Transform> player1CardBank = new List<Transform>();
     public List<Transform> player2CardBank = new List<Transform>();
     public List<Transform> player3CardBank = new List<Transform>();
@@ -34,6 +37,7 @@ public class GameManager : MonoBehaviour
     public List<List<Transform>> playerBankCardsTransforms = new List<List<Transform>>();
     public HealthBar healthBar;
     public int healthBarId;
+    public GameObject loadingScreen;
 
     private Player player;
 
@@ -47,6 +51,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+        loadingScreen.SetActive(true);
 
         player = PhotonNetwork.LocalPlayer;
 
@@ -105,6 +110,7 @@ public class GameManager : MonoBehaviour
         healthBar = FindObjectOfType<HealthBar>();
         healthBar.gameObject.SetActive(false);
         healthBarId = healthBar.gameObject.GetPhotonView().ViewID;
+        loadingScreen.SetActive(false);
     }
 
     public void SetUpCardsOnBank(CardBank bank, List<Transform> positions, Quaternion rotation)
