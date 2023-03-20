@@ -4,16 +4,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameStateManager gameStateManager;
 
+    private Hashtable playerProperties = new Hashtable();
+
+    [Header("Prefabs to Instantiate")]
     [SerializeField] private GameObject playerBoardPrefab;
     [SerializeField] private GameObject cardBankPrefab;
     [SerializeField] private GameObject fightingAreaPrefab;
     [SerializeField] private Canvas healthBarCanvasPrefab;
 
+    [Header("Player specific lists")]
     public List<Vector3> boardPositions = new List<Vector3>();
     public List<Quaternion> boardRotations = new List<Quaternion>();
     public List<Vector3> bankPositions = new List<Vector3>();
@@ -22,6 +28,7 @@ public class GameManager : MonoBehaviour
     public List<Quaternion> cameraOnBoardRotations = new List<Quaternion>();
     public List<Quaternion> cardRotations = new List<Quaternion>();
 
+    [Header("Player locations")]
     public List<Transform> player1CardBank = new List<Transform>();
     public List<Transform> player2CardBank = new List<Transform>();
     public List<Transform> player3CardBank = new List<Transform>();
@@ -30,6 +37,7 @@ public class GameManager : MonoBehaviour
     public List<List<Transform>> playerBankCardsTransforms = new List<List<Transform>>();
     public HealthBar healthBar;
     public int healthBarId;
+    public GameObject loadingScreen;
 
     private Player player;
 
@@ -43,23 +51,36 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+        loadingScreen.SetActive(true);
 
         player = PhotonNetwork.LocalPlayer;
+
+        List<Player> playersInRoom = Support.GetPlayersInRoom(PhotonNetwork.CurrentRoom.Players);
+        List<Player> sortedPlayers = Support.SortListOfPlayers(playersInRoom);
+        int index = sortedPlayers.FindIndex(x => x.NickName == player.NickName);
+        foreach (Player p in sortedPlayers)
+        {
+            Debug.Log(p.NickName);
+        }
+
+        player.CustomProperties["RoomID"] = index;
+
+        Debug.Log($"Player index is: {(int)player.CustomProperties["RoomID"]}");
 
         playerBankCardsTransforms.Add(player1CardBank);
         playerBankCardsTransforms.Add(player2CardBank);
         playerBankCardsTransforms.Add(player3CardBank);
         playerBankCardsTransforms.Add(player4CardBank);
 
-        Instantiate(playerBoardPrefab, boardPositions[player.ActorNumber - 1], boardRotations[player.ActorNumber - 1]);
+        Instantiate(playerBoardPrefab, boardPositions[Support.GetPlayerRoomId(player)], boardRotations[Support.GetPlayerRoomId(player)]);
 
         InitializeNetworkObjects();
 
         StartCoroutine(SetPlayersPositionAndRotation(
-            bankPositions[player.ActorNumber - 1], 
-            bankRotations[player.ActorNumber - 1], 
-            cameraOnBoardPositions[player.ActorNumber - 1], 
-            cameraOnBoardRotations[player.ActorNumber - 1]));
+            bankPositions[Support.GetPlayerRoomId(player)], 
+            bankRotations[Support.GetPlayerRoomId(player)], 
+            cameraOnBoardPositions[Support.GetPlayerRoomId(player)], 
+            cameraOnBoardRotations[Support.GetPlayerRoomId(player)]));
 
         //FOR TESTING ONLY
         Table.Instance.GoldAmount = 0;
@@ -84,16 +105,18 @@ public class GameManager : MonoBehaviour
         bank.transform.rotation = rotation;
         Camera.main.transform.position = camPos;
         Camera.main.transform.rotation = camRot;
-        SetUpCardsOnBank(bank.GetComponent<CardBank>(), playerBankCardsTransforms[player.ActorNumber - 1], cardRotations[player.ActorNumber - 1]);
+        SetUpCardsOnBank(bank.GetComponent<CardBank>(), playerBankCardsTransforms[Support.GetPlayerRoomId(player)], cardRotations[Support.GetPlayerRoomId(player)]);
         gameStateManager.gameObject.SetActive(true);
         healthBar = FindObjectOfType<HealthBar>();
         healthBar.gameObject.SetActive(false);
         healthBarId = healthBar.gameObject.GetPhotonView().ViewID;
+        loadingScreen.SetActive(false);
     }
 
     public void SetUpCardsOnBank(CardBank bank, List<Transform> positions, Quaternion rotation)
     {
         GameObject[] cards = GameObject.FindGameObjectsWithTag("Card");
+        Debug.Log(cards.Length);
         for (int i = 0; i < cards.Length; i++)
         {
             cards[i].transform.position = positions[i].position;

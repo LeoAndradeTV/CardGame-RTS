@@ -46,7 +46,7 @@ public class AttackUnitsSpawner : MonoBehaviourPunCallbacks, IPunObservable
 
     private void InstantiateUnit(int unitNumber)
     {
-        PhotonNetwork.Instantiate(unitPrefabs[unitNumber].name, unitPrefabs[unitNumber].transform.position + spawnPositions[0], unitRotations[PhotonNetwork.LocalPlayer.ActorNumber - 1]);
+        PhotonNetwork.Instantiate(unitPrefabs[unitNumber].name, unitPrefabs[unitNumber].transform.position + spawnPositions[0], unitRotations[Support.GetPlayerRoomId(PhotonNetwork.LocalPlayer)]);
         spawnPositions.RemoveAt(0);
     }
 
@@ -75,68 +75,68 @@ public class AttackUnitsSpawner : MonoBehaviourPunCallbacks, IPunObservable
 
     public void buildSpawnPositions(int amount)
     {
-        Vector3 spawnPos = startingOffsets[player.ActorNumber - 1];
+        Vector3 spawnPos = startingOffsets[Support.GetPlayerRoomId(player)];
         spawnPositions.Add(spawnPos);
         for (int i = 0; i < amount; i++)
         {
-            if (player.ActorNumber == 1)
+            if (Support.GetPlayerRoomId(player) == 0)
             {
-                if (spawnPos.x < maxXList[player.ActorNumber - 1])
+                if (spawnPos.x < maxXList[Support.GetPlayerRoomId(player)])
                 {
-                    spawnPos.x += xOffsetList[player.ActorNumber - 1];
+                    spawnPos.x += xOffsetList[Support.GetPlayerRoomId(player)];
                 }
                 else
                 {
-                    spawnPos.z += zOffsetList[player.ActorNumber - 1];
-                    spawnPos.x = startingOffsets[player.ActorNumber - 1].x;
+                    spawnPos.z += zOffsetList[Support.GetPlayerRoomId(player)];
+                    spawnPos.x = startingOffsets[Support.GetPlayerRoomId(player)].x;
                 }
-                if (spawnPos.z > maxZList[player.ActorNumber - 1])
+                if (spawnPos.z > maxZList[Support.GetPlayerRoomId(player)])
                 {
                     Debug.Log("Most units deployed: 96");
                 }
             }
-            else if (player.ActorNumber == 2)
+            else if (Support.GetPlayerRoomId(player) == 1)
             {
-                if (spawnPos.z < maxZList[player.ActorNumber - 1])
+                if (spawnPos.z < maxZList[Support.GetPlayerRoomId(player)])
                 {
-                    spawnPos.z += zOffsetList[player.ActorNumber - 1];
+                    spawnPos.z += zOffsetList[Support.GetPlayerRoomId(player)];
                 }
                 else
                 {
-                    spawnPos.x += xOffsetList[player.ActorNumber - 1];
-                    spawnPos.z = startingOffsets[player.ActorNumber - 1].z;
+                    spawnPos.x += xOffsetList[Support.GetPlayerRoomId(player)];
+                    spawnPos.z = startingOffsets[Support.GetPlayerRoomId(player)].z;
                 }
-                if (spawnPos.x < maxXList[player.ActorNumber - 1])
+                if (spawnPos.x < maxXList[Support.GetPlayerRoomId(player)])
                 {
                     Debug.Log("Most units deployed: 96");
                 }
-            } else if (player.ActorNumber == 3)
+            } else if (Support.GetPlayerRoomId(player) == 2)
             {
-                if (spawnPos.x < maxXList[player.ActorNumber - 1])
+                if (spawnPos.x > maxXList[Support.GetPlayerRoomId(player)])
                 {
-                    spawnPos.x += xOffsetList[player.ActorNumber - 1];
+                    spawnPos.x += xOffsetList[Support.GetPlayerRoomId(player)];
                 }
                 else
                 {
-                    spawnPos.z += zOffsetList[player.ActorNumber - 1];
-                    spawnPos.x = startingOffsets[player.ActorNumber - 1].x;
+                    spawnPos.z += zOffsetList[Support.GetPlayerRoomId(player)];
+                    spawnPos.x = startingOffsets[Support.GetPlayerRoomId(player)].x;
                 }
-                if (spawnPos.z > maxZList[player.ActorNumber - 1])
+                if (spawnPos.z > maxZList[Support.GetPlayerRoomId(player)])
                 {
                     Debug.Log("Most units deployed: 96");
                 }
-            } else if (player.ActorNumber == 4)
+            } else if (Support.GetPlayerRoomId(player) == 3)
             {
-                if (spawnPos.z < maxZList[player.ActorNumber - 1])
+                if (spawnPos.z > maxZList[Support.GetPlayerRoomId(player)])
                 {
-                    spawnPos.z += xOffsetList[player.ActorNumber - 1];
+                    spawnPos.z += xOffsetList[Support.GetPlayerRoomId(player)];
                 }
                 else
                 {
-                    spawnPos.x += xOffsetList[player.ActorNumber - 1];
-                    spawnPos.z = startingOffsets[player.ActorNumber - 1].x;
+                    spawnPos.x += xOffsetList[Support.GetPlayerRoomId(player)];
+                    spawnPos.z = startingOffsets[Support.GetPlayerRoomId(player)].x;
                 }
-                if (spawnPos.x > maxXList[player.ActorNumber - 1])
+                if (spawnPos.x > maxXList[Support.GetPlayerRoomId(player)])
                 {
                     Debug.Log("Most units deployed: 96");
                 }

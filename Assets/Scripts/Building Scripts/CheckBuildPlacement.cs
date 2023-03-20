@@ -21,22 +21,22 @@ public class CheckBuildPlacement : MonoBehaviour
 
     private void Update()
     {
-        if (player.ActorNumber == 1)
+        if (Support.GetPlayerRoomId(player) == 0)
         {
             buildPlacement.canPlace = buildPlacement.pos.z < buildZMax;
             return;
         }
-        if (player.ActorNumber == 2)
+        if (Support.GetPlayerRoomId(player) == 1)
         {
             buildPlacement.canPlace = buildPlacement.pos.x > 70f;
             return;
         }
-        if (player.ActorNumber == 3)
+        if (Support.GetPlayerRoomId(player) == 2)
         {
             buildPlacement.canPlace = buildPlacement.pos.z > 320;
             return;
         }
-        if (player.ActorNumber == 4)
+        if (Support.GetPlayerRoomId(player) == 3)
         {
             buildPlacement.canPlace = buildPlacement.pos.x < -70f;
             return;

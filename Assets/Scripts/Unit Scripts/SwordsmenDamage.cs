@@ -21,7 +21,7 @@ public class SwordsmenDamage : MonoBehaviour
 
     public void DealDamage()
     {
-        if (GameStateManager.instance.activePlayerNumber == GameStateManager.instance.player.ActorNumber - 1)
+        if (GameStateManager.instance.activePlayerNumber == Support.GetPlayerRoomId(GameStateManager.instance.player))
         {
             AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"] = (int)AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"] - damage;
             int currentHealth = (int)AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"];

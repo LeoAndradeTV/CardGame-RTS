@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
 
 public class Projectile : MonoBehaviour
 {
@@ -25,14 +26,18 @@ public class Projectile : MonoBehaviour
 
     public void DealDamage()
     {
-        AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"] = (int)AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"] - damage;
-        int currentHealth = (int)AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"];
+        Player targetPlayer = AttackStateManager.instance.targetPlayer;
+        targetPlayer.CustomProperties["CurrentHealth"] = (int)targetPlayer.CustomProperties["CurrentHealth"] - damage;
+        int currentHealth = (int)targetPlayer.CustomProperties["CurrentHealth"];
         healthBarView.RPC("SetHealth", RpcTarget.All, currentHealth);
+
+        object[] data = new object[] { currentHealth, targetPlayer.NickName };
+        PhotonNetwork.RaiseEvent(0, data, RaiseEventOptions.Default, SendOptions.SendUnreliable);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (GameStateManager.instance.activePlayerNumber == GameStateManager.instance.player.ActorNumber - 1)
+        if (GameStateManager.instance.activePlayerNumber == Support.GetPlayerRoomId(GameStateManager.instance.player))
         {
             DealDamage();
         }

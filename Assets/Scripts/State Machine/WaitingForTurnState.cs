@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,7 +39,7 @@ public class WaitingForTurnState : GameStateAbstract
 
     public override void UpdateState(GameStateManager manager)
     {
-        if (manager.activePlayerNumber == manager.player.ActorNumber - 1)
+        if (manager.activePlayerNumber == Support.GetPlayerRoomId(manager.player))
         {
             ExitState(manager);
         }

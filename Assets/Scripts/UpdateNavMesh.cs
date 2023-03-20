@@ -11,7 +11,7 @@ public class UpdateNavMesh : MonoBehaviour
     private PhotonView view;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         surface = GetComponentInChildren<NavMeshSurface>();
         surface.BuildNavMesh();
