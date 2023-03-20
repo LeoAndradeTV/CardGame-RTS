@@ -1,21 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class CameraController : MonoBehaviour
 {
     public static CameraController instance;
     public bool canMoveCamera;
 
+    private Player player;
+
     private float speed = 150f;
     private float currentZoom = 277f;
     private float zoomSpeed = 40f;
     private float minZoom = 25f;
     private float maxZoom = 277f;
-    private float minVertical = 128f;
-    private float maxVertical = 350f;
-    private float minHorizontal = -90f;
-    private float maxHorizontal = 90f;
+    private float minVertical = 110f;
+    private float maxVertical = 375f;
+    private float minHorizontal = -110f;
+    private float maxHorizontal = 110f;
 
     // Start is called before the first frame update
     void Awake()
@@ -24,6 +28,7 @@ public class CameraController : MonoBehaviour
         {
             instance = this;
         }
+        player = PhotonNetwork.LocalPlayer;
     }
 
     // Update is called once per frame
@@ -38,7 +43,23 @@ public class CameraController : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        transform.position = new Vector3(transform.position.x + horizontal * speed * Time.deltaTime, currentZoom, transform.position.z + vertical * speed * Time.deltaTime);
+        if (Support.GetPlayerRoomId(player) == 0)
+        {
+            transform.position = new Vector3(transform.position.x + horizontal * speed * Time.deltaTime, currentZoom, transform.position.z + vertical * speed * Time.deltaTime);
+        }
+        else if (Support.GetPlayerRoomId(player) == 1)
+        {
+            transform.position = new Vector3(transform.position.x - vertical * speed * Time.deltaTime, currentZoom, transform.position.z + horizontal * speed * Time.deltaTime);
+        }
+        else if (Support.GetPlayerRoomId(player) == 2)
+        {
+            transform.position = new Vector3(transform.position.x - horizontal * speed * Time.deltaTime, currentZoom, transform.position.z - vertical * speed * Time.deltaTime);
+        }
+        else if (Support.GetPlayerRoomId(player) == 3)
+        {
+            transform.position = new Vector3(transform.position.x + vertical * speed * Time.deltaTime, currentZoom, transform.position.z - horizontal * speed * Time.deltaTime);
+
+        }
 
         SetCameraInBound();
 

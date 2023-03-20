@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +14,7 @@ public class PlayerCards : MonoBehaviour
     private List<CardData> playerDiscard = new List<CardData>();
     public List<Card> cardsInHand = new List<Card>();
 
+    private Player player;
     private bool deckIsEmpty => playerDeck.Count == 0;
     private bool handIsFull => cardsInHand.Count >= 5;
 
@@ -22,13 +25,14 @@ public class PlayerCards : MonoBehaviour
         {
             instance = this;
         }
+        player = PhotonNetwork.LocalPlayer;
         CreateInitialDeck();
     }
 
     // Create every initial card
     public void CreateInitialDeck()
     {
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 6; i++)
         {
             playerDeck.Add(cardData[0]);
         }
@@ -36,8 +40,13 @@ public class PlayerCards : MonoBehaviour
         {
             playerDeck.Add(cardData[1]);
         }
+        //Add one type of attack card
+        for (int i = 0; i < 1; i++)
+        {
+            playerDeck.Add(cardData[2]);
+        }
 
-        //TODO: Add one type of attack card
+        
     }
     public void DrawCards()
     {
@@ -58,7 +67,7 @@ public class PlayerCards : MonoBehaviour
                 continue;
 
             // Makes and places card
-            Card card = Instantiate(cardPrefab, Table.Instance.cardLocations[i].position, Quaternion.Euler(90f, 0f, 0f));
+            Card card = Instantiate(cardPrefab, Table.Instance.cardLocations[i].position, GameManager.instance.cardRotations[Support.GetPlayerRoomId(player)]);
             
             card.indexInHand = i;
             Table.Instance.locationIsFilled[i] = true;
@@ -72,7 +81,7 @@ public class PlayerCards : MonoBehaviour
 
             SetDrawAndShuffleButtons(!deckIsEmpty);
         }
-        UIHandler.instance.SetBuildButton(false);
+        UIHandler.instance.SetBuildsButton(false);
 
     }
     public void DiscardCard(Card card)
@@ -81,7 +90,6 @@ public class PlayerCards : MonoBehaviour
         cardsInHand.Remove(card);
         Table.Instance.locationIsFilled[card.indexInHand] = false;
         Destroy(card.gameObject);
-        UIHandler.instance.SetBuildButton(GetCardsInHand() == 0);
     }
     public void ShuffleCards()
     {

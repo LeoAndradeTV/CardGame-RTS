@@ -1,21 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Realtime;
+using Photon.Pun;
+using UnityEngine.AI;
 
 public class CheckBuildPlacement : MonoBehaviour
 {
     BuildPlacement buildPlacement;
 
-    private float buildZMax = 175f;
+    private Player player;
+
+    private float buildZMax = 180f;
 
     void Start()
     {
+        player = PhotonNetwork.LocalPlayer;
         buildPlacement = GameObject.Find("BuildPlacement").GetComponent<BuildPlacement>();
     }
 
     private void Update()
     {
-        buildPlacement.canPlace = buildPlacement.pos.z < buildZMax;
+        if (Support.GetPlayerRoomId(player) == 0)
+        {
+            buildPlacement.canPlace = buildPlacement.pos.z < buildZMax;
+            return;
+        }
+        if (Support.GetPlayerRoomId(player) == 1)
+        {
+            buildPlacement.canPlace = buildPlacement.pos.x > 70f;
+            return;
+        }
+        if (Support.GetPlayerRoomId(player) == 2)
+        {
+            buildPlacement.canPlace = buildPlacement.pos.z > 320;
+            return;
+        }
+        if (Support.GetPlayerRoomId(player) == 3)
+        {
+            buildPlacement.canPlace = buildPlacement.pos.x < -70f;
+            return;
+        }
     }
 
     private void OnTriggerStay(Collider other)

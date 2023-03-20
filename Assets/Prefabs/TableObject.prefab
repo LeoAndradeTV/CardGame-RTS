@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 4191675654318759269}
   m_Layer: 0
   m_Name: Table
-  m_TagString: Untagged
+  m_TagString: PlayerTable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,6 +191,7 @@ MonoBehaviour:
   - {fileID: 4191675654781762231}
   - {fileID: 4191675656046076616}
   locationIsFilled: 0000000000
+  goldText: {fileID: 4191675655786012729}
 --- !u!1 &4191675654736559365
 GameObject:
   m_ObjectHideFlags: 0

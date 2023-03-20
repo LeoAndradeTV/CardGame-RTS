@@ -8,7 +8,7 @@ public class UnitController : MonoBehaviour
     Camera cam;
     UnitMotor motor;
 
-    public LayerMask targetsMask;
+    public LayerMask targetsMask = LayerMask.GetMask("Target Layer");
     
     
 

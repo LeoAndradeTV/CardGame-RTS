@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class BuildManager : MonoBehaviour
 {
-    [SerializeField] private BuildPlacement buildPlacement;
+    private BuildPlacement buildPlacement;
+
+    private void OnEnable()
+    {
+        if (buildPlacement != null) { return; }
+        buildPlacement = GameObject.FindGameObjectWithTag("FightingArea").GetComponentInChildren<BuildPlacement>();
+    }
 
     public void Build(BuildingData buildingData)
     {

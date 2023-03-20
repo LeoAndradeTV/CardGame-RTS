@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Diagnostics.Contracts;
+using Photon.Pun;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -12,25 +14,21 @@ public class PlayerStats : MonoBehaviour
         {
             Instance = this;
         }
+
+        playerProperties["MaxHealth"] = 10000;
+        playerProperties["CurrentHealth"] = 10000;
+        UpdatePlayerProperties();
+        Debug.Log(playerProperties["CurrentHealth"]);
     }
 
-    public int maxHealth => 10000;
+    public ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
+
+    public int maxHealth = 10000;
     public int currentHealth = 10000;
     public int meleeAttackStat => BuildingCounter.SwordsmenAmount * 5;
     public int siegeAttackStat => BuildingCounter.SiegeAmount * 10;   
     public int archersAttackStat =>BuildingCounter.ArchersAmount * 5;
     public int protectionStat => BuildingCounter.WallAmount * 10;
-    public int GoldAmount
-    {
-        get { return goldAmount; }
-        set
-        {
-            goldAmount = value;
-            goldText.text = goldAmount.ToString();
-        }
-    }
-    private int goldAmount;
-    public TMP_Text goldText;
 
 
     public void UpdatePlayerStats(BuildingData buildingData)
@@ -53,6 +51,8 @@ public class PlayerStats : MonoBehaviour
                 BuildingCounter.WallAmount++;
                 break;
         }
+        UpdatePlayerProperties();
+
     }
     private void RemoveMaterials(BuildingData buildingData)
     {
@@ -60,7 +60,16 @@ public class PlayerStats : MonoBehaviour
         MaterialCounter.RockCounter -= buildingData.buildingRockRequirement;
         MaterialCounter.StringCounter -= buildingData.buildingStringRequirement;
         MaterialCounter.IronCounter -= buildingData.buildingIronRequirement;
-        Debug.Log("Are we here?");
+    }
+
+    public void UpdatePlayerProperties()
+    {
+        
+        playerProperties["MeleeStat"] = meleeAttackStat;
+        playerProperties["SiegeStat"] = siegeAttackStat;
+        playerProperties["ArchersStat"] = archersAttackStat;
+        playerProperties["DefenseStat"] = protectionStat;
+        PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
 
     private void OnEnable()

@@ -12,4 +12,6 @@ public static class Actions
     public static Action<Card, int> OnCardBought;
     public static Action<bool> ChangeCardInteractable;
     public static Action<BuildingData> OnBuildingBuilt;
+    public static Action OnFinishedBuilding;
+    public static Action OnTurnEnded;
 }

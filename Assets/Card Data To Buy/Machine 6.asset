@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00ae0854ef5ef345a598169c0931ce1, type: 3}
   m_Name: Machine 6
   m_EditorClassIdentifier: 
-  CardType: 9
-  CardStatus: 0
+  cardType: 9
+  cardStatus: 1
   name: Machine 6
   description: Harvest 4 iron
   price: 7

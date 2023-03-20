@@ -1,10 +1,17 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
-public class BuildPlacement : MonoBehaviour
+public class BuildPlacement : MonoBehaviourPunCallbacks
 {
+    private Player player;
+
+    private PhotonView photonView;
+
     public GameObject[] objects;
     private GameObject pendingObject;
     private BuildingData pendingObjectBuildingData;
@@ -19,20 +26,30 @@ public class BuildPlacement : MonoBehaviour
     private Material startingMaterial;
     private MeshRenderer[] meshRenderers;
 
+    [SerializeField] private Material[] materialsByPlayer;
+
     public bool canPlace = true;
     public GameObject overlappingGameObject;
     public bool mouseOverUIElement => EventSystem.current.IsPointerOverGameObject();
 
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        photonView = GetComponent<PhotonView>();
+        player = PhotonNetwork.LocalPlayer;
+    }
 
     private void Update()
     {
         if (pendingObject != null)
         {
-            Debug.Log("We got here");
-            pendingObject.transform.position = new Vector3(
-                RoundToNearestGrid(pos.x),
-                RoundToNearestGrid(pos.y),
-                RoundToNearestGrid(pos.z));
+                pendingObject.transform.position = new Vector3(
+                    RoundToNearestGrid(pos.x),
+                    RoundToNearestGrid(pos.y),
+                    RoundToNearestGrid(pos.z));
+
+
+            pendingObject.transform.rotation = GameManager.instance.bankRotations[Support.GetPlayerRoomId(player)];
 
             //pendingObject.transform.position = pos;
             if (Input.GetMouseButtonDown(0))
@@ -63,7 +80,7 @@ public class BuildPlacement : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
+    { 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, 10000.0f, layerMask))
         {
@@ -73,7 +90,7 @@ public class BuildPlacement : MonoBehaviour
 
     public void SelectObject(int index, BuildingData buildingData)
     {
-        pendingObject = Instantiate(objects[index], pos, transform.rotation);
+        pendingObject = PhotonNetwork.Instantiate(objects[index].name, pos, transform.rotation);
         startingMaterial = pendingObject.GetComponentInChildren<MeshRenderer>().material;
         pendingObjectBuildingData = buildingData;
     }
@@ -83,8 +100,15 @@ public class BuildPlacement : MonoBehaviour
         meshRenderers = pendingObject.GetComponentsInChildren<MeshRenderer>();
         foreach (MeshRenderer renderer in meshRenderers)
         {
-            renderer.material = startingMaterial;
+            if (building == BuildType.Wall)
+            {
+                renderer.material = startingMaterial;
+                continue;
+            }
+            renderer.material = materialsByPlayer[Support.GetPlayerRoomId(player)];
         }
+        int materialIndex = Support.GetPlayerRoomId(player);
+        photonView.RPC("UpdateNewObjectMaterials", RpcTarget.All, pendingObject.GetPhotonView().ViewID, materialIndex);
         Actions.OnBuildingBuilt?.Invoke(pendingObjectBuildingData);
 
         pendingObject = null;
@@ -128,5 +152,16 @@ public class BuildPlacement : MonoBehaviour
 
         //pendingObject.GetComponentInChildren<MeshRenderer>().material = materials[1];
 
+    }
+
+    [PunRPC]
+    private void UpdateNewObjectMaterials(int viewId, int materialIndex)
+    {
+        GameObject newObject = PhotonView.Find(viewId).gameObject;
+        MeshRenderer[] renderers = newObject.GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer renderer in renderers)
+        {
+            renderer.material = materialsByPlayer[materialIndex];
+        }
     }
 }

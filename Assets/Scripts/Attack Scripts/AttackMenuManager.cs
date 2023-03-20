@@ -25,6 +25,11 @@ public class AttackMenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        SetSlidersMax();
+    }
+
+    private void SetSlidersMax()
+    {
         archerSlider.maxValue = BuildingCounter.ArchersAmount * 3f;
         swordsmenSlider.maxValue = BuildingCounter.SwordsmenAmount * 5f;
         siegesSlider.maxValue = BuildingCounter.SiegeAmount;
@@ -33,6 +38,10 @@ public class AttackMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(gameObject.activeInHierarchy)
+        {
+            SetSlidersMax();
+        }
         UpdateUnitCount();
     }
 
@@ -44,6 +53,7 @@ public class AttackMenuManager : MonoBehaviour
         UIHandler.instance.HideAllMenus();
         UIHandler.instance.ChangeToTableView();
         attackUnitsSpawner.SpawnUnits(archersCommitted, swordsmenCommitted, siegesCommitted);
+        GameStateManager.instance.SwitchState(GameStateManager.instance.attackState);
     }
     private void UpdateUnitCount()
     {

@@ -1,17 +1,41 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackUnitsSpawner : MonoBehaviour
+public class AttackUnitsSpawner : MonoBehaviourPunCallbacks, IPunObservable
 {
+    private Player player;
+
     public GameObject[] unitPrefabs;
     private List<Vector3> spawnPositions = new List<Vector3>();
-    private float maxX = 40;
-    private float maxZ = 20;
-    float x = 0, y = 0, z = 0;
+
+    private List<Vector3> startingOffsets = new List<Vector3>()
+        {
+            new Vector3(-60, 0, 0),
+            new Vector3(70, 0, 15),
+            new Vector3(60, 0, 145),
+            new Vector3(-60, 0, 135)
+        };
+
+    private List<float> maxXList = new List<float>() { 60f, 30f, -60f, -20f};
+    private List<float> maxZList = new List<float>() { 40f, 135f, 105f, 15f};
+
+    private List<float> xOffsetList = new List<float> { 8, -8, -8, 8 };
+    private List<float> zOffsetList = new List<float> { 8, 8, -8, -8 };
+
+    private List<Quaternion> unitRotations = new List<Quaternion>()
+    {
+        Quaternion.Euler(0, 0, 0),
+        Quaternion.Euler(0, 270, 0),
+        Quaternion.Euler(0, 180, 0),
+        Quaternion.Euler(0, 90, 0)
+    };
 
     public void SpawnUnits(int archers, int swordsmen, int sieges)
     {
+        player = PhotonNetwork.LocalPlayer;
         spawnPositions.Clear();
         buildSpawnPositions(archers + swordsmen + sieges);
         SpawnSieges(sieges);
@@ -22,7 +46,7 @@ public class AttackUnitsSpawner : MonoBehaviour
 
     private void InstantiateUnit(int unitNumber)
     {
-        Instantiate(unitPrefabs[unitNumber], transform.position + spawnPositions[0], Quaternion.identity);
+        PhotonNetwork.Instantiate(unitPrefabs[unitNumber].name, unitPrefabs[unitNumber].transform.position + spawnPositions[0], unitRotations[Support.GetPlayerRoomId(PhotonNetwork.LocalPlayer)]);
         spawnPositions.RemoveAt(0);
     }
 
@@ -51,22 +75,78 @@ public class AttackUnitsSpawner : MonoBehaviour
 
     public void buildSpawnPositions(int amount)
     {
+        Vector3 spawnPos = startingOffsets[Support.GetPlayerRoomId(player)];
+        spawnPositions.Add(spawnPos);
         for (int i = 0; i < amount; i++)
         {
-            Vector3 spawnPos = new Vector3(x, y, z);
-            if (x < maxX)
+            if (Support.GetPlayerRoomId(player) == 0)
             {
-                x += 2;
-            } else
-            {
-                z += 3;
-                x = 0;
+                if (spawnPos.x < maxXList[Support.GetPlayerRoomId(player)])
+                {
+                    spawnPos.x += xOffsetList[Support.GetPlayerRoomId(player)];
+                }
+                else
+                {
+                    spawnPos.z += zOffsetList[Support.GetPlayerRoomId(player)];
+                    spawnPos.x = startingOffsets[Support.GetPlayerRoomId(player)].x;
+                }
+                if (spawnPos.z > maxZList[Support.GetPlayerRoomId(player)])
+                {
+                    Debug.Log("Most units deployed: 96");
+                }
             }
-            if (z > maxZ)
+            else if (Support.GetPlayerRoomId(player) == 1)
             {
-                Debug.Log("Most units deployed");
-            }
+                if (spawnPos.z < maxZList[Support.GetPlayerRoomId(player)])
+                {
+                    spawnPos.z += zOffsetList[Support.GetPlayerRoomId(player)];
+                }
+                else
+                {
+                    spawnPos.x += xOffsetList[Support.GetPlayerRoomId(player)];
+                    spawnPos.z = startingOffsets[Support.GetPlayerRoomId(player)].z;
+                }
+                if (spawnPos.x < maxXList[Support.GetPlayerRoomId(player)])
+                {
+                    Debug.Log("Most units deployed: 96");
+                }
+            } else if (Support.GetPlayerRoomId(player) == 2)
+            {
+                if (spawnPos.x > maxXList[Support.GetPlayerRoomId(player)])
+                {
+                    spawnPos.x += xOffsetList[Support.GetPlayerRoomId(player)];
+                }
+                else
+                {
+                    spawnPos.z += zOffsetList[Support.GetPlayerRoomId(player)];
+                    spawnPos.x = startingOffsets[Support.GetPlayerRoomId(player)].x;
+                }
+                if (spawnPos.z > maxZList[Support.GetPlayerRoomId(player)])
+                {
+                    Debug.Log("Most units deployed: 96");
+                }
+            } else if (Support.GetPlayerRoomId(player) == 3)
+            {
+                if (spawnPos.z > maxZList[Support.GetPlayerRoomId(player)])
+                {
+                    spawnPos.z += xOffsetList[Support.GetPlayerRoomId(player)];
+                }
+                else
+                {
+                    spawnPos.x += xOffsetList[Support.GetPlayerRoomId(player)];
+                    spawnPos.z = startingOffsets[Support.GetPlayerRoomId(player)].x;
+                }
+                if (spawnPos.x > maxXList[Support.GetPlayerRoomId(player)])
+                {
+                    Debug.Log("Most units deployed: 96");
+                }
+            }         
             spawnPositions.Add(spawnPos);
         }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        
     }
 }

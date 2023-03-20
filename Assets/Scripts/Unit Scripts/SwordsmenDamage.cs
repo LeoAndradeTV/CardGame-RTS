@@ -1,24 +1,31 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SwordsmenDamage : MonoBehaviour
 {
-    [SerializeField] private int damage;
+    int damage;
+    [SerializeField] private int minDamage;
+    [SerializeField] private int maxDamage;
     [SerializeField] private HealthBar healthBar;
+
+    private PhotonView healthBarView;
 
     private void Start()
     {
-        //healthBar = GameObject.Find("Health Bar").GetComponent<HealthBar>();
+        damage = Random.Range(minDamage, maxDamage);
+        healthBarView = PhotonView.Find(GameManager.instance.healthBarId);
+
     }
 
     public void DealDamage()
     {
-        damage = PlayerStats.Instance.meleeAttackStat;
-        if (healthBar != null)
+        if (GameStateManager.instance.activePlayerNumber == Support.GetPlayerRoomId(GameStateManager.instance.player))
         {
-            healthBar.currentHealth -= damage;
-            healthBar.SetHealth(healthBar.currentHealth);
+            AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"] = (int)AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"] - damage;
+            int currentHealth = (int)AttackStateManager.instance.targetPlayer.CustomProperties["CurrentHealth"];
+            healthBarView.RPC("SetHealth", RpcTarget.All, currentHealth);
         }
         
     }

@@ -14,6 +14,18 @@ public class Table : MonoBehaviour
     public Transform[] cardLocations = new Transform[5];
     public bool[] locationIsFilled = new bool[5];
 
+    public int GoldAmount
+    {
+        get { return goldAmount; }
+        set
+        {
+            goldAmount = value;
+            goldText.text = goldAmount.ToString();
+        }
+    }
+    private int goldAmount;
+    public TMP_Text goldText;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -21,6 +33,7 @@ public class Table : MonoBehaviour
         {
             Instance = this;
         }
+        drawButton.interactable = false;
     }
 
     public void DrawCard()

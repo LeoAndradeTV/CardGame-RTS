@@ -8,6 +8,8 @@ TagManager:
   - Vegetation
   - Arrow
   - Rock
+  - CardBank
+  - PlayerTable
   layers:
   - Default
   - TransparentFX

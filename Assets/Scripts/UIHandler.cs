@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class UIHandler : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class UIHandler : MonoBehaviour
     public bool allMenusAreClosed = true;
     public int harvests;
 
+    private Player player;
+
     [Header("Menus")]
     [SerializeField] private GameObject cardSelectionMenu;
     [SerializeField] private GameObject materialSelectionMenu;
@@ -18,6 +22,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private GameObject cardPurchaseMenu;
     [SerializeField] private GameObject buildingMenu;
     [SerializeField] private GameObject attackMenu;
+    [SerializeField] private GameObject healthBarArea;
 
     [Header("Buttons")]
     [SerializeField] private Button playButton;
@@ -27,16 +32,18 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private Button goToTableButton;
     [SerializeField] private Button goToBoardButton;
     [SerializeField] private Button buildButton;
+    [SerializeField] private Button finishBuildingButton;
+    [SerializeField] private Button endTurnButton;
     [SerializeField] private Button woodButton;
     [SerializeField] private Button rockButton;
     [SerializeField] private Button ironButton;
     [SerializeField] private Button stringButton;
 
     [Header("Camera Properties")]
-    [SerializeField] private Vector3 cameraOnBoard;
-    [SerializeField] private Vector3 cameraOnTable;
-    [SerializeField] private Quaternion cameraOnBoardRotation;
-    [SerializeField] private Quaternion cameraOnTableRotation;
+    [SerializeField] private List<Vector3> cameraOnBoard;
+    [SerializeField] private List<Vector3> cameraOnTable;
+    [SerializeField] private List<Quaternion> cameraOnBoardRotation;
+    [SerializeField] private List<Quaternion> cameraOnTableRotation;
     [SerializeField] private new Camera camera;
     public Vector3 lastCameraPositionOnTable;
 
@@ -59,9 +66,13 @@ public class UIHandler : MonoBehaviour
         {
             instance = this;
         }
-        SetBuildButton(false);
+        player = PhotonNetwork.LocalPlayer;
+        camera = Camera.main;
+        SetBuildsButton(false);
+        SetEndTurnButton(false);
         HideAllMenus();
-        lastCameraPositionOnTable = cameraOnTable;
+        Debug.Log(player.NickName);
+        lastCameraPositionOnTable = cameraOnTable[Support.GetPlayerRoomId(player)];
     }
 
     public void HideAllMenus()
@@ -87,14 +98,14 @@ public class UIHandler : MonoBehaviour
         cardSelectionMenu.SetActive(!allMenusAreClosed);
         playerHUD.SetActive(allMenusAreClosed);
     }
-    public void ShowBuyMenu(Card card)
+    public void ShowBuyMenu(Card card, CardData data)
     {
         if (cardInBuyMenuSpawn.gameObject.transform.childCount > 0)
         {
             Destroy(cardInBuyMenuSpawn.gameObject.transform.GetChild(0).gameObject);
         }
         buyButton.onClick.RemoveAllListeners();
-        buyButton.onClick.AddListener(()=>BuyButtonClicked(card, PlayerStats.Instance.GoldAmount));
+        buyButton.onClick.AddListener(()=>BuyButtonClicked(card, Table.Instance.GoldAmount));
         StartCoroutine(ShowBuyMenuCoroutine());
         var cardInMenu = Instantiate(card, cardInBuyMenuSpawn);
         SetUpCardInMenu(cardInMenu);
@@ -134,7 +145,7 @@ public class UIHandler : MonoBehaviour
     }
     public void ShowAndSetCardPlayMenu(Card card)
     {
-        //Destroy any previous instantiated card
+        //Destroy any previously instantiated card
         if (cardInPlayMenuSpawn.gameObject.transform.childCount > 0)
         {
             Destroy(cardInPlayMenuSpawn.gameObject.transform.GetChild(0).gameObject);
@@ -185,11 +196,12 @@ public class UIHandler : MonoBehaviour
         if (goldAmount < card.price)
         {
             Debug.Log("Not enough gold");
+            HideAllMenus();
             return;
         }
 
-        PlayerStats.Instance.GoldAmount -= card.price;
-        PlayerCards.instance.AddCardToDiscardFromBank(card);
+        Table.Instance.GoldAmount -= card.price;
+        
         HideAllMenus();
 
     }
@@ -197,13 +209,28 @@ public class UIHandler : MonoBehaviour
     {
         Actions.OnCardBought?.Invoke(card, goldAmount);
     }
-    public void SetBuildButton(bool set)
+    public void SetBuildsButton(bool set)
     {
         buildButton.gameObject.SetActive(set);
+        finishBuildingButton.gameObject.SetActive(set);
+    }
+    public void SetEndTurnButton(bool set)
+    {
+        endTurnButton.gameObject.SetActive(set);
     }
     public void BuildButtonClicked()
     {
         buildingMenu.SetActive(true);
+    }
+    public void FinishBuildingButtonClicked()
+    {
+        SetBuildsButton(false);
+        ChangeToBoardView();
+        Actions.OnFinishedBuilding?.Invoke();
+    }
+    public void OnEndTurnClicked()
+    {
+        Actions.OnTurnEnded?.Invoke();
     }
     private IEnumerator LerpCamera(Vector3 startPos, Vector3 endPos, Quaternion startRot, Quaternion endRot, bool moveCamera)
     {
@@ -221,15 +248,20 @@ public class UIHandler : MonoBehaviour
     }
     public void ChangeToTableView()
     {
-        StartCoroutine(LerpCamera(camera.transform.position, lastCameraPositionOnTable, camera.transform.rotation, cameraOnTableRotation, true));
+        StartCoroutine(LerpCamera(camera.transform.position, lastCameraPositionOnTable, camera.transform.rotation, cameraOnTableRotation[Support.GetPlayerRoomId(player)], true));
         Actions.ChangeCardInteractable?.Invoke(false);   // Player cards can't be selected
 
     }
     public void ChangeToBoardView()
     {
         lastCameraPositionOnTable = camera.transform.position;
-        StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard, camera.transform.rotation, cameraOnBoardRotation, false));
+        StartCoroutine(LerpCamera(camera.transform.position, cameraOnBoard[Support.GetPlayerRoomId(player)], camera.transform.rotation, cameraOnBoardRotation[Support.GetPlayerRoomId(player)], false));
         Actions.ChangeCardInteractable?.Invoke(true);    // Player cards can be selected
+    }
+
+    public void SetHealthBarArea(bool set)
+    {
+        healthBarArea.SetActive(set);
     }
     
     private void OnEnable()
