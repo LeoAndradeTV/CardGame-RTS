@@ -71,10 +71,10 @@ public class BuildPlacement : MonoBehaviourPunCallbacks
                     
                 }
             }
-            if (Input.GetMouseButtonDown(1))
-            {
-                RotateObject();
-            }
+            //if (Input.GetMouseButtonDown(1))
+            //{
+            //    RotateObject();
+            //}
         }
         UpdateMaterials();
     }

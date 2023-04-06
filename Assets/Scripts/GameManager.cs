@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
             cameraOnBoardRotations[Support.GetPlayerRoomId(player)]));
 
         //FOR TESTING ONLY
-        Table.Instance.GoldAmount = 0;
+        Table.Instance.GoldAmount = 100;
 
     }
 

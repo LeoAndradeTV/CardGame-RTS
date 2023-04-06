@@ -17,6 +17,7 @@ public class DrawCardsState : GameStateAbstract
 
     public override void EnterState(GameStateManager manager)
     {
+        UIHandler.instance.ChangeToBoardView();
         cards = GameObject.FindGameObjectsWithTag("Card");
         foreach (GameObject card in cards)
         {
