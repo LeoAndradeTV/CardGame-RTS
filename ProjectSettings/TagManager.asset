@@ -10,6 +10,14 @@ TagManager:
   - Rock
   - CardBank
   - PlayerTable
+  - HealthBar
+  - FightingArea
+  - Attack_State_Manager
+  - Card
+  - Player1
+  - Player2
+  - Player3
+  - Player4
   layers:
   - Default
   - TransparentFX

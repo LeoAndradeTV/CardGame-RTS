@@ -41,19 +41,19 @@ public class ChooseTargetState : AttackBaseState
                 Vector3 moveLocation = new Vector3 (hit.point.x, 0f, hit.point.z);
                 foreach (UnitMotor motor in manager.unitsOnTheBoard)
                 {
-                    if (hit.collider.gameObject.name == "Player1Castle")
+                    if (hit.collider.gameObject.CompareTag("Player1"))
                     {
                         manager.targetPlayer = PhotonNetwork.PlayerList[0];
                     }
-                    else if (hit.collider.gameObject.name == "Player2Castle")
+                    else if (hit.collider.gameObject.CompareTag("Player2"))
                     {
                         manager.targetPlayer = PhotonNetwork.PlayerList[1];
                     }
-                    else if (hit.collider.gameObject.name == "Player3Castle")
+                    else if (hit.collider.gameObject.CompareTag("Player3"))
                     {
                         manager.targetPlayer = PhotonNetwork.PlayerList[2];
                     }
-                    else if (hit.collider.gameObject.name == "Player4Castle")
+                    else if (hit.collider.gameObject.CompareTag("Player4"))
                     {
                         manager.targetPlayer = PhotonNetwork.PlayerList[3];
                     }

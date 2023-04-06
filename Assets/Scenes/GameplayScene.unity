@@ -3748,6 +3748,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1383745209}
   - component: {fileID: 1383745208}
+  - component: {fileID: 1383745210}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -3862,6 +3863,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1383745210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383745207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3943f3e6da55cf54a875d12f125b3cf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingAreaPrefabs:
+  - {fileID: 3427453850376444787, guid: d79740ec9fb755147a1676aa87e415b2, type: 3}
+  - {fileID: 3427453850376444787, guid: e966947525b9c5d49847f3acd9ba47e8, type: 3}
+  - {fileID: 3427453850376444787, guid: 521722b8408ecf14fa3e32586ecb9fc7, type: 3}
+  - {fileID: 3427453850376444787, guid: c4840d1bbf0c4af44ae122b5cf0d8947, type: 3}
+  materials:
+  - {fileID: 2100000, guid: 4a8b820c98c7b4540bab4e4f3d70d7fb, type: 2}
+  - {fileID: 2100000, guid: a2085ab309c94a143a706621cd42e213, type: 2}
+  - {fileID: 2100000, guid: 774e3206a73de7d49b22dca748ca487c, type: 2}
+  - {fileID: 2100000, guid: 54adf927cb20b8d4e880dc266a7eea38, type: 2}
 --- !u!4 &1392508412 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5404027568004638117, guid: 951b914daeb03924ea46308e0e67a7b6,
